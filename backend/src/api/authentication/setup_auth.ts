@@ -9,12 +9,12 @@ const adapter = new PostgresJsAdapter(sql, {
 
 const lucia = new Lucia(adapter, {
 	sessionCookie: {
-		name: "user_info",
+		name: "iau",
 		attributes: {
 			secure: process.env.NODE_ENV === "production"
 		}
 	},
-	sessionExpiresIn: new TimeSpan(2, 'd'),
+	sessionExpiresIn: new TimeSpan(1, 'd'),
 	getUserAttributes(databaseUserAttributes) {
 		return {
 			name: databaseUserAttributes.name,

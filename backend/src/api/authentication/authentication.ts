@@ -6,7 +6,7 @@ import { signupRoute } from "./signup";
 
 export const authenticationRoute : FastifyPluginAsync = async (fastify, option) => {
 	fastify.get('/', async (req, res) => {
-		const userPossible = await isAuthenticated(req)
+		const userPossible = await isAuthenticated(fastify, req)
 		if(!userPossible) {
 			res.statusCode = 401;
 			res.send({message: "User is not authenticated"})

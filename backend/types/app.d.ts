@@ -27,8 +27,9 @@ declare module 'fastify' {
   interface FastifyInstance{
     config: {
       port: number,
-      cookie: {
-        name: string
+      cookieName: {
+        sessionId: string,
+        user_info: string
       }
     }
   }

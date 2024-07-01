@@ -24,8 +24,7 @@ export const signupRoute: FastifyPluginAsync = async (fastify, option) => {
 			from: "binhbhgl5@gmail.com",
 			to: email,
 			subject: "Welcome to our website",
-      text: `Hello ${name}, welcome to our website.`,
-      html: `<h1>Hello ${name}, welcome to our website</h1>`,
+      text: `Hello ${name}, welcome to our website.\nAccess this link to create your own article.\n${process.env.CLIENT_URL}`,
 		})
 
 		console.log(info.response)

@@ -10,8 +10,9 @@ const server = fastify({
 
 server.decorate('config',{
   port: Number(process.env.PORT) ?? 3000,
-  cookie: {
-    name: lucia.sessionCookieName
+  cookieName: {
+    sessionId: lucia.sessionCookieName,
+    user_info: "iuser"
   }
 })
 
@@ -21,7 +22,7 @@ server.get('/', (req, res) => {
 
 const pluginsRegister = () => {
   server.register(cookiePlugin,{
-    secret: "mysecret",
+    secret: process.env.COOKIE_SECRET,
     parseOptions: {}
   })
 

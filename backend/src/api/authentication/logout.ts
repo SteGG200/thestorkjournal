@@ -8,7 +8,7 @@ export const logoutRoute: FastifyPluginAsync = async (fastify, option) => {
 	})
 
 	fastify.post('/', async (req, res) => {
-		const user = await isAuthenticated(req)
+		const user = await isAuthenticated(fastify, req)
 
 		if(user === undefined) {
 			res.statusCode = 401
@@ -18,7 +18,8 @@ export const logoutRoute: FastifyPluginAsync = async (fastify, option) => {
 
 		await lucia.invalidateUserSessions(user.id);
 
-		res.clearCookie(fastify.config.cookie.name)
+		res.clearCookie(fastify.config.cookieName.sessionId)
+		res.clearCookie(fastify.config.cookieName.user_info)
 
 		res.statusCode = 200
 		res.send({ message: "User logged out successfully" })
