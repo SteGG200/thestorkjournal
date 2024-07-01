@@ -1,14 +1,7 @@
 import fastify from "fastify";
+import cookiePlugin from "@fastify/cookie"
 
-import { authenticationRoute } from "./authentication/authentication";
-
-declare module 'fastify' {
-  interface FastifyInstance{
-    config: {
-      port: number;
-    }
-  }
-}
+import { authenticationRoute } from "./api/authentication/authentication";
 
 const server = fastify({
   logger: true,
@@ -18,18 +11,32 @@ server.decorate('config',{
   port: Number(process.env.PORT) ?? 3000,
 })
 
-server.register(authenticationRoute, {
-  prefix: '/auth'
-})
-
 server.get('/', (req, res) => {
   res.send("This is a test server");
 })
 
-server.listen({port: server.config.port}, (err, address) => {
-  if(err){
-    server.log.error(err);
-    process.exit(1);
+const pluginsRegister = () => {
+  server.register(cookiePlugin,{
+    secret: "mysecret",
+    parseOptions: {}
+  })
+
+  server.register(authenticationRoute, {
+    prefix: '/auth'
+  })
+
+}
+
+const startServer = () =>{
+  try{
+    pluginsRegister();
+    server.listen({port: server.config.port}, (err, address) => {
+      server.log.info(`Server listening at ${address}`)
+    });
+  }catch(err){
+    server.log.error(err)
+    process.exit(1)
   }
-  server.log.info(`Server is listening at ${address}`);
-})
+}
+
+startServer();
