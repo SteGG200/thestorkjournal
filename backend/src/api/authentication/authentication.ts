@@ -1,14 +1,25 @@
-import { FastifyPluginCallback} from "fastify";
-import { loginRount } from "./login";
+import { FastifyPluginAsync, FastifyPluginCallback} from "fastify";
+import { loginRoute } from "./login";
+import { logoutRoute } from "./logout";
+import { isAuthenticated } from "../../utils/authentication";
 
-export const authenticationRoute : FastifyPluginCallback = (fastify, option, done) => {
-	fastify.get('/', (req, res) => {
-		res.send("This is authentication page.")
+export const authenticationRoute : FastifyPluginAsync = async (fastify, option) => {
+	fastify.get('/', async (req, res) => {
+		const userPossible = await isAuthenticated(req)
+		if(!userPossible) {
+			res.statusCode = 403;
+			res.send({message: "User is not authenticated"})
+			return
+		}
+		res.statusCode = 200;
+		res.send({message: `Hello, ${userPossible.name}`})
 	})
 
-	fastify.register(loginRount,{
+	fastify.register(loginRoute,{
 		prefix: '/login'
 	})
 
-	done()
+	fastify.register(logoutRoute, {
+		prefix: '/logout'
+	})
 }

@@ -2,6 +2,7 @@ import fastify from "fastify";
 import cookiePlugin from "@fastify/cookie"
 
 import { authenticationRoute } from "./api/authentication/authentication";
+import lucia from "./api/authentication/setup_auth";
 
 const server = fastify({
   logger: true,
@@ -9,6 +10,9 @@ const server = fastify({
 
 server.decorate('config',{
   port: Number(process.env.PORT) ?? 3000,
+  cookie: {
+    name: lucia.sessionCookieName
+  }
 })
 
 server.get('/', (req, res) => {

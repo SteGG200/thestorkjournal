@@ -20,7 +20,10 @@ declare global{
 declare module 'fastify' {
   interface FastifyInstance{
     config: {
-      port: number;
+      port: number,
+      cookie: {
+        name: string
+      }
     }
   }
 }
