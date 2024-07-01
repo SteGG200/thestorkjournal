@@ -7,7 +7,7 @@ export const authenticationRoute : FastifyPluginAsync = async (fastify, option) 
 	fastify.get('/', async (req, res) => {
 		const userPossible = await isAuthenticated(req)
 		if(!userPossible) {
-			res.statusCode = 403;
+			res.statusCode = 401;
 			res.send({message: "User is not authenticated"})
 			return
 		}
