@@ -36,6 +36,8 @@ export const loginRoute : FastifyPluginAsync = async (fastify, option) => {
 			return
 		}
 
+		await lucia.deleteExpiredSessions()
+
 		const session = await lucia.createSession(userId,{})
 		const sessionCookie = lucia.createSessionCookie(session.id)
 

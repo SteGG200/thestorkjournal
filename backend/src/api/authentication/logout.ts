@@ -18,6 +18,8 @@ export const logoutRoute: FastifyPluginAsync = async (fastify, option) => {
 
 		await lucia.invalidateUserSessions(user.id);
 
+	  await lucia.deleteExpiredSessions()
+
 		res.clearCookie(fastify.config.cookieName.sessionId)
 		res.clearCookie(fastify.config.cookieName.user_info)
 
