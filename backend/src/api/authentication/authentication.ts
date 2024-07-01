@@ -2,6 +2,7 @@ import { FastifyPluginAsync, FastifyPluginCallback} from "fastify";
 import { loginRoute } from "./login";
 import { logoutRoute } from "./logout";
 import { isAuthenticated } from "../../utils/authentication";
+import { signupRoute } from "./signup";
 
 export const authenticationRoute : FastifyPluginAsync = async (fastify, option) => {
 	fastify.get('/', async (req, res) => {
@@ -13,6 +14,10 @@ export const authenticationRoute : FastifyPluginAsync = async (fastify, option) 
 		}
 		res.statusCode = 200;
 		res.send({message: `Hello, ${userPossible.name}`})
+	})
+
+	fastify.register(signupRoute, {
+		prefix: '/signup'
 	})
 
 	fastify.register(loginRoute,{

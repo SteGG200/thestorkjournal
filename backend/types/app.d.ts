@@ -8,6 +8,12 @@ declare global{
     password: string,
   }
 
+  interface BodySignup{
+    name: string,
+    email: string,
+    password: string,
+  }
+
   interface UserProfileSchema{
     id: number,
     created_at: Date,

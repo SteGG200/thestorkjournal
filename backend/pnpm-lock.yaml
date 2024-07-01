@@ -23,6 +23,9 @@ dependencies:
   lucia:
     specifier: ^3.2.0
     version: 3.2.0
+  nodemailer:
+    specifier: ^6.9.14
+    version: 6.9.14
   nodemon:
     specifier: ^3.1.4
     version: 3.1.4
@@ -37,6 +40,9 @@ devDependencies:
   '@types/node':
     specifier: ^20.14.9
     version: 20.14.9
+  '@types/nodemailer':
+    specifier: ^6.4.15
+    version: 6.4.15
   tsx:
     specifier: ^4.15.8
     version: 4.15.8
@@ -657,6 +663,12 @@ packages:
       undici-types: 5.26.5
     dev: true
 
+  /@types/nodemailer@6.4.15:
+    resolution: {integrity: sha512-0EBJxawVNjPkng1zm2vopRctuWVCxk34JcIlRuXSf54habUWdz1FB7wHDqOqvDa8Mtpt0Q3LTXQkAs2LNyK5jQ==}
+    dependencies:
+      '@types/node': 20.14.9
+    dev: true
+
   /abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
     dev: false
@@ -1233,6 +1245,11 @@ packages:
         optional: true
     dependencies:
       whatwg-url: 5.0.0
+    dev: false
+
+  /nodemailer@6.9.14:
+    resolution: {integrity: sha512-Dobp/ebDKBvz91sbtRKhcznLThrKxKt97GI2FAlAyy+fk19j73Uz3sBXolVtmcXjaorivqsbbbjDY+Jkt4/bQA==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /nodemon@3.1.4:

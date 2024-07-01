@@ -1,5 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
-import { authenticateUser } from "../../database/authentication/authentication";
+import { authenticateUser } from "../../database/authentication/userHandler";
 import lucia from "./setup_auth";
 import { isAuthenticated } from "../../utils/authentication";
 
