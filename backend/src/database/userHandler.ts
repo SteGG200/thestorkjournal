@@ -1,5 +1,5 @@
 import { User } from "lucia";
-import sql from "../db"
+import sql from "./db"
 import brcypt from "bcrypt"
 
 export const authenticateUser = async (email: string, password: string) : Promise<User | undefined> => {

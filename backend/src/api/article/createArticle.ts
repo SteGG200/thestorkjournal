@@ -1,7 +1,7 @@
 import { FastifyPluginAsync } from "fastify";
 import { getUserInfoCookie } from "../../utils/cookieHandler";
 import { isAuthenticated } from "../../utils/authentication";
-import { createNewArticle } from "../../database/authentication/articleHandler";
+import { createNewArticle } from "../../database/articleHandler";
 import transporter from "../../utils/emailHandler";
 import crypto from "crypto"
 

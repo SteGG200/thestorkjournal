@@ -1,5 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
-import { authenticateUser } from "../../database/authentication/userHandler";
+import { authenticateUser } from "../../database/userHandler";
 import lucia from "./setup_auth";
 import { isAuthenticated } from "../../utils/authentication";
 import { createUserInfoCookie } from "../../utils/cookieHandler";

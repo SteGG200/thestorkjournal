@@ -1,5 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
-import { createNewUser, isEmailExisted } from "../../database/authentication/userHandler";
+import { createNewUser, isEmailExisted } from "../../database/userHandler";
 import transporter from "../../utils/emailHandler";
 
 export const signupRoute: FastifyPluginAsync = async (fastify, option) => {
@@ -11,6 +11,12 @@ export const signupRoute: FastifyPluginAsync = async (fastify, option) => {
 		Body: BodySignupAPI
 	}>('/', async (req, res) => {
 		const { name, email, password } = req.body;
+
+		if(!name || name == "" ||!email || email == "" ||!password || password == "") {
+      res.statusCode = 400
+      res.send({message: "Invalid input"})
+      return
+    }
     
 		const emailExistance = await isEmailExisted(email)
 
