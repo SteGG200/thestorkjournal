@@ -13,7 +13,7 @@ server.decorate('config',{
   port: Number(process.env.PORT) ?? 3000,
   cookieName: {
     sessionId: lucia.sessionCookieName,
-    user_info: "iuser"
+    userInfo: "iuser"
   }
 })
 
@@ -24,7 +24,10 @@ server.get('/', (req, res) => {
 const pluginsRegister = () => {
   server.register(cookiePlugin,{
     secret: process.env.COOKIE_SECRET,
-    parseOptions: {}
+    parseOptions: {
+      maxAge: 172800,
+      path: '/'
+    }
   })
 
   server.register(authenticationRoute, {

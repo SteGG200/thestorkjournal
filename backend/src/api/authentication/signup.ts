@@ -8,7 +8,7 @@ export const signupRoute: FastifyPluginAsync = async (fastify, option) => {
 	})
 
 	fastify.post<{
-		Body: BodySignup
+		Body: BodySignupAPI
 	}>('/', async (req, res) => {
 		const { name, email, password } = req.body;
     
@@ -24,7 +24,7 @@ export const signupRoute: FastifyPluginAsync = async (fastify, option) => {
 			from: "binhbhgl5@gmail.com",
 			to: email,
 			subject: "Welcome to our website",
-      text: `Hello ${name}, welcome to our website.\nAccess this link to create your own article.\n${process.env.CLIENT_URL}`,
+      text: `Hello ${name}, welcome to our website.\n\nAccess this link to create your own article.\n\n${process.env.CLIENT_URL}`,
 		})
 
 		console.log(info.response)

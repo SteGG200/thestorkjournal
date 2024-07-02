@@ -2,7 +2,7 @@ import { FastifyPluginAsync } from "fastify";
 import { authenticateUser } from "../../database/authentication/userHandler";
 import lucia from "./setup_auth";
 import { isAuthenticated } from "../../utils/authentication";
-import jwt from "jsonwebtoken"
+import { createUserInfoCookie } from "../../utils/cookieHandler";
 
 export const loginRoute : FastifyPluginAsync = async (fastify, option) => {
 	fastify.get('/', (req, res) => {
@@ -10,11 +10,11 @@ export const loginRoute : FastifyPluginAsync = async (fastify, option) => {
 	})
 
 	fastify.post<{
-		Body: BodyLogin
+		Body: BodyLoginAPI
 	}>('/', async (req, res) => {
-		const userPossible = await isAuthenticated(fastify, req)
+		const authentication = await isAuthenticated(fastify, req)
 
-		if(userPossible){
+		if(authentication){
 			res.statusCode = 400
 			res.send({message: "User already logged in"})
 			return
@@ -41,15 +41,12 @@ export const loginRoute : FastifyPluginAsync = async (fastify, option) => {
 		const session = await lucia.createSession(userProfile.id,{})
 		const sessionCookie = lucia.createSessionCookie(session.id)
 
-		res.setCookie(sessionCookie.name, sessionCookie.value)
-
+		res.cookie(sessionCookie.name, sessionCookie.value)
 
 		// Add userId to cookie
-		const token_user_info = jwt.sign(userProfile, process.env.JWT_SECRET_KEY as string, {
-			expiresIn: '1d'
-		})
+		const tokenUserInfo = createUserInfoCookie(userProfile)
 
-		res.setCookie(fastify.config.cookieName.user_info, token_user_info)
+		res.cookie(fastify.config.cookieName.userInfo, tokenUserInfo)
 
 		res.statusCode = 200;
 		res.send({message: "User logged in successfully"})

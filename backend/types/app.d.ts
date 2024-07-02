@@ -3,15 +3,20 @@ import "lucia"
 import lucia from "../src/api/authentication/setup_auth";
 
 declare global{
-  interface BodyLogin{
+  interface BodyLoginAPI{
     email: string,
     password: string,
   }
 
-  interface BodySignup{
+  interface BodySignupAPI extends BodyLoginAPI{
     name: string,
-    email: string,
-    password: string,
+  }
+
+  interface ArticleInfo{
+    title: string,
+    thumbnail: string,
+    content: string,
+    category: string,
   }
 
   interface UserProfileSchema{
@@ -29,7 +34,7 @@ declare module 'fastify' {
       port: number,
       cookieName: {
         sessionId: string,
-        user_info: string
+        userInfo: string
       }
     }
   }

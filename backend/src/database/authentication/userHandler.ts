@@ -1,7 +1,8 @@
+import { User } from "lucia";
 import sql from "../db"
 import brcypt from "bcrypt"
 
-export const authenticateUser = async (email: string, password: string) => {
+export const authenticateUser = async (email: string, password: string) : Promise<User | undefined> => {
 	const userPossible = await sql<UserProfileSchema[]>`SELECT * FROM users WHERE email = ${email}`
 
 	if(userPossible.length == 0){

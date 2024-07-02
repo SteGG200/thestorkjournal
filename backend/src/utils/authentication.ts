@@ -1,28 +1,30 @@
 import { FastifyInstance, FastifyRequest } from "fastify";
 import lucia from "../api/authentication/setup_auth";
-import jwt, { JwtPayload } from "jsonwebtoken"
+import { getUserInfoCookie } from "./cookieHandler";
 
 export const isAuthenticated = async (fastify: FastifyInstance, req: FastifyRequest) => {
 	const cookieHeader = req.headers.cookie
+	console.log(req.url)
+	console.log(cookieHeader)
 	const sessionId = lucia.readSessionCookie(cookieHeader?? "")
 
-	if(!sessionId) return undefined;
+	if(!sessionId) return false;
 
 	const { session, user } = await lucia.validateSession(sessionId)
 
-	if(!session || !user) return undefined;
+	if(!session || !user) return false;
 
-	const token_user_info = req.cookies[fastify.config.cookieName.user_info]
+	const tokenUserInfo = req.cookies[fastify.config.cookieName.userInfo]
 
-	if(!token_user_info){
-		return undefined
+	if(!tokenUserInfo){
+		return false
 	}
 
-	const user_info = jwt.verify(token_user_info, process.env.JWT_SECRET_KEY as string)
+	const userInfoCookie = getUserInfoCookie(tokenUserInfo)
 
-	if((user_info as JwtPayload).id == user.id){
-		return user
+	if(userInfoCookie.id == user.id){
+		return true
 	}
 
-	return undefined
+	return false
 }
