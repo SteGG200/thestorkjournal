@@ -12,10 +12,6 @@ declare global{
     name: string,
   }
 
-  interface ParamsConfirmArticleAPI{
-    articleId: string
-  }
-
   interface BodyConfirmArticleAPI{
     confirmKey: string,
     article: ArticleInfo,
@@ -50,7 +46,8 @@ declare module 'fastify' {
       cookieName: {
         sessionId: string,
         userInfo: string
-      }
+      },
+      articleCategories: string[]
     }
   }
 }

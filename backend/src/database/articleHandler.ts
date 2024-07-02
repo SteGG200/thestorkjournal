@@ -30,3 +30,11 @@ export const confirmArticle = async (article: ArticleInfo, authorId: number) => 
   VALUES (${authorId}, ${article.title}, ${article.thumbnail}, ${article.category}, ${article.content})`
 
 }
+
+export const getArticles = async (category: string = "") => {
+	if(category != ""){
+		return await sql`SELECT * FROM articles WHERE category = ${category}`
+	}else{
+		return await sql`SELECT * FROM articles`
+	}
+}

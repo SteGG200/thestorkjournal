@@ -14,7 +14,8 @@ server.decorate('config',{
   cookieName: {
     sessionId: lucia.sessionCookieName,
     userInfo: "iuser"
-  }
+  },
+  articleCategories: ['sport']
 })
 
 server.get('/', (req, res) => {

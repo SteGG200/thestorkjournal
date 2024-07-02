@@ -4,7 +4,9 @@ import validate from 'uuid-validate'
 
 export const confirmArticleRoute : FastifyPluginAsync = async (fastify, option) => {
 	fastify.post<{
-		Params: ParamsConfirmArticleAPI,
+		Params: {
+			articleId : string
+		},
 		Body: BodyConfirmArticleAPI
 	}>('/:articleId/get', async (req, res) => {
 
@@ -39,7 +41,9 @@ export const confirmArticleRoute : FastifyPluginAsync = async (fastify, option) 
 	})
 
 	fastify.post<{
-		Params: ParamsConfirmArticleAPI
+		Params: {
+			articleId : string
+		}
 		Body: BodyConfirmArticleAPI
 	}>('/:articleId', async (req, res) => {
 
