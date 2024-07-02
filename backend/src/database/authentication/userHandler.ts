@@ -5,7 +5,7 @@ export const authenticateUser = async (email: string, password: string) => {
 	const userPossible = await sql<UserProfileSchema[]>`SELECT * FROM users WHERE email = ${email}`
 
 	if(userPossible.length == 0){
-		return null;
+		return undefined;
 	}
 
 	const hashedPassword = userPossible[0].password
@@ -13,9 +13,13 @@ export const authenticateUser = async (email: string, password: string) => {
 	const match = await brcypt.compare(password, hashedPassword)
 
 	if(match ||	password === hashedPassword) {
-		return userPossible[0].id;
+		return {
+			id: userPossible[0].id,
+			name: userPossible[0].name,
+      email: userPossible[0].email,
+		}
 	}
-	return null
+	return undefined
 }
 
 export const isEmailExisted = async (email: string) => {

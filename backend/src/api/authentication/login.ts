@@ -28,9 +28,9 @@ export const loginRoute : FastifyPluginAsync = async (fastify, option) => {
 			return
 		}
 
-		const userId = await authenticateUser(email, password);
+		const userProfile = await authenticateUser(email, password);
 
-		if(!userId){
+		if(!userProfile){
 			res.statusCode = 401;
 			res.send({message: "Incorrect username or password"})
 			return
@@ -38,14 +38,14 @@ export const loginRoute : FastifyPluginAsync = async (fastify, option) => {
 
 		await lucia.deleteExpiredSessions()
 
-		const session = await lucia.createSession(userId,{})
+		const session = await lucia.createSession(userProfile.id,{})
 		const sessionCookie = lucia.createSessionCookie(session.id)
 
 		res.setCookie(sessionCookie.name, sessionCookie.value)
 
 
 		// Add userId to cookie
-		const token_user_info = jwt.sign({userId}, process.env.JWT_SECRET_KEY as string, {
+		const token_user_info = jwt.sign(userProfile, process.env.JWT_SECRET_KEY as string, {
 			expiresIn: '1d'
 		})
 

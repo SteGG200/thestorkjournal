@@ -20,7 +20,7 @@ export const isAuthenticated = async (fastify: FastifyInstance, req: FastifyRequ
 
 	const user_info = jwt.verify(token_user_info, process.env.JWT_SECRET_KEY as string)
 
-	if((user_info as JwtPayload).userId == user.id){
+	if((user_info as JwtPayload).id == user.id){
 		return user
 	}
 

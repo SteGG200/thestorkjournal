@@ -3,6 +3,7 @@ import cookiePlugin from "@fastify/cookie"
 
 import { authenticationRoute } from "./api/authentication/authentication";
 import lucia from "./api/authentication/setup_auth";
+import { articleRoute } from "./api/article/article";
 
 const server = fastify({
   logger: true,
@@ -30,6 +31,9 @@ const pluginsRegister = () => {
     prefix: '/auth'
   })
 
+  server.register(articleRoute, {
+    prefix: '/article'
+  })
 }
 
 const startServer = () =>{
