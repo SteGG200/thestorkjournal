@@ -1,4 +1,4 @@
-import fastify, { FastifyPluginAsync } from "fastify";
+import { FastifyPluginAsync } from "fastify";
 import { createNewUser, isEmailExisted } from "../../database/authentication/userHandler";
 import transporter from "../../utils/emailHandler";
 
