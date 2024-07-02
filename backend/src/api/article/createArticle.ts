@@ -23,17 +23,23 @@ export const createArticleRoute : FastifyPluginAsync = async (fastify, option) =
 
 		const article = req.body
 
+		if(!article.title || !article.thumbnail || !article.category || !article.content){
+			res.statusCode = 400
+      res.send({message: "Invalid article information"})
+      return
+		}
+
 		const authorInfo = getUserInfoCookie(req.cookies[fastify.config.cookieName.userInfo] as string)
 
-		const confirm_key = crypto.randomBytes(32).toString('base64')
+		const confirmKey = crypto.randomBytes(32).toString('base64')
 
-		const articleId = await createNewArticle(authorInfo.id, article, confirm_key)
+		const articleId = await createNewArticle(authorInfo.id, article, confirmKey)
 
 		transporter.sendMail({
 			from: process.env.EMAIL_ADMIN,
 			to: process.env.EMAIL_ADMIN,
       subject: "New Article Created",
-      text: `A new article has been created by ${authorInfo.name} with email ${authorInfo.email}.\n\nThe ID of the article is ${articleId}. Using the key below to confirm the article as soon as you can.\n\nThis is the key: ${confirm_key}\n\nThank you!`
+      text: `A new article has been created by ${authorInfo.name} with email ${authorInfo.email}.\n\nThe ID of the article is ${articleId}. Using the key below to confirm the article as soon as you can.\n\nThis is the key: ${confirmKey}\n\nThank you!`
 		})
 
 		res.statusCode = 200

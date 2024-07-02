@@ -11,6 +11,9 @@ dependencies:
   '@lucia-auth/adapter-postgresql':
     specifier: ^3.1.2
     version: 3.1.2(lucia@3.2.0)(postgres@3.4.4)
+  '@types/uuid-validate':
+    specifier: ^0.0.3
+    version: 0.0.3
   bcrypt:
     specifier: ^5.1.1
     version: 5.1.1
@@ -38,6 +41,9 @@ dependencies:
   postgres:
     specifier: ^3.4.4
     version: 3.4.4
+  uuid-validate:
+    specifier: ^0.0.3
+    version: 0.0.3
 
 devDependencies:
   '@types/bcrypt':
@@ -690,6 +696,10 @@ packages:
     dependencies:
       '@types/node': 20.14.9
     dev: true
+
+  /@types/uuid-validate@0.0.3:
+    resolution: {integrity: sha512-htkuv1+RZjjHkSrXets3a6kqDeqgYutBtdER3U6I1mWV58AIsDFWoUuN0cB6DMOWiqTHK0XqH3pXeqIVfJIrog==}
+    dev: false
 
   /abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -1713,6 +1723,10 @@ packages:
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+    dev: false
+
+  /uuid-validate@0.0.3:
+    resolution: {integrity: sha512-Fykw5U4eZESbq739BeLvEBFRuJODfrlmjx5eJux7W817LjRaq4b7/i4t2zxQmhcX+fAj4nMfRdTzO4tmwLKn0w==}
     dev: false
 
   /webidl-conversions@3.0.1:

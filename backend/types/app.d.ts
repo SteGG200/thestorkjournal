@@ -12,6 +12,17 @@ declare global{
     name: string,
   }
 
+  interface ParamsConfirmArticleAPI{
+    articleId: string
+  }
+
+  interface BodyConfirmArticleAPI{
+    confirmKey: string,
+    article: ArticleInfo,
+    authorId: number,
+    confirmStatus: boolean
+  }
+
   interface ArticleInfo{
     title: string,
     thumbnail: string,
@@ -25,6 +36,10 @@ declare global{
     name: string,
     email: string,
     password: string,
+  }
+
+  interface ArticleInfoSchema extends ArticleInfo{
+    userId: number,
   }
 }
 

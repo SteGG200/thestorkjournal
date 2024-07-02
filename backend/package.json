@@ -15,6 +15,7 @@
   "dependencies": {
     "@fastify/cookie": "^9.3.1",
     "@lucia-auth/adapter-postgresql": "^3.1.2",
+    "@types/uuid-validate": "^0.0.3",
     "bcrypt": "^5.1.1",
     "crypto-js": "^4.2.0",
     "fastify": "^4.28.0",
@@ -23,7 +24,8 @@
     "lucia": "^3.2.0",
     "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4",
-    "postgres": "^3.4.4"
+    "postgres": "^3.4.4",
+    "uuid-validate": "^0.0.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
