@@ -1,9 +1,9 @@
 import { FastifyPluginAsync } from "fastify";
-import { getArticles } from "../../database/articleHandler";
+import { getListArticles } from "../../database/articleHandler";
 
 export const getArticleRoute : FastifyPluginAsync = async (fastify, option) => {
 	fastify.get('/', async (req, res) => {
-		const articlesInfo = await getArticles()
+		const articlesInfo = await getListArticles()
 
 		res.statusCode = 200
 		res.send({articles : articlesInfo})
@@ -21,7 +21,7 @@ export const getArticleRoute : FastifyPluginAsync = async (fastify, option) => {
       return
 		}
 
-		const articlesInfo = await getArticles(category)
+		const articlesInfo = await getListArticles(category)
 
 		res.statusCode = 200
 		res.send({articles : articlesInfo})

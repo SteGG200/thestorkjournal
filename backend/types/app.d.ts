@@ -34,8 +34,12 @@ declare global{
     password: string,
   }
 
-  interface ArticleInfoSchema extends ArticleInfo{
-    userId: number,
+  interface UnconfirmedArticleInfoSchema extends ArticleInfo{
+    user_id: number,
+  }
+
+  interface ArticleInfoSchema extends UnconfirmedArticleInfoSchema{
+    date_publish: string
   }
 }
 

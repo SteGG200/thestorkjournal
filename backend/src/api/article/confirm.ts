@@ -32,7 +32,7 @@ export const confirmArticleRoute : FastifyPluginAsync = async (fastify, option) 
     }
 
 		res.statusCode = 200
-		res.send({authorId: articleInfo[0].userId, article: {
+		res.send({authorId: articleInfo[0].user_id, article: {
 			title: articleInfo[0].title,
       thumbnail: articleInfo[0].thumbnail,
       content: articleInfo[0].content,
@@ -59,7 +59,7 @@ export const confirmArticleRoute : FastifyPluginAsync = async (fastify, option) 
 
 		if(!article.title || !article.thumbnail || !article.content || !article.category || !confirmKey || confirmStatus === undefined) {
 			res.statusCode = 400
-      res.send({message: "Invalid article or confirm key"})
+      res.send({message: "Invalid input"})
       return
 		}
 

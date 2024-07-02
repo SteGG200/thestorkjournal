@@ -9,7 +9,7 @@ export const createNewArticle = async (userId : number, newArticle:  ArticleInfo
 }
 
 export const getUnconfirmedArticle = async (articleId: string, confirmKey: string) => {
-	return await sql<ArticleInfoSchema[]>`SELECT user_id, title, thumbnail, category, content FROM unconfirmed_articles
+	return await sql<UnconfirmedArticleInfoSchema[]>`SELECT user_id, title, thumbnail, category, content FROM unconfirmed_articles
 	WHERE id = ${articleId} AND key = ${confirmKey}`
 }
 
@@ -31,10 +31,14 @@ export const confirmArticle = async (article: ArticleInfo, authorId: number) => 
 
 }
 
-export const getArticles = async (category: string = "") => {
+export const getListArticles = async (category: string = "") => {
 	if(category != ""){
-		return await sql`SELECT * FROM articles WHERE category = ${category}`
+		return await sql<ArticleInfoSchema[]>`SELECT * FROM articles WHERE category = ${category}`
 	}else{
-		return await sql`SELECT * FROM articles`
+		return await sql<ArticleInfoSchema[]>`SELECT * FROM articles`
 	}
+}
+
+export const getArticle = async (articleId: string) => {
+	return await sql<ArticleInfoSchema[]>`SELECT date_publish, user_id, title, thumbnail, category, content FROM articles WHERE id = ${articleId}`
 }

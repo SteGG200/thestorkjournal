@@ -33,3 +33,7 @@ export const createNewUser = async (name: string, email: string, password: strin
 
 	await sql`INSERT INTO users (name, email, password) VALUES (${name}, ${email}, ${hashedPassword})`
 }
+
+export const getUser = async (userId: number) => {
+	return (await sql<User[]>`SELECT id, name, email FROM users WHERE id = ${userId}`)[0]
+}
