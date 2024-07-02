@@ -16,6 +16,7 @@
     "@fastify/cookie": "^9.3.1",
     "@lucia-auth/adapter-postgresql": "^3.1.2",
     "bcrypt": "^5.1.1",
+    "crypto-js": "^4.2.0",
     "fastify": "^4.28.0",
     "fastify-plugin": "^4.5.1",
     "jsonwebtoken": "^9.0.2",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/crypto-js": "^4.2.2",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.14.9",
     "@types/nodemailer": "^6.4.15",
