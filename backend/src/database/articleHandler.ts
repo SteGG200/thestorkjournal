@@ -33,12 +33,21 @@ export const confirmArticle = async (article: ArticleInfo, authorId: number) => 
 
 export const getListArticles = async (category: string = "") => {
 	if(category != ""){
-		return await sql<ArticleInfoSchema[]>`SELECT * FROM articles WHERE category = ${category}`
+		return await sql<ArticleInfoSchema[]>`SELECT date_publish, title, thumbnail, category, content FROM articles 
+		WHERE category = ${category}
+		ORDER BY date_publish DESC`
 	}else{
-		return await sql<ArticleInfoSchema[]>`SELECT * FROM articles`
+		return await sql<ArticleInfoSchema[]>`SELECT date_publish, title, thumbnail, category, content FROM articles
+		ORDER BY date_publish DESC`
 	}
 }
 
-export const getArticle = async (articleId: string) => {
+export const getArticleById = async (articleId: string) => {
 	return await sql<ArticleInfoSchema[]>`SELECT date_publish, user_id, title, thumbnail, category, content FROM articles WHERE id = ${articleId}`
+}
+
+export const getArticleBySearch = async (query: string) => {
+	const tempQuery = "%" + query + "%"
+	return await sql<ArticleInfoSchema[]>`SELECT date_publish, title, thumbnail, category, content FROM articles
+	WHERE title LIKE ${tempQuery} OR content LIKE ${tempQuery}`
 }

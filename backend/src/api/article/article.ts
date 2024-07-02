@@ -3,6 +3,7 @@ import { createArticleRoute } from "./createArticle";
 import { confirmArticleRoute } from "./confirm";
 import { getArticleRoute } from "./getArticles";
 import { showArticleRoute } from "./show";
+import { searchArticlesRoute } from "./search";
 
 export const articleRoute : FastifyPluginCallback = (fastify, option, done) => {
 	fastify.get('/', (req, res) => {
@@ -23,6 +24,10 @@ export const articleRoute : FastifyPluginCallback = (fastify, option, done) => {
 
 	fastify.register(showArticleRoute, {
 		prefix: '/show'
+	})
+
+	fastify.register(searchArticlesRoute, {
+		prefix: '/search'
 	})
 
 	done()

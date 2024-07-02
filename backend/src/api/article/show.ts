@@ -1,7 +1,7 @@
 import { FastifyPluginAsync } from "fastify";
 import validate from "uuid-validate";
-import { getArticle } from "../../database/articleHandler";
-import { getUser } from "../../database/userHandler";
+import { getArticleById } from "../../database/articleHandler";
+import { getUserById } from "../../database/userHandler";
 
 export const showArticleRoute : FastifyPluginAsync = async (fastify, option) => {
 	fastify.get<{
@@ -17,7 +17,7 @@ export const showArticleRoute : FastifyPluginAsync = async (fastify, option) => 
       return
 		}
 
-		const articleInfo = await getArticle(articleId)
+		const articleInfo = await getArticleById(articleId)
 
 		if(articleInfo.length === 0){
 			res.statusCode = 404
@@ -25,7 +25,7 @@ export const showArticleRoute : FastifyPluginAsync = async (fastify, option) => 
       return
 		}
 
-		const authorInfo = await getUser(articleInfo[0].user_id)
+		const authorInfo = await getUserById(articleInfo[0].user_id)
 
 		res.statusCode = 200
 		res.send({article: {
