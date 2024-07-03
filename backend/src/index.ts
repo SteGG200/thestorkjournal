@@ -1,5 +1,7 @@
 import fastify from "fastify";
 import cookiePlugin from "@fastify/cookie"
+import middlewarePlugin from '@fastify/middie'
+import cors from 'cors'
 
 import { authenticationRoute } from "./api/authentication/authentication";
 import lucia from "./api/authentication/setup_auth";
@@ -22,7 +24,7 @@ server.get('/', (req, res) => {
   res.send("This is a test server");
 })
 
-const pluginsRegister = () => {
+const pluginsRegister = async () => {
   server.register(cookiePlugin,{
     secret: process.env.COOKIE_SECRET,
     parseOptions: {
@@ -30,6 +32,13 @@ const pluginsRegister = () => {
       path: '/'
     }
   })
+
+  await server.register(middlewarePlugin)
+  server.use(cors({
+    origin: [process.env.CLIENT_URL ?? "*"],
+    credentials: true,
+    methods: ['GET', 'POST']
+  }))
 
   server.register(authenticationRoute, {
     prefix: '/auth'
@@ -40,9 +49,9 @@ const pluginsRegister = () => {
   })
 }
 
-const startServer = () =>{
+const startServer = async () =>{
   try{
-    pluginsRegister();
+    await pluginsRegister();
     server.listen({port: server.config.port}, (err, address) => {
       server.log.info(`Server listening at ${address}`)
     });
