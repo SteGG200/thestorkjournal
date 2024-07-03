@@ -7,8 +7,7 @@
     "dev": "tsx --tsconfig ./tsconfig.json --env-file=.env src/server.ts",
     "watch": "tsx watch --tsconfig ./tsconfig.json --env-file=.env src/server.ts",
     "build": "rm ./dist -rf && tsc",
-    "preview": "node --env-file=./.env dist/server.js",
-    "start": "node dist/server.js"
+    "start": "node --env-file=./.env dist/server.js"
   },
   "keywords": [],
   "author": "SteGG200",
