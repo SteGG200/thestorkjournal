@@ -16,12 +16,12 @@ export const uploadImageRoute : FastifyPluginAsync = async (fastify, option) => 
 
 		const imageName = `${image.filename.split('.')[0]}_${crypto.randomBytes(24).toString('hex')}.${image.mimetype.split('/')[1]}`
 
-		// const blob = await put(imageName, image, {
-		// 	contentType: contentType,
-		// 	access: 'public'
-		// })
+		const blob = await put(imageName, image.file, {
+			contentType: image.mimetype,
+			access: 'public'
+		})
 
 		res.statusCode = 200
-		res.send({result: 'OK', imageName})
+		res.send({result: blob, imageName})
 	})
 }
