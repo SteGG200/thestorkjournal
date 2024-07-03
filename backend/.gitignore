@@ -4,4 +4,4 @@
 
 .env
 
-test.http
+test*

@@ -1,11 +1,14 @@
 import fastify from "fastify";
 import cookiePlugin from "@fastify/cookie"
+import multipartPlugin from "@fastify/multipart"
 import middlewarePlugin from '@fastify/middie'
 import cors from 'cors'
+import xXssProtection from 'x-xss-protection'
 
 import { authenticationRoute } from "./api/authentication/authentication";
 import lucia from "./api/authentication/setup_auth";
 import { articleRoute } from "./api/article/article";
+import { uploadImageRoute } from "./uploadImage";
 
 const server = fastify({
   logger: true,
@@ -33,12 +36,17 @@ const pluginsRegister = async () => {
     }
   })
 
+  server.register(multipartPlugin)
+
   await server.register(middlewarePlugin)
+
   server.use(cors({
-    origin: [process.env.CLIENT_URL ?? "*"],
+    origin: process.env.CLIENT_URL ?? "*",
     credentials: true,
     methods: ['GET', 'POST']
   }))
+
+  server.use(xXssProtection())
 
   server.register(authenticationRoute, {
     prefix: '/auth'
@@ -47,12 +55,16 @@ const pluginsRegister = async () => {
   server.register(articleRoute, {
     prefix: '/article'
   })
+
+  server.register(uploadImageRoute, {
+    prefix: '/upload'
+  })
 }
 
 const startServer = async () =>{
   try{
     await pluginsRegister();
-    server.listen({port: server.config.port}, (err, address) => {
+    server.listen({port: server.config.port, host: '0.0.0.0'}, (err, address) => {
       server.log.info(`Server listening at ${address}`)
     });
   }catch(err){

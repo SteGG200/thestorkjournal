@@ -4,8 +4,6 @@ import { getUserInfoCookie } from "./cookieHandler";
 
 export const isAuthenticated = async (fastify: FastifyInstance, req: FastifyRequest) => {
 	const cookieHeader = req.headers.cookie
-	console.log(req.url)
-	console.log(cookieHeader)
 	const sessionId = lucia.readSessionCookie(cookieHeader?? "")
 
 	if(!sessionId) return false;
