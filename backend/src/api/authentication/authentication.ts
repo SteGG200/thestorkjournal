@@ -1,9 +1,9 @@
-import { FastifyPluginAsync, FastifyPluginCallback} from "fastify";
-import { loginRoute } from "./login";
-import { logoutRoute } from "./logout";
-import { isAuthenticated } from "../../utils/authentication";
-import { signupRoute } from "./signup";
-import { getUserInfoCookie } from "../../utils/cookieHandler";
+import { FastifyPluginAsync } from "fastify";
+import { loginRoute } from "./login.js";
+import { logoutRoute } from "./logout.js";
+import { isAuthenticated } from "../../utils/authentication.js";
+import { signupRoute } from "./signup.js";
+import { getUserInfoCookie } from "../../utils/cookieHandler.js";
 
 export const authenticationRoute : FastifyPluginAsync = async (fastify, option) => {
 	fastify.get('/', async (req, res) => {

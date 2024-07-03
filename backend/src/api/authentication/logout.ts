@@ -1,7 +1,7 @@
 import { FastifyPluginAsync } from "fastify";
-import lucia from "./setup_auth";
-import { isAuthenticated } from "../../utils/authentication";
-import { getUserInfoCookie } from "../../utils/cookieHandler";
+import lucia from "./setup_auth.js";
+import { isAuthenticated } from "../../utils/authentication.js";
+import { getUserInfoCookie } from "../../utils/cookieHandler.js";
 
 export const logoutRoute: FastifyPluginAsync = async (fastify, option) => {
 	fastify.get('/', (req, res) => {

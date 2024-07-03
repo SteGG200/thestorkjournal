@@ -1,9 +1,9 @@
 import { FastifyPluginCallback } from "fastify";
-import { createArticleRoute } from "./createArticle";
-import { confirmArticleRoute } from "./confirm";
-import { getArticleRoute } from "./getArticles";
-import { showArticleRoute } from "./show";
-import { searchArticlesRoute } from "./search";
+import { createArticleRoute } from "./createArticle.js";
+import { confirmArticleRoute } from "./confirm.js";
+import { getArticleRoute } from "./getArticles.js";
+import { showArticleRoute } from "./show.js";
+import { searchArticlesRoute } from "./search.js";
 
 export const articleRoute : FastifyPluginCallback = (fastify, option, done) => {
 	fastify.get('/', (req, res) => {

@@ -1,5 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
-import { getListArticles } from "../../database/articleHandler";
+import { getListArticles } from "../../database/articleHandler.js";
 
 export const getArticleRoute : FastifyPluginAsync = async (fastify, option) => {
 	fastify.get('/', async (req, res) => {

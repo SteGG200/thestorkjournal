@@ -1,5 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
-import { getArticleBySearch } from "../../database/articleHandler";
+import { getArticleBySearch } from "../../database/articleHandler.js";
 
 export const searchArticlesRoute : FastifyPluginAsync = async (fastify, option) => {
 	fastify.post<{

@@ -1,5 +1,5 @@
 import { Lucia, TimeSpan } from 'lucia';
-import sql from '../../database/db';
+import sql from '../../database/db.js';
 import { PostgresJsAdapter } from '@lucia-auth/adapter-postgresql'
 
 const adapter = new PostgresJsAdapter(sql, {

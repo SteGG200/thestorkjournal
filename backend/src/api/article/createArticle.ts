@@ -1,8 +1,8 @@
 import { FastifyPluginAsync } from "fastify";
-import { getUserInfoCookie } from "../../utils/cookieHandler";
-import { isAuthenticated } from "../../utils/authentication";
-import { createNewArticle } from "../../database/articleHandler";
-import transporter from "../../utils/emailHandler";
+import { getUserInfoCookie } from "../../utils/cookieHandler.js";
+import { isAuthenticated } from "../../utils/authentication.js";
+import { createNewArticle } from "../../database/articleHandler.js";
+import transporter from "../../utils/emailHandler.js";
 import crypto from "crypto"
 
 export const createArticleRoute : FastifyPluginAsync = async (fastify, option) => {

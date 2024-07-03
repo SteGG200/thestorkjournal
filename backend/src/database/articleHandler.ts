@@ -1,4 +1,4 @@
-import sql from './db'
+import sql from './db.js'
 
 export const createNewArticle = async (userId : number, newArticle:  ArticleInfo, key: string) => {
 	const article = await sql<{id: string}[]>`INSERT INTO unconfirmed_articles (user_id, title, thumbnail, category, content, key) 

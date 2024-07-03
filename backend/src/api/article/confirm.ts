@@ -1,5 +1,5 @@
 import { FastifyPluginAsync } from "fastify";
-import { confirmArticle, getUnconfirmedArticle, removeUnconfirmedArticle } from "../../database/articleHandler";
+import { confirmArticle, getUnconfirmedArticle, removeUnconfirmedArticle } from "../../database/articleHandler.js";
 import validate from 'uuid-validate'
 
 export const confirmArticleRoute : FastifyPluginAsync = async (fastify, option) => {

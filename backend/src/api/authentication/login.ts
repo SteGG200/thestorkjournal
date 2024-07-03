@@ -1,8 +1,8 @@
 import { FastifyPluginAsync } from "fastify";
-import { authenticateUser } from "../../database/userHandler";
-import lucia from "./setup_auth";
-import { isAuthenticated } from "../../utils/authentication";
-import { createUserInfoCookie } from "../../utils/cookieHandler";
+import { authenticateUser } from "../../database/userHandler.js";
+import lucia from "./setup_auth.js";
+import { isAuthenticated } from "../../utils/authentication.js";
+import { createUserInfoCookie } from "../../utils/cookieHandler.js";
 
 export const loginRoute : FastifyPluginAsync = async (fastify, option) => {
 	fastify.get('/', (req, res) => {

@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyRequest } from "fastify";
-import lucia from "../api/authentication/setup_auth";
-import { getUserInfoCookie } from "./cookieHandler";
+import lucia from "../api/authentication/setup_auth.js";
+import { getUserInfoCookie } from "./cookieHandler.js";
 
 export const isAuthenticated = async (fastify: FastifyInstance, req: FastifyRequest) => {
 	const cookieHeader = req.headers.cookie

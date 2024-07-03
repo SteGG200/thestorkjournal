@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from "fastify";
-import { createNewUser, isEmailExisted } from "../../database/userHandler";
-import transporter from "../../utils/emailHandler";
+import { createNewUser, isEmailExisted } from "../../database/userHandler.js";
+import transporter from "../../utils/emailHandler.js";
 
 export const signupRoute: FastifyPluginAsync = async (fastify, option) => {
 	fastify.get('/', (req, res) => {

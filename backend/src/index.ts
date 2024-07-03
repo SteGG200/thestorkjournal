@@ -5,17 +5,17 @@ import middlewarePlugin from '@fastify/middie'
 import cors from 'cors'
 import xXssProtection from 'x-xss-protection'
 
-import { authenticationRoute } from "./api/authentication/authentication";
-import lucia from "./api/authentication/setup_auth";
-import { articleRoute } from "./api/article/article";
-import { uploadImageRoute } from "./uploadImage";
+import { authenticationRoute } from "./api/authentication/authentication.js";
+import lucia from "./api/authentication/setup_auth.js";
+import { articleRoute } from "./api/article/article.js";
+import { uploadImageRoute } from "./uploadImage.js";
 
 const server = fastify({
   logger: true,
 })
 
 server.decorate('config',{
-  port: Number(process.env.PORT) ?? 3000,
+  port: Number(process.env.PORT ?? "3000"),
   cookieName: {
     sessionId: lucia.sessionCookieName,
     userInfo: "iuser"
