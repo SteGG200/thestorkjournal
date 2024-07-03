@@ -12,7 +12,7 @@ export const uploadImageRoute : FastifyPluginAsync = async (fastify, option) => 
 			return;
 		}
 
-		console.log(image)
+		// console.log(image)
 
 		const imageName = `${image.filename.split('.')[0]}_${crypto.randomBytes(24).toString('hex')}.${image.mimetype.split('/')[1]}`
 

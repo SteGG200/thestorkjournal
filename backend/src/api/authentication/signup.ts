@@ -33,7 +33,7 @@ export const signupRoute: FastifyPluginAsync = async (fastify, option) => {
       text: `Hello ${name}, welcome to our website.\n\nAccess this link to create your own article.\n\n${process.env.CLIENT_URL}`,
 		})
 
-		console.log(info.response)
+		// console.log(info.response)
 
 		await createNewUser(name, email, password)
 
