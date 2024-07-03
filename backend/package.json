@@ -7,7 +7,8 @@
     "dev": "tsx --tsconfig ./tsconfig.json --env-file=.env src/server.ts",
     "watch": "tsx watch --tsconfig ./tsconfig.json --env-file=.env src/server.ts",
     "build": "rm ./dist -rf && tsc",
-    "start": "node --env-file=./.env dist/server.js"
+    "preview": "node --env-file=./.env dist/server.js",
+    "start": "node dist/server.js"
   },
   "keywords": [],
   "author": "SteGG200",
@@ -32,6 +33,7 @@
     "x-xss-protection": "^2.0.0"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.7",
     "@neondatabase/serverless": "^0.9.4",
     "@types/bcrypt": "^5.0.2",
     "@types/connect": "^3.4.38",
