@@ -1,6 +1,8 @@
 import { FastifyPluginAsync } from "fastify";
 import { confirmArticle, getUnconfirmedArticle, removeUnconfirmedArticle } from "../../database/articleHandler.js";
 import validate from 'uuid-validate'
+import { getUserById } from "../../database/userHandler.js";
+import transporter from "../../utils/emailHandler.js";
 
 export const confirmArticleRoute : FastifyPluginAsync = async (fastify, option) => {
 	fastify.post<{
@@ -70,6 +72,16 @@ export const confirmArticleRoute : FastifyPluginAsync = async (fastify, option) 
 			res.send({message: "Forbidden!"})
 			return
 		}
+
+		const authorInfo = await getUserById(authorId)
+
+		transporter.sendMail({
+			from: process.env.EMAIL_ADMIN,
+			to: authorInfo.email,
+			subject: `Your article was ${confirmStatus ? "confirmed successfully" : "rejected"}`,
+      text: `${confirmStatus ? `Your article was successfully confirmed by admin and published on our website.\n\nYou can see it by enter following link:\n\n${process.env.CLIENT_URL}` : ""}`
+		})
+
 		if(confirmStatus){
 			await confirmArticle(article, authorId)
 			res.statusCode = 200
