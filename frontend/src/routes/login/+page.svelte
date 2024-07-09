@@ -18,11 +18,10 @@
             body: JSON.stringify({
                 email: email,
                 password: password,
-            })
-
+            }),
+            credentials: 'include'
         });
         const status_code = response.status;
-        console.log(status_code);
         if (status_code==200){
             console.log("ok");
             logged_in.set(true);
