@@ -6,6 +6,9 @@
     import { goto } from "$app/navigation";
     let email = $state("");
     let password = $state("");
+
+    
+
     async function fetch_login_data(){
         const response = await fetch(`${PUBLIC_SERVER_URL}/auth/login`,{
             method: "POST",
