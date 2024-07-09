@@ -22,6 +22,11 @@ export const uploadImageRoute: FastifyPluginAsync = async (fastify, option) => {
 		});
 
 		res.statusCode = 200;
-		res.send({ result: blob, imageName });
+		res.send({
+			success: 1,
+			file: {
+				url: blob.url
+			}
+		});
 	});
 };
