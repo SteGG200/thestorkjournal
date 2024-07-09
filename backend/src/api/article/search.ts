@@ -1,23 +1,23 @@
-import { FastifyPluginAsync } from "fastify";
-import { getArticleBySearch } from "../../database/articleHandler.js";
+import { FastifyPluginAsync } from 'fastify';
+import { getArticleBySearch } from '../../database/articleHandler.js';
 
-export const searchArticlesRoute : FastifyPluginAsync = async (fastify, option) => {
+export const searchArticlesRoute: FastifyPluginAsync = async (fastify, option) => {
 	fastify.post<{
 		Body: {
-			query: string
-		}
+			query: string;
+		};
 	}>('/', async (req, res) => {
 		const query = req.body.query;
 
 		if (!query) {
-			res.statusCode = 400
-			res.send({message: "Invalid query"})
-			return
+			res.statusCode = 400;
+			res.send({ message: 'Invalid query' });
+			return;
 		}
 
-		const articlesInfo = await getArticleBySearch(query)
+		const articlesInfo = await getArticleBySearch(query);
 
-		res.statusCode = 200
-		res.send({articles: articlesInfo})
-	})
-}
+		res.statusCode = 200;
+		res.send({ articles: articlesInfo });
+	});
+};
