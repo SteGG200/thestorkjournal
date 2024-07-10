@@ -1,41 +1,55 @@
 <script>
+	import { PUBLIC_SERVER_URL } from "$env/static/public";
+	import Page from "../routes/+page.svelte";
 	import Navbar from "./navbar.svelte";
+    import Popup from "./popup.svelte";
 
-    class SimpleImage {
-        static get toolbox() {
-            return {
-            title: 'Image',
-            icon: '<svg width="17" height="15" viewBox="0 0 336 276" xmlns="http://www.w3.org/2000/svg"><path d="M291 150V79c0-19-15-34-34-34H79c-19 0-34 15-34 34v42l67-44 81 72 56-29 42 30zm0 52l-43-30-56 30-81-67-66 39v23c0 19 15 34 34 34h178c17 0 31-13 34-29zM79 0h178c44 0 79 35 79 79v118c0 44-35 79-79 79H79c-44 0-79-35-79-79V79C0 35 35 0 79 0z"/></svg>'
-            };
-        }
-
-        render(){
-            return document.createElement('input');
-        }
-
-        /*save(blockContent){
-            return {
-            url: blockContent.value
-            }
-        }*/
-    }
+    const message=false;
 
     $effect(() => {
         const loadEditor = async () => {
             const ImageTool = (await import("@editorjs/image")).default;
-
             const editor = new (await import("@editorjs/editorjs")).default({
                 autofocus: true,
+                placeholder: 'Article Content',
                 tools: {
                     image:{
+                        //@ts-ignore
                         class: ImageTool,
+                        config: {
+                            endpoints: {
+                                byFile: `${PUBLIC_SERVER_URL}/upload`,
+                                byUrl: `${PUBLIC_SERVER_URL}`,
+                            }
+                        }
                     }
                 }
             });
         }
         loadEditor();
     });
-</script>
-<Navbar/>
 
-<div id="editorjs" class="mt-20"></div> 
+    function check_submit(){
+
+    }
+
+    function submit(){
+
+    }
+
+
+</script>
+{#if message}
+    <Popup/>
+{/if}
+<Navbar/>
+<div class="flex pb-10 pt-24">
+    <input class="font-bold text-3xl w-3/4 text-center outline-none mx-auto" placeholder="Article title">
+</div>
+<div id="editorjs" class="text-xl" placeholder="Article content"></div> 
+<div class="w-full flex items-center justify-center">
+    <button type="button" onclick={submit}
+        class="w-1/6 text-gray-100 bg-red-700 hover:bg-primary-700
+         focus:ring-4 focus:outline-none focus:ring-red-800 focus:ring-primary-300 
+         font-medium rounded-lg text-base px-5 py-2.5 text-center ">Submit</button>
+</div>

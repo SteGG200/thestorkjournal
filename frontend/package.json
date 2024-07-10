@@ -35,6 +35,8 @@
 	"type": "module",
 	"dependencies": {
 		"@editorjs/editorjs": "^2.29.1",
-		"@editorjs/image": "^2.9.1"
+		"@editorjs/header": "^2.8.5",
+		"@editorjs/image": "^2.9.1",
+		"@editorjs/link": "^2.6.2"
 	}
 }

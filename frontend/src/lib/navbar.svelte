@@ -1,11 +1,12 @@
 <script>
     import "../app.css";
+    import { goto } from "$app/navigation";
     let name = 'world';
+
     const tags= ["News", "Politics", "Economies", "Science","Entertainment", "Sport","Art gallery", "About"];
-    
     function to_login(){
       console.log("lmao");
-      window.location.href = './login';
+      goto("./login");
     }
   
   </script>
