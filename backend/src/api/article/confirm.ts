@@ -4,7 +4,7 @@ import {
 	getUnconfirmedArticle,
 	removeUnconfirmedArticle
 } from '../../database/articleHandler.js';
-import validate from 'uuid-validate';
+import { uuidValidateV4 } from '../../utils/articleIdHandler.js';
 import { getUserById } from '../../database/userHandler.js';
 import transporter from '../../utils/emailHandler.js';
 
@@ -16,7 +16,7 @@ export const confirmArticleRoute: FastifyPluginAsync = async (fastify, option) =
 		Body: BodyConfirmArticleAPI;
 	}>('/:articleId/get', async (req, res) => {
 		const articleId = req.params.articleId;
-		if (!validate(articleId)) {
+		if (!uuidValidateV4(articleId)) {
 			res.statusCode = 400;
 			res.send({ message: 'Invalid article ID' });
 			return;
@@ -57,7 +57,7 @@ export const confirmArticleRoute: FastifyPluginAsync = async (fastify, option) =
 	}>('/:articleId', async (req, res) => {
 		const articleId = req.params.articleId;
 
-		if (!validate(articleId)) {
+		if (!uuidValidateV4(articleId)) {
 			res.statusCode = 400;
 			res.send({ message: 'Invalid article ID' });
 			return;
@@ -81,7 +81,6 @@ export const confirmArticleRoute: FastifyPluginAsync = async (fastify, option) =
 		const checkRemoveUnconfirmedArticle = await removeUnconfirmedArticle(
 			articleId,
 			confirmKey,
-			article,
 			authorId
 		);
 
@@ -93,19 +92,28 @@ export const confirmArticleRoute: FastifyPluginAsync = async (fastify, option) =
 
 		const authorInfo = await getUserById(authorId);
 
-		transporter.sendMail({
-			from: process.env.EMAIL_ADMIN,
-			to: authorInfo.email,
-			subject: `Your article was ${confirmStatus ? 'confirmed successfully' : 'rejected'}`,
-			text: `${confirmStatus ? `Your article was successfully confirmed by admin and published on our website.\n\nYou can see it by enter following link:\n\n${process.env.CLIENT_URL}` : ''}`
-		});
-
+		
 		if (confirmStatus) {
-			await confirmArticle(article, authorId);
+			const { id, datePublish } = (await confirmArticle(article, authorId))[0];
+
+			transporter.sendMail({
+				from: process.env.EMAIL_ADMIN,
+				to: authorInfo.email,
+				subject: 'Your article was confirmed successfully',
+				text: `Your article was successfully confirmed by admin and published on our website at ${datePublish}.\n\nYou can see it by enter following link:\n\n${process.env.CLIENT_URL}/${id}`
+			});
+
 			res.statusCode = 200;
 			res.send({ message: 'Article is confirmed successfully' });
 			return;
 		}
+		
+		transporter.sendMail({
+			from: process.env.EMAIL_ADMIN,
+			to: authorInfo.email,
+			subject: 'Your article was rejected',
+			text: ''
+		});
 
 		res.statusCode = 200;
 		res.send({ message: 'Article is rejected successfully' });
