@@ -11,7 +11,8 @@ import { articleRoute } from './api/article/article.js';
 import { uploadImageRoute } from './uploadImage.js';
 
 const server = fastify({
-	logger: true
+	logger: true,
+	bodyLimit: 4194304
 });
 
 server.decorate('config', {
