@@ -23,6 +23,9 @@
 	let message = $state();
 	let category = $state();
     let editor = $state();
+    let onimage = $state(true);
+    let image,thumbnail_src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg";
+    
 
 	$effect(() => {
 		const loadEditor = async () => {
@@ -32,7 +35,6 @@
 				placeholder: 'Article Content',
 				tools: {
 					image: {
-						//@ts-ignore
 						class: ImageTool,
 						config: {
 							endpoints: {
@@ -48,6 +50,32 @@
 		};
 		loadEditor();
 	});
+
+    async function send_thumbnail(e){
+        const file = e.target.files[0]
+        const formData = new FormData()
+        formData.append("thumbnail", file)
+        const response = await fetch(`${PUBLIC_SERVER_URL}/upload`,{
+            method: 'POST',
+            body: formData
+        })
+
+        const result = await response.json()
+        if (response.status != 200){
+            alert("NO");
+        }else{
+            console.log(result);
+            thumbnail_src = result.file.url;
+            onimage=true;
+        }
+
+        
+    }
+
+    function upload_thumbnail(){
+        console.log("ok");
+        image.click();
+    }
 
 	function check_submit() {
 		if (title.length < 10) {
@@ -69,14 +97,31 @@
 	<Popup />
 {/if}
 <Navbar />
-<div class="flex pb-10 pt-24">
+<div class="flex flex-col items-center justify-center mb-10 pt-24">
 	<input
 		bind:value={title}
-		class="font-bold text-3xl w-3/4 text-center outline-none mx-auto"
+		class="font-bold text-3xl w-3/4 text-center outline-none mx-auto mb-4" 
 		placeholder="Article title"
 	/>
+    
+    {#if onimage}
+        <div class="text-center"> 
+            <img class="w-full mx-4 sm:w-[650px] hover:blur-sm" src={thumbnail_src} alt="your_thumbnail" onclick={upload_thumbnail}>
+            <div class="w-full h-full">
+                <div class="absolute top-1/2 left-1/2 translate-x-1/2 translate-y-1/2 text-gray-200">Change thumbnail</div>
+            </div>
+        </div>
+    {:else}
+        <div class="flex flex-col items-center border border-gray-500 w-full mx-4 sm:w-[650px] h-80 rounded-lg pt-28">
+            <img alt="icon_img" class="w-16 h-16" src="https://icones.pro/wp-content/uploads/2021/08/icone-photo-grise.png" onclick={upload_thumbnail}>
+            <button class="text-gray-500 border-none hover:font-semibold " onclick={upload_thumbnail} >Upload Thumbnail</button>
+        </div>
+    {/if}
+    <input class="hidden" type="file" accept=".jpg, .jpeg, .png" bind:this={image} onchange={(e) => { send_thumbnail(e)}}>
 </div>
 <div id="editorjs" class="text-xl" placeholder="Article content"></div>
+
+
 <div class="w-full flex items-center justify-center space-x-6">
 	<select
 		bind:value={category}

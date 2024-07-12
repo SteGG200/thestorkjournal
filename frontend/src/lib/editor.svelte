@@ -4,7 +4,10 @@
 	import Navbar from "./navbar.svelte";
     import Popup from "./popup.svelte";
 
-    const message=false;
+    const tags= ["News", "Politics", "Economies", "Science","Entertainment", "Sport","Art gallery", "About"];
+    const onmessage=false;
+    let title=$state();
+    let message = $state();
 
     $effect(() => {
         const loadEditor = async () => {
@@ -30,7 +33,10 @@
     });
 
     function check_submit(){
-
+        if (title.length < 10){
+            message = "Title must contain at least 10 characters."
+        }
+        
     }
 
     function submit(){
@@ -39,12 +45,12 @@
 
 
 </script>
-{#if message}
+{#if onmessage}
     <Popup/>
 {/if}
 <Navbar/>
 <div class="flex pb-10 pt-24">
-    <input class="font-bold text-3xl w-3/4 text-center outline-none mx-auto" placeholder="Article title">
+    <input bind:value={title} class="font-bold text-3xl w-3/4 text-center outline-none mx-auto" placeholder="Article title">
 </div>
 <div id="editorjs" class="text-xl" placeholder="Article content"></div> 
 <div class="w-full flex items-center justify-center">
