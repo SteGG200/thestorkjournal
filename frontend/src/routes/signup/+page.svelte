@@ -1,7 +1,7 @@
 <script>
     import { PUBLIC_SERVER_URL } from "$env/static/public";
     import "../../app.css";
-    import Navbar from "../../lib/navbar.svelte";
+    import Navbar from "../../subcomponent/navbar.svelte";
     import { goto } from "$app/navigation";
     let email = $state("");
     let password = $state("");
@@ -28,6 +28,7 @@
                 password: password,
                 name: name,
             })
+
         });
         const status_code = response.status;
         console.log(status_code);

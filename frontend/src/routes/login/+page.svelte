@@ -1,12 +1,14 @@
 <script>
     import { PUBLIC_SERVER_URL } from "$env/static/public";
     import "../../app.css";
-    import Navbar from "../../lib/navbar.svelte";
-    import {log_in_fail_message, logged_in} from "../../store.js";
+    import Navbar from "../../subcomponent/navbar.svelte";
+    import {log_in_fail_message, logged_in} from "$lib/store.js";
+    import { page } from '$app/stores';
     import { goto } from "$app/navigation";
+	import PreviousMap from "postcss/lib/previous-map";
     let email = $state("");
     let password = $state("");
-
+    let previousPage = "/login";
     
 
     async function fetch_login_data(){
@@ -18,6 +20,7 @@
             body: JSON.stringify({
                 email: email,
                 password: password,
+                
             }),
             credentials: 'include'
         });
@@ -25,7 +28,9 @@
         if (status_code==200){
             console.log("ok");
             logged_in.set(true);
-            goto("/");
+            history.back();
+            // console.log(history.);
+            // goto(previousPage);
             
         }else if (status_code==401){
             log_in_fail_message.set(true);
@@ -55,17 +60,7 @@
                         <input type="password" name="password" id="password" placeholder="" bind:value={password}
                          class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required={true}>
                     </div>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                              <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 ">
-                            </div>
-                            <div class="ml-3 text-sm">
-                              <label for="remember" class="text-gray-500 ">Remember me</label>
-                            </div>
-                        </div>
-                        <a href="/error404" class="text-sm font-medium text-primary-600 hover:underline ">Forgot password?</a>
-                    </div>
+                    
                     {#if $log_in_fail_message}
                         <div class="text-red-500">Wrong email or password.</div>
                     {/if}

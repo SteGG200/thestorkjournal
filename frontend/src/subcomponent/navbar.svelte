@@ -3,10 +3,19 @@
     import { goto } from "$app/navigation";
     let name = 'world';
 
-    const tags= ["News", "Politics", "Economies", "Science","Entertainment", "Sport","Art gallery", "About"];
-    function to_login(){
-      console.log("lmao");
-      goto("./login");
+    const tags = [
+        'News',
+		'Economics',
+		'Science',
+        'Life style',
+        'Fashion',
+		'Sport',
+        'Technology',
+        'Art gallery',
+        'About us'
+	];
+    function to_text_editor(){
+      goto("./text-editor");
     }
   
   </script>
@@ -22,11 +31,11 @@ fixed w-full z-20 top-0 start-0 border-b ">
   
       <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
 
-        <button type="button" on:click={to_login} 
+        <button type="button" on:click={to_text_editor} 
         class="text-white bg-red-700 hover:bg-red-800 
         focus:ring-4 focus:outline-none focus:ring-red-800
         font-medium text-center text-sm
-        rounded-lg px-4 py-2 ">Login</button>
+        rounded-lg px-4 py-2 ">Write article</button>
 
         <button data-collapse-toggle="navbar-sticky" type="button"
         class="inline-flex items-center p-2 w-10 h-10 justify-center
