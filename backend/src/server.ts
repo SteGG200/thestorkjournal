@@ -33,7 +33,8 @@ const pluginsRegister = async () => {
 		secret: process.env.COOKIE_SECRET,
 		parseOptions: {
 			maxAge: 172800,
-			path: '/'
+			path: '/',
+			sameSite: 'none'
 		}
 	});
 
