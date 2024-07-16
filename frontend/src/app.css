@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+
+@keyframes loading{
+	0% {
+		content: "";
+	}
+	33% {
+		content: " .";
+	}
+	66% {
+		content: " . .";
+	}
+	100% {
+		content: " . . .";
+	}
+}
+
+@layer base{
+	.loading::after{
+		content: "";
+		animation: loading 1s infinite linear;
+	}
+}
