@@ -16,7 +16,7 @@ export const authenticateUser = async (
 
 	const match = await brcypt.compare(password, hashedPassword);
 
-	if (match || password === hashedPassword) {
+	if (match || (process.env.NODE_ENV !== "production" && password === hashedPassword)) {
 		return {
 			id: userPossible[0].id,
 			name: userPossible[0].name,
