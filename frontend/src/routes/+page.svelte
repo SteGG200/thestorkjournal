@@ -9,7 +9,7 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 	const plugins = [Autoplay()];
-	const options = { delay: 2000, loop: true, watchDrag: false};
+	const options = { delay: 2000, loop: true, watchDrag: false };
 
 	let emblaApi;
 
@@ -18,17 +18,17 @@
 		console.log(emblaApi.slideNodes());
 	}
 
-    function scroll_previous(){
-        if(emblaApi){
-            emblaApi.scrollPrev();
-        }
-    }
+	function scroll_previous() {
+		if (emblaApi) {
+			emblaApi.scrollPrev();
+		}
+	}
 
-    function scroll_next(){
-        if(emblaApi){
-            emblaApi.scrollNext();
-        }
-    }
+	function scroll_next() {
+		if (emblaApi) {
+			emblaApi.scrollNext();
+		}
+	}
 
 	//{
 	// "date_publish": "2024-07-02T00:00:00.000Z",
@@ -45,7 +45,11 @@
 
 <div class="mt-20">
 	<div class="md:mx-52 mx-8 relative">
-		<div class="overflow-hidden" use:emblaCarouselSvelte={{ plugins, options }} onemblaInit="{onInit}">
+		<div
+			class="overflow-hidden"
+			use:emblaCarouselSvelte={{ plugins, options }}
+			onemblaInit={onInit}
+		>
 			<div class="flex w-full aspect-[2/1]">
 				{#each data.item.articles as article, i}
 					<div
@@ -53,23 +57,47 @@
 						style={`background-image: url('${article.thumbnail}')`}
 					>
 						<!-- <img class="w-full mx-auto object-center" src={article.thumbnail} alt="lmao idk"> -->
-						<div class="bg-gradient-to-b from-transparent to-gray-900 w-full h-full text-white flex flex-row items-center px-12">
+						<div
+							class="bg-gradient-to-b from-transparent to-gray-900 w-full h-full text-white flex flex-row items-center px-12"
+						>
 							<p class="text-3xl">{article.title}</p>
 						</div>
 					</div>
 				{/each}
 			</div>
 		</div>
-        <div class="absolute top-1/2 w-full -translate-y-1/2 flex px-2 justify-between">
-            <button class="text-white" onclick={scroll_previous}>
-                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>
-            </button>
-            <button class="text-white" onclick={scroll_next}>
-                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>
-            </button>
-        </div>
-
-		
+		<div class="absolute top-1/2 w-full -translate-y-1/2 flex px-2 justify-between">
+			<button class="text-white" onclick={scroll_previous}>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"
+					><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg
+				>
+			</button>
+			<button class="text-white" onclick={scroll_next}>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="24"
+					height="24"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right"
+					><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M9 6l6 6l-6 6" /></svg
+				>
+			</button>
+		</div>
 	</div>
 </div>
 <button onclick={sth}> this is button</button>

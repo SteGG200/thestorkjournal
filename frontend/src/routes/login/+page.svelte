@@ -1,33 +1,33 @@
 <script>
-import { PUBLIC_SERVER_URL } from '$env/static/public';
-import '../../app.css';
-import { goto } from '$app/navigation'
-import { log_in_fail_message, logged_in } from '$lib/store.js';
-let email = $state('');
-let password = $state('');
+	import { PUBLIC_SERVER_URL } from '$env/static/public';
+	import '../../app.css';
+	import { goto } from '$app/navigation';
+	import { log_in_fail_message, logged_in } from '$lib/store.js';
+	let email = $state('');
+	let password = $state('');
 
-async function fetch_login_data() {
-	const response = await fetch(`${PUBLIC_SERVER_URL}/auth/login`, {
-		method: 'POST',
-		headers: {
-			'content-type': 'application/json'
-		},
-		body: JSON.stringify({
-			email: email,
-			password: password
-		}),
-		credentials: 'include'
-	});
-	const status_code = response.status;
-	if (status_code == 200) {
-		console.log('ok');
-		logged_in.set(true);
-		let previousPage = sessionStorage.getItem("from") ?? "/";
-		goto(previousPage);
-	} else if (status_code == 401) {
-		log_in_fail_message.set(true);
+	async function fetch_login_data() {
+		const response = await fetch(`${PUBLIC_SERVER_URL}/auth/login`, {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json'
+			},
+			body: JSON.stringify({
+				email: email,
+				password: password
+			}),
+			credentials: 'include'
+		});
+		const status_code = response.status;
+		if (status_code == 200) {
+			console.log('ok');
+			logged_in.set(true);
+			let previousPage = sessionStorage.getItem('from') ?? '/';
+			goto(previousPage);
+		} else if (status_code == 401) {
+			log_in_fail_message.set(true);
+		}
 	}
-}
 </script>
 
 <section class="bg-gray-200">
@@ -75,13 +75,12 @@ async function fetch_login_data() {
 						type="submit"
 						onclick={fetch_login_data}
 						class="w-full text-gray-100 bg-red-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-red-800 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-						>Sign in</button
 					>
+						Sign in
+					</button>
 					<p class="text-sm font-light text-gray-700">
-						Don’t have an account yet? <a
-							href="/signup"
-							class="font-medium text-primary-600 hover:underline">Sign up</a
-						>
+						Don’t have an account yet?
+						<a href="/signup" class="font-medium text-primary-600 hover:underline">Sign up</a>
 					</p>
 				</form>
 			</div>

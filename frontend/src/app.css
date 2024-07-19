@@ -2,31 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
 
-
-@keyframes loading{
+@keyframes loading {
 	0% {
-		content: "";
+		content: '';
 	}
 	33% {
-		content: " .";
+		content: ' .';
 	}
 	66% {
-		content: " . .";
+		content: ' . .';
 	}
 	100% {
-		content: " . . .";
+		content: ' . . .';
 	}
 }
 
-@layer base{
-	.loading::after{
-		content: "";
+@layer base {
+	.loading::after {
+		content: '';
 		animation: loading 1s infinite linear;
 	}
 }
