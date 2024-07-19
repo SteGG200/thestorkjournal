@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "embla-carousel-autoplay": "^8.1.7",
+    "embla-carousel-svelte": "^8.1.6"
+  }
+}

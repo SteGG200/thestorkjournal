@@ -33,7 +33,7 @@ let replyMessage = $state(0)
 
 let isLoading = $state(true)
 
-let inputThumbnail;
+let inputThumbnails=$state(null);
 
 $effect(() => {
 	title = localStorage.getItem("title") ?? "";
@@ -186,8 +186,9 @@ const submitArticle = async () => {
 <Popup_401 />
 {/if}
 
-
-<img class="w-20 h-[36px] block mx-4 mt-4" src="/logo.png" alt="logo"/>
+<a href="/">
+    <img class="w-20 h-[36px] block mx-4 mt-4" src="/logo.png" alt="logo"/>
+</a>
 <!-- <div class="border-red-600 border-t-2 w-full h-0"></div> -->
 
 <div class="mx-auto mt">
