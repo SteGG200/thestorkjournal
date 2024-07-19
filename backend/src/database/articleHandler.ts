@@ -34,7 +34,9 @@ export const removeUnconfirmedArticle = async (
 };
 
 export const confirmArticle = async (article: ArticleInfo, authorId: number) => {
-	return await sql<{id: string, datePublish: string}[]>`INSERT INTO articles (user_id, title, thumbnail, category, content) 
+	return await sql<
+		{ id: string; datePublish: string }[]
+	>`INSERT INTO articles (user_id, title, thumbnail, category, content) 
   VALUES (${authorId}, ${article.title}, ${article.thumbnail}, ${article.category}, ${article.content})
 	RETURNING id, date_publish`;
 };
