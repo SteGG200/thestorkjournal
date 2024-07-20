@@ -25,8 +25,6 @@ export const showArticleRoute: FastifyPluginAsync = async (fastify, option) => {
 			return;
 		}
 
-		const authorInfo = await getUserById(articleInfo[0].user_id);
-
 		res.statusCode = 200;
 		res.send({
 			article: {
@@ -36,7 +34,7 @@ export const showArticleRoute: FastifyPluginAsync = async (fastify, option) => {
 				category: articleInfo[0].category,
 				content: articleInfo[0].content
 			},
-			author: authorInfo
+			authorName: articleInfo[0].name
 		});
 	});
 };

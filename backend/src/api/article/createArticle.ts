@@ -11,7 +11,7 @@ export const createArticleRoute: FastifyPluginAsync = async (fastify, option) =>
 	});
 
 	fastify.post<{
-		Body: ArticleInfo;
+		Body: BodyCreateArticleAPI;
 	}>('/', async (req, res) => {
 		const authentication = await isAuthenticated(fastify, req);
 
@@ -33,7 +33,7 @@ export const createArticleRoute: FastifyPluginAsync = async (fastify, option) =>
 
 		const confirmKey = crypto.randomBytes(32).toString('base64');
 
-		const articleId = await createNewArticle(authorInfo.id, article, confirmKey);
+		const articleId = await createNewArticle({user_id: authorInfo.id, ...article}, confirmKey);
 
 		transporter.sendMail({
 			from: process.env.EMAIL_ADMIN,
