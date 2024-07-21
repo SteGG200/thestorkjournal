@@ -141,6 +141,9 @@ importers:
       '@editorjs/link':
         specifier: ^2.6.2
         version: 2.6.2
+      uuid:
+        specifier: ^10.0.0
+        version: 10.0.0
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
