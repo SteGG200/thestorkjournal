@@ -37,14 +37,14 @@
 	// "category": "sport",
 	// "content": "This is a new article"
 	function sth() {
-		console.log(data.item.articles);
+		console.log(data);
 	}
 </script>
 
 <Navbar />
 
 <div class="mt-20">
-	<div class="md:mx-52 mx-8 relative">
+	<div class="md:mx-32 mx-8 relative">
 		<div
 			class="overflow-hidden"
 			use:emblaCarouselSvelte={{ plugins, options }}
@@ -58,9 +58,17 @@
 					>
 						<!-- <img class="w-full mx-auto object-center" src={article.thumbnail} alt="lmao idk"> -->
 						<div
-							class="bg-gradient-to-b from-transparent to-gray-900 w-full h-full text-white flex flex-row items-center px-12"
+							class="bg-gradient-to-b from-transparent to-gray-900 w-full h-full text-white flex flex-col-reverse px-12 pb-12"
 						>
-							<p class="text-3xl">{article.title}</p>
+							<p class="text-gray-500 text-lg">
+								By: {article.name} on {new Date(article.date_publish).toLocaleDateString('en-US', {
+									year: 'numeric',
+									month: 'long',
+									day: 'numeric'
+								})}
+							</p>
+                            <p class="truncate text-gray-400 pb-4">{article.content}</p>
+							<h1 class="text-4xl pb-4">{article.title}</h1>
 						</div>
 					</div>
 				{/each}
@@ -99,5 +107,46 @@
 			</button>
 		</div>
 	</div>
+	<div class=" mt-12 md:mx-32 mx-8">
+		<div class="flex flex-row border-t-2 border-gray-300 pt-8">
+			<!-- <div> if anythisadsádasdaádsadsadsadasdsadng here</div> -->
+			<div class="w-2/3 border-r-2 border-gray-300">
+				{#each data.item.articles as article, i}
+					<div class="flex flex-row mb-12 items-center">
+						<div
+							class="w-2/3 aspect-video bg-center bg-cover"
+							style={`background-image: url('${article.thumbnail}')`}
+						></div>
+						<div class="mx-4 w-full items-center text-center">
+							<p class="text-2xl font-medium">{article.title}</p>
+							<p class="text-gray-500 text-lg">
+								By: {article.name} on {new Date(article.date_publish).toLocaleDateString('en-US', {
+									year: 'numeric',
+									month: 'long',
+									day: 'numeric'
+								})}
+							</p>
+						</div>
+						<!-- <img src={article.thumbnail} alt="idk"> -->
+					</div>
+				{/each}
+			</div>
+
+			<div>
+				<!-- {#each data.item.articles as article, i}
+                    <div class="flex flex-row mb-12 items-center mx-4">
+                        <div
+                            class="w-full aspect-video bg-center bg-cover"
+                            style={`background-image: url('${article.thumbnail}')`}
+                        ></div>
+                        <div class="mx-4 w-full items-center text-center text-sm">
+                            <p>{article.title}</p>
+                        </div>
+                    </div>
+                {/each} -->
+			</div>
+		</div>
+	</div>
 </div>
-<button onclick={sth}> this is button</button>
+
+<!-- <button onclick={sth}> this is button</button> -->

@@ -33,7 +33,7 @@
 
 	let isLoading = $state(true);
 
-	let inputThumbnails = $state(null);
+	let inputThumbnail = $state(null);
 
 	$effect(() => {
 		title = localStorage.getItem('title') ?? '';
