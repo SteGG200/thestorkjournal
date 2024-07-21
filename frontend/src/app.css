@@ -28,4 +28,13 @@
 		content: '';
 		animation: loading 1s infinite linear;
 	}
+
+	.content > a {
+		color: #176DB3;
+		text-decoration: underline;
+	}
+
+	.content > a:hover {
+		text-decoration: none;
+	}
 }
