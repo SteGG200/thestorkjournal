@@ -31,7 +31,7 @@ fixed w-full z-20 top-0 start-0 border-b"
 			<img src="/logo.png" class="h-10" alt="The Stork Journal Logo" />
 		</a>
 
-		<div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+		<div class="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
 			<button
 				type="button"
 				on:click={to_text_editor}
@@ -45,7 +45,7 @@ fixed w-full z-20 top-0 start-0 border-b"
 				data-collapse-toggle="navbar-sticky"
 				type="button"
 				class="inline-flex items-center p-2 w-10 h-10 justify-center
-        text-sm text-gray-500 rounded-lg md:hidden
+        text-sm text-gray-500 rounded-lg lg:hidden
         hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
 				aria-controls="navbar-sticky"
 				aria-expanded="false"
@@ -71,17 +71,17 @@ fixed w-full z-20 top-0 start-0 border-b"
 
 		<div
 			class="items-center justify-between hidden
-        w-full md:flex md:w-auto md:order-1"
+        w-full lg:flex lg:w-auto lg:order-1"
 			id="navbar-sticky"
 		>
 			<ul
-				class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white"
+				class="flex flex-col p-4 lg:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 lg:bg-white"
 			>
 				{#each tags as tag}
 					<li>
 						<a
 							href="/error404"
-							class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-700 md:p-0"
+							class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-red-700 lg:p-0"
 							>{tag}</a
 						>
 					</li>

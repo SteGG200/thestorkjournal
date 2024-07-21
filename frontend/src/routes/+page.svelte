@@ -3,11 +3,21 @@
 	import { PUBLIC_SERVER_URL } from '$env/static/public';
 	import '../app.css';
 	import Navbar from '$components/navbar.svelte';
-
+    import PageButton from '../components/page_button.svelte';
+    import Footer from '$components/Footer.svelte';
+    //import { current_page } from "$lib/store.js"
+    import EtcButton from '../components/Etc_button.svelte';
+	import { goto } from '$app/navigation';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import Autoplay from 'embla-carousel-autoplay';
+	import Page from './text-editor/+page.svelte';
 	/** @type {import('./$types').PageData} */
-	export let data;
+    const{ data } = $props();
+
+    let current_number_page = $state(1);
+    const article_per_page = 5;
+    const article_number = data.item.articles.length;
+    const pages = Math.ceil(article_number / article_per_page);
 	const plugins = [Autoplay()];
 	const options = { delay: 2000, loop: true, watchDrag: false };
 
@@ -15,7 +25,7 @@
 
 	function onInit(event) {
 		emblaApi = event.detail;
-		console.log(emblaApi.slideNodes());
+		//console.log(emblaApi.slideNodes());
 	}
 
 	function scroll_previous() {
@@ -30,15 +40,16 @@
 		}
 	}
 
-	//{
-	// "date_publish": "2024-07-02T00:00:00.000Z",
-	// "title": "New Article",
-	// "thumbnail": "https://scontent.fhan3-2.fna.fbcdn.net/v/t39.30808-6/446810132_475189898322908_1339928912308263727_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFZISB5YvXLh8o1OwfNMKXud_Ue59OMRV939R7n04xFX21ztbt5QNy9T3nOMNdW2DWXR1uLIljoAJvjTKzsUjJh&_nc_ohc=6gmndcQ3-vUQ7kNvgGKmnMR&_nc_ht=scontent.fhan3-2.fna&oh=00_AYCc5cfN4Hrb_3GSFTlYugnk_YUE4_icTazJMEpr6Q91jQ&oe=6689BB98",
-	// "category": "sport",
-	// "content": "This is a new article"
+    console.log(data);
+
+// content
+// : 
+// "{\"time\":1721571779892,\"blocks\":[{\"id\":\"ZKaQXgIL1F\",\"type\":\"paragraph\",\"data\":{\"text\":\"This is a new article\"}}],\"version\":\"2.30.2\"}"
+
 	function sth() {
-		console.log(data);
+		console.log(data.item);
 	}
+    
 </script>
 
 <Navbar />
@@ -58,17 +69,21 @@
 					>
 						<!-- <img class="w-full mx-auto object-center" src={article.thumbnail} alt="lmao idk"> -->
 						<div
-							class="bg-gradient-to-b from-transparent to-gray-900 w-full h-full text-white flex flex-col-reverse px-12 pb-12"
+							class="bg-gradient-to-b from-transparent to-gray-900 w-full h-full text-white flex flex-col-reverse px-8 pb-4 md:p-12"
 						>
-							<p class="text-gray-500 text-lg">
+							<p class="text-gray-500 text-md">
 								By: {article.name} on {new Date(article.date_publish).toLocaleDateString('en-US', {
 									year: 'numeric',
 									month: 'long',
 									day: 'numeric'
 								})}
 							</p>
-                            <p class="truncate text-gray-400 pb-4">{article.content}</p>
-							<h1 class="text-4xl pb-4">{article.title}</h1>
+                            <div class="hidden md:block text-gray-400 pb-4">
+                                <p class="line-clamp-3">{@html JSON.parse(article.content).blocks[0].data.text}</p>
+                            </div>
+							<a href="/{article.id}">
+                                <h1 class="text-xl md:text-4xl pb-2 md:pb-4 hover:text-gray-400">{article.title}</h1>
+                            </a>
 						</div>
 					</div>
 				{/each}
@@ -108,18 +123,23 @@
 		</div>
 	</div>
 	<div class=" mt-12 md:mx-32 mx-8">
-		<div class="flex flex-row border-t-2 border-gray-300 pt-8">
+		<div class="md:flex md:flex-row border-t-2 border-gray-300 py-8">
 			<!-- <div> if anythisadsádasdaádsadsadsadasdsadng here</div> -->
-			<div class="w-2/3 border-r-2 border-gray-300">
-				{#each data.item.articles as article, i}
-					<div class="flex flex-row mb-12 items-center">
-						<div
-							class="w-2/3 aspect-video bg-center bg-cover"
-							style={`background-image: url('${article.thumbnail}')`}
-						></div>
-						<div class="mx-4 w-full items-center text-center">
-							<p class="text-2xl font-medium">{article.title}</p>
-							<p class="text-gray-500 text-lg">
+			<div class=" w-full md:w-2/3 md:border-r-2 border-gray-300">
+				{#each data.item.articles.slice( (current_number_page-1) * article_per_page , Math.min(current_number_page*article_per_page , article_number) ) as article, i}
+					<div class="flex flex-row items-center mt-4 mx-4">
+                        
+                        <button
+                            class="w-2/3 aspect-[14/8] bg-center bg-cover"
+                            style={`background-image: url('${article.thumbnail}')`}
+                            onclick={()=>{goto(`/${article.id}`)}}
+                        ></button>
+                        
+						<div class="ml-4 w-full items-center">
+							<a href="/{article.id}" class="text-xl font-medium hover:text-gray-800">
+                                <p class="line-clamp-3">{article.title}</p>
+                            </a>
+							<p class="text-gray-500">
 								By: {article.name} on {new Date(article.date_publish).toLocaleDateString('en-US', {
 									year: 'numeric',
 									month: 'long',
@@ -129,24 +149,85 @@
 						</div>
 						<!-- <img src={article.thumbnail} alt="idk"> -->
 					</div>
+                    <div class="pb-8 border-b-2 border-gray-300 mx-4 mt-4 ">
+                        <p class="line-clamp-3">{@html JSON.parse(article.content).blocks[0].data.text}</p>
+                    </div>
 				{/each}
+
+                <div class="flex flex-row m-4 items-center justify-center">
+                    {#if current_number_page!=1}
+                        <PageButton page_number={"Previous"} change_page={()=>{
+                            current_number_page--;
+                        }}/>
+                    {/if}
+
+                    <PageButton page_number={1} change_page={()=>{
+                        current_number_page=1;
+                    }}/>
+
+                    {#if current_number_page>3}
+                        <EtcButton/>
+                    {/if}
+                    
+                    {#if current_number_page>2}
+                        <PageButton page_number={current_number_page-1} change_page={()=>{
+                            current_number_page--;
+                        }}/>
+                    {/if}
+                    
+                    {#if current_number_page!=1 && current_number_page!=pages}
+                        <PageButton page_number={current_number_page} change_page={()=>{
+                        }}/>
+                    {/if}
+                
+                    {#if current_number_page < pages-1  }
+                        <PageButton page_number={current_number_page+1} change_page={()=>{
+                            current_number_page++;
+                        }}/>
+                    {/if}
+
+                    {#if current_number_page< pages-2}
+                        <EtcButton/>
+                    {/if}
+                    
+                    {#if current_number_page != 1}
+                    <PageButton page_number={pages} change_page={()=>{
+                        current_number_page=pages;
+                    }}/>
+                    {/if}
+
+                    {#if current_number_page != pages }
+                        <PageButton page_number={"Next"} change_page={()=>{
+                            current_number_page++;
+                        }}/>
+                    {/if}
+                </div>
 			</div>
 
-			<div>
-				<!-- {#each data.item.articles as article, i}
-                    <div class="flex flex-row mb-12 items-center mx-4">
-                        <div
-                            class="w-full aspect-video bg-center bg-cover"
+			<div class="border-t-2 border-gray-300 pt-8 md:pt-0 md:border-none">
+                <div class="text-gray-600 font-semibold px-4 pb-4 text-md">Suggested for you</div>
+				{#each data.item.articles as article, i}
+                    <div class="flex flex-row mb-4 items-center mx-4">
+                        <button
+                            class="w-1/4 aspect-square bg-center bg-cover"
                             style={`background-image: url('${article.thumbnail}')`}
-                        ></div>
-                        <div class="mx-4 w-full items-center text-center text-sm">
-                            <p>{article.title}</p>
+                            onclick={()=>{goto(`/${article.id}`)}}
+                        ></button>
+                        <div class="mx-4 w-full text-sm font-semibold">
+                            <a href="/{article.id}" class="hover:text-gray-800">
+                                <p class="line-clamp-2">{article.title}</p>
+                            </a>
                         </div>
                     </div>
-                {/each} -->
+                {/each}
 			</div>
+            
+            
+
 		</div>
 	</div>
 </div>
 
 <!-- <button onclick={sth}> this is button</button> -->
+
+<Footer/>
