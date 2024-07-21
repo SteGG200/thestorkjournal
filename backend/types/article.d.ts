@@ -12,4 +12,5 @@ interface UnconfirmedArticleInfo extends Article {
 interface ArticleInfo extends Article {
 	date_publish: string;
 	name: string;
+	id: string;
 }

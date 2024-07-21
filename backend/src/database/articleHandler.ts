@@ -45,17 +45,19 @@ export const getListArticles = async (category: string = '') => {
 	if (category != '') {
 		return await sql<
 		ArticleInfo[]
-		>`SELECT articles.date_publish, articles.title, articles.thumbnail, articles.category, articles.content, users.name 
-		FROM articles, users 
-		WHERE articles.user_id = users.id
-		AND articles.category = ${category}
+		>`SELECT articles.id, articles.date_publish, articles.title, articles.thumbnail, articles.category, articles.content, users.name 
+		FROM articles 
+		INNER JOIN users 
+		ON articles.user_id = users.id
+		WHERE articles.category = ${category}
 		ORDER BY date_publish DESC`;
 	} else {
 		return await sql<
 		ArticleInfo[]
-		>`SELECT articles.date_publish, articles.title, articles.thumbnail, articles.category, articles.content, users.name 
-		FROM articles, users 
-		WHERE articles.user_id = users.id 
+		>`SELECT articles.id, articles.date_publish, articles.title, articles.thumbnail, articles.category, articles.content, users.name 
+		FROM articles 
+		INNER JOIN users 
+		ON articles.user_id = users.id 
 		ORDER BY date_publish DESC`;
 	}
 };
@@ -64,9 +66,10 @@ export const getArticleById = async (articleId: string) => {
 	return await sql<
 		ArticleInfo[]
 	>`SELECT articles.date_publish, articles.title, articles.thumbnail, articles.category, articles.content, users.name 
-		FROM articles, users 
-		WHERE articles.user_id = users.id
-		AND articles.id = ${articleId}
+		FROM articles 
+		INNER JOIN users 
+		ON articles.user_id = users.id
+		WHERE articles.id = ${articleId}
 		ORDER BY date_publish DESC`;
 };
 
@@ -74,9 +77,10 @@ export const getArticleBySearch = async (query: string) => {
 	const tempQuery = '%' + query + '%';
 	return await sql<
 	ArticleInfo[]
-	>`SELECT articles.date_publish, articles.title, articles.thumbnail, articles.category, articles.content, users.name 
-	FROM articles, users
-	WHERE articles.user_id = users.id
-	AND (title LIKE ${tempQuery} OR content LIKE ${tempQuery})
+	>`SELECT articles.id, articles.date_publish, articles.title, articles.thumbnail, articles.category, articles.content, users.name 
+	FROM articles
+	INNER JOIN users 
+	ON articles.user_id = users.id
+	WHERE title LIKE ${tempQuery} OR content LIKE ${tempQuery}
 	ORDER BY date_publish DESC`;
 };
