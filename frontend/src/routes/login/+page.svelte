@@ -23,7 +23,7 @@
 			console.log('ok');
 			logged_in.set(true);
 			let previousPage = sessionStorage.getItem('from') ?? '/';
-            sessionStorage.removeItem('from');
+			sessionStorage.removeItem('from');
 			goto(previousPage);
 		} else if (status_code == 401) {
 			log_in_fail_message.set(true);

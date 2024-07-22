@@ -1,75 +1,80 @@
 <script>
-	//import { get } from "svelte/store";
-	import { PUBLIC_SERVER_URL } from '$env/static/public';
 	import '../app.css';
 	import Navbar from '$components/navbar.svelte';
-    import PageButton from '../components/page_button.svelte';
-    import Footer from '$components/Footer.svelte';
-    //import { current_page } from "$lib/store.js"
-    import EtcButton from '../components/Etc_button.svelte';
+	import PageButton from '../components/page_button.svelte';
+	import Footer from '$components/Footer.svelte';
+	import EtcButton from '../components/Etc_button.svelte';
 	import { goto } from '$app/navigation';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import Autoplay from 'embla-carousel-autoplay';
-	import Page from './text-editor/+page.svelte';
-	/** @type {import('./$types').PageData} */
-    const{ data } = $props();
+	import { suggestArticles } from '$lib/utils.js'
 
-    let current_number_page = $state(1);
-    const article_per_page = 5;
-    const article_number = data.item.articles.length;
-    const pages = Math.ceil(article_number / article_per_page);
-	const plugins = [Autoplay()];
-	const options = { delay: 2000, loop: true, watchDrag: false };
+	/** @type {import('./$types').PageData} */
+	const { data } = $props();
+
+	let current_number_page = $state(1);
+	const article_per_page = 5;
+	const article_number = data.articles.length;
+	const pages = Math.ceil(article_number / article_per_page);
+
+	const limit_suggested_article = 3
+
+	const plugins = [
+		Autoplay({
+			delay: 3000
+		})
+	];
+	const options = { watchDrag: false, loop: true };
 
 	let emblaApi;
 
 	function onInit(event) {
 		emblaApi = event.detail;
-		//console.log(emblaApi.slideNodes());
 	}
 
 	function scroll_previous() {
 		if (emblaApi) {
 			emblaApi.scrollPrev();
+			const autoplay = emblaApi.plugins().autoplay;
+			autoplay.stop();
+			setTimeout(() => {
+				autoplay.play();
+			}, 500);
 		}
 	}
 
 	function scroll_next() {
 		if (emblaApi) {
 			emblaApi.scrollNext();
+			const autoplay = emblaApi.plugins().autoplay;
+			autoplay.stop();
+			setTimeout(() => {
+				autoplay.play();
+			}, 500);
 		}
 	}
 
-    console.log(data);
-
-// content
-// : 
-// "{\"time\":1721571779892,\"blocks\":[{\"id\":\"ZKaQXgIL1F\",\"type\":\"paragraph\",\"data\":{\"text\":\"This is a new article\"}}],\"version\":\"2.30.2\"}"
-
-	function sth() {
-		console.log(data.item);
-	}
-    
+	
 </script>
 
 <Navbar />
 
-<div class="mt-20">
-	<div class="md:mx-32 mx-8 relative">
+<div class="pt-10">
+	<div class="mx-auto max-md:mx-4 w-4/5 max-md:w-auto relative">
 		<div
 			class="overflow-hidden"
 			use:emblaCarouselSvelte={{ plugins, options }}
 			onemblaInit={onInit}
 		>
 			<div class="flex w-full aspect-[2/1]">
-				{#each data.item.articles as article, i}
+				{#each data.articles.slice(0, 5) as article}
 					<div
 						class="flex-none w-full min-w-0 bg-center bg-cover"
 						style={`background-image: url('${article.thumbnail}')`}
 					>
 						<!-- <img class="w-full mx-auto object-center" src={article.thumbnail} alt="lmao idk"> -->
 						<div
-							class="bg-gradient-to-b from-transparent to-gray-900 w-full h-full text-white flex flex-col-reverse px-8 pb-4 md:p-12"
+							class="bg-gradient-to-b from-transparent to-gray-900 w-full h-full text-white flex flex-col-reverse px-8 pb-4 md:p-12 space-y-2"
 						>
 							<p class="text-gray-500 text-md">
 								By: {article.name} on {new Date(article.date_publish).toLocaleDateString('en-US', {
@@ -78,12 +83,14 @@
 									day: 'numeric'
 								})}
 							</p>
-                            <div class="hidden md:block text-gray-400 pb-4">
-                                <p class="line-clamp-3">{@html JSON.parse(article.content).blocks[0].data.text}</p>
-                            </div>
-							<a href="/{article.id}">
-                                <h1 class="text-xl md:text-4xl pb-2 md:pb-4 hover:text-gray-400">{article.title}</h1>
-                            </a>
+							<div class="hidden md:block text-gray-400 pb-4 w-2/3">
+								<p class="line-clamp-3">{@html JSON.parse(article.content).blocks[0].data.text}</p>
+							</div>
+							<a class="pb-2 md:pb-4 hover:text-gray-400 w-1/2 max-lg:w-full" href="/{article.id}">
+								<h1 class="text-xl md:text-4xl">
+									{article.title}
+								</h1>
+							</a>
 						</div>
 					</div>
 				{/each}
@@ -122,23 +129,23 @@
 			</button>
 		</div>
 	</div>
-	<div class=" mt-12 md:mx-32 mx-8">
+	<div class="mt-12 md:mx-auto mx-4 w-4/5 max-md:w-auto">
 		<div class="md:flex md:flex-row border-t-2 border-gray-300 py-8">
-			<!-- <div> if anythisadsádasdaádsadsadsadasdsadng here</div> -->
-			<div class=" w-full md:w-2/3 md:border-r-2 border-gray-300">
-				{#each data.item.articles.slice( (current_number_page-1) * article_per_page , Math.min(current_number_page*article_per_page , article_number) ) as article, i}
+			<div class="max-lg:w-auto w-2/3 border-r-2 border-gray-300">
+				{#each data.articles.slice((current_number_page - 1) * article_per_page, Math.min(current_number_page * article_per_page, article_number)) as article}
 					<div class="flex flex-row items-center mt-4 mx-4">
-                        
-                        <button
-                            class="w-2/3 aspect-[14/8] bg-center bg-cover"
-                            style={`background-image: url('${article.thumbnail}')`}
-                            onclick={()=>{goto(`/${article.id}`)}}
-                        ></button>
-                        
+						<button
+							class="w-2/3 max-lg:w-[250px] aspect-[14/8] bg-center bg-cover"
+							style={`background-image: url('${article.thumbnail}')`}
+							onclick={() => {
+								goto(`/${article.id}`);
+							}}
+						></button>
+
 						<div class="ml-4 w-full items-center">
-							<a href="/{article.id}" class="text-xl font-medium hover:text-gray-800">
-                                <p class="line-clamp-3">{article.title}</p>
-                            </a>
+							<a href="/{article.id}" class="text-xl font-semibold hover:text-gray-600">
+								<p class="line-clamp-3">{article.title}</p>
+							</a>
 							<p class="text-gray-500">
 								By: {article.name} on {new Date(article.date_publish).toLocaleDateString('en-US', {
 									year: 'numeric',
@@ -147,87 +154,102 @@
 								})}
 							</p>
 						</div>
-						<!-- <img src={article.thumbnail} alt="idk"> -->
 					</div>
-                    <div class="pb-8 border-b-2 border-gray-300 mx-4 mt-4 ">
-                        <p class="line-clamp-3">{@html JSON.parse(article.content).blocks[0].data.text}</p>
-                    </div>
+					<div class="pb-8 border-b-2 border-gray-300 mx-4 mt-4">
+						<p class="line-clamp-3 content">{@html JSON.parse(article.content).blocks[0].data.text}</p>
+					</div>
 				{/each}
 
-                <div class="flex flex-row m-4 items-center justify-center">
-                    {#if current_number_page!=1}
-                        <PageButton page_number={"Previous"} change_page={()=>{
-                            current_number_page--;
-                        }}/>
-                    {/if}
+				<div class="flex flex-row m-4 items-center justify-center">
+					{#if current_number_page != 1}
+						<PageButton
+							page_number={'Previous'}
+							change_page={() => {
+								current_number_page--;
+							}}
+						/>
+					{/if}
 
-                    <PageButton page_number={1} change_page={()=>{
-                        current_number_page=1;
-                    }}/>
+					<PageButton
+						page_number={1}
+						change_page={() => {
+							current_number_page = 1;
+						}}
+					/>
 
-                    {#if current_number_page>3}
-                        <EtcButton/>
-                    {/if}
-                    
-                    {#if current_number_page>2}
-                        <PageButton page_number={current_number_page-1} change_page={()=>{
-                            current_number_page--;
-                        }}/>
-                    {/if}
-                    
-                    {#if current_number_page!=1 && current_number_page!=pages}
-                        <PageButton page_number={current_number_page} change_page={()=>{
-                        }}/>
-                    {/if}
-                
-                    {#if current_number_page < pages-1  }
-                        <PageButton page_number={current_number_page+1} change_page={()=>{
-                            current_number_page++;
-                        }}/>
-                    {/if}
+					{#if current_number_page > 3}
+						<EtcButton />
+					{/if}
 
-                    {#if current_number_page< pages-2}
-                        <EtcButton/>
-                    {/if}
-                    
-                    {#if current_number_page != 1}
-                    <PageButton page_number={pages} change_page={()=>{
-                        current_number_page=pages;
-                    }}/>
-                    {/if}
+					{#if current_number_page > 2}
+						<PageButton
+							page_number={current_number_page - 1}
+							change_page={() => {
+								current_number_page--;
+							}}
+						/>
+					{/if}
 
-                    {#if current_number_page != pages }
-                        <PageButton page_number={"Next"} change_page={()=>{
-                            current_number_page++;
-                        }}/>
-                    {/if}
-                </div>
+					{#if current_number_page != 1 && current_number_page != pages}
+						<PageButton page_number={current_number_page} change_page={() => {}} />
+					{/if}
+
+					{#if current_number_page < pages - 1}
+						<PageButton
+							page_number={current_number_page + 1}
+							change_page={() => {
+								current_number_page++;
+							}}
+						/>
+					{/if}
+
+					{#if current_number_page < pages - 2}
+						<EtcButton />
+					{/if}
+
+					{#if current_number_page != 1}
+						<PageButton
+							page_number={pages}
+							change_page={() => {
+								current_number_page = pages;
+							}}
+						/>
+					{/if}
+
+					{#if current_number_page != pages}
+						<PageButton
+							page_number={'Next'}
+							change_page={() => {
+								current_number_page++;
+							}}
+						/>
+					{/if}
+				</div>
 			</div>
 
-			<div class="border-t-2 border-gray-300 pt-8 md:pt-0 md:border-none">
-                <div class="text-gray-600 font-semibold px-4 pb-4 text-md">Suggested for you</div>
-				{#each data.item.articles as article, i}
-                    <div class="flex flex-row mb-4 items-center mx-4">
-                        <button
-                            class="w-1/4 aspect-square bg-center bg-cover"
-                            style={`background-image: url('${article.thumbnail}')`}
-                            onclick={()=>{goto(`/${article.id}`)}}
-                        ></button>
-                        <div class="mx-4 w-full text-sm font-semibold">
-                            <a href="/{article.id}" class="hover:text-gray-800">
-                                <p class="line-clamp-2">{article.title}</p>
-                            </a>
-                        </div>
-                    </div>
-                {/each}
+			<div class="max-md:border-t-2 max-md:border-gray-300 max-md:pt-8 pt-0 border-none w-1/3 max-md:w-auto">
+				<div class="text-gray-600 font-semibold px-4 pb-4 text-md">Suggested for you</div>
+				{#each suggestArticles(data.articles, limit_suggested_article) as article}
+					<div class="flex flex-row mb-4 items-center mx-4">
+						<button
+							class="w-1/4 max-lg:w-[60px] aspect-square bg-center bg-cover"
+							style={`background-image: url('${article.thumbnail}')`}
+							onclick={() => {
+								goto(`/${article.id}`);
+							}}
+						></button>
+						<div class="mx-4 w-full text-base text-[#176db3]">
+							<a href="/{article.id}" class="hover:text-gray-800">
+								<p class="line-clamp-2">{article.title}</p>
+							</a>
+						</div>
+					</div>
+				{/each}
 			</div>
-            
-            
-
 		</div>
 	</div>
 </div>
 
 <!-- <button onclick={sth}> this is button</button> -->
 
-<Footer/>
+<Footer />

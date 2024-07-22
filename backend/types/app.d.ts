@@ -9,7 +9,6 @@ declare global {
 	// 	content: string;
 	// 	category: string;
 	// }
-
 	// interface ArticleInfo extends UnconfirmedArticleInfo {
 	// 	date_publish: string;
 	// }

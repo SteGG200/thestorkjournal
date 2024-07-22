@@ -1,4 +1,4 @@
-interface Article{
+interface Article {
 	title: string;
 	thumbnail: string;
 	content: string;

@@ -160,17 +160,16 @@
 					content: contentStr,
 					category: category
 				}),
-                credentials: 'include'
+				credentials: 'include'
 			});
 
 			replyMessage = response.status;
-            if (response.status == 200){
-                localStorage.removeItem('title');
-                localStorage.removeItem('thumbnail');
-                localStorage.removeItem('content');
-                localStorage.removeItem('category');
-            }
-			else if (response.status == 401) {
+			if (response.status == 200) {
+				localStorage.removeItem('title');
+				localStorage.removeItem('thumbnail');
+				localStorage.removeItem('content');
+				localStorage.removeItem('category');
+			} else if (response.status == 401) {
 				saveArticleToLocalStorage();
 				sessionStorage.setItem('from', '/text-editor');
 			}

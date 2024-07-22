@@ -9,7 +9,7 @@
 		'Science',
 		'Life style',
 		'Fashion',
-		'Sport',
+		'Sports',
 		'Technology',
 		'Art gallery',
 		'About us'
@@ -21,7 +21,7 @@
 
 <nav
 	class="bg-white border-red-700
-fixed w-full z-20 top-0 start-0 border-b"
+sticky w-full z-20 top-0 start-0 border-b"
 >
 	<div
 		class="max-w-screen-xl mx-auto p-4
@@ -80,7 +80,7 @@ fixed w-full z-20 top-0 start-0 border-b"
 				{#each tags as tag}
 					<li>
 						<a
-							href="/error404"
+							href={`/category/${tag.toLowerCase().replace(' ','-')}`}
 							class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-red-700 lg:p-0"
 							>{tag}</a
 						>

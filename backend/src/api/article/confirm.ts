@@ -93,7 +93,7 @@ export const confirmArticleRoute: FastifyPluginAsync = async (fastify, option) =
 		const authorInfo = await getUserById(authorId);
 
 		if (confirmStatus) {
-			const { id, datePublish } = (await confirmArticle({user_id: authorId, ...article}))[0];
+			const { id, datePublish } = (await confirmArticle({ user_id: authorId, ...article }))[0];
 
 			transporter.sendMail({
 				from: process.env.EMAIL_ADMIN,

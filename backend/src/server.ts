@@ -27,7 +27,7 @@ server.decorate('config', {
 		'science',
 		'life-style',
 		'fashion',
-		'sport',
+		'sports',
 		'technology',
 		'art-gallery'
 	]

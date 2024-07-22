@@ -44,7 +44,7 @@ export const confirmArticle = async (article: UnconfirmedArticleInfo) => {
 export const getListArticles = async (category: string = '') => {
 	if (category != '') {
 		return await sql<
-		ArticleInfo[]
+			ArticleInfo[]
 		>`SELECT articles.id, articles.date_publish, articles.title, articles.thumbnail, articles.category, articles.content, users.name 
 		FROM articles 
 		INNER JOIN users 
@@ -53,7 +53,7 @@ export const getListArticles = async (category: string = '') => {
 		ORDER BY date_publish DESC`;
 	} else {
 		return await sql<
-		ArticleInfo[]
+			ArticleInfo[]
 		>`SELECT articles.id, articles.date_publish, articles.title, articles.thumbnail, articles.category, articles.content, users.name 
 		FROM articles 
 		INNER JOIN users 
@@ -76,7 +76,7 @@ export const getArticleById = async (articleId: string) => {
 export const getArticleBySearch = async (query: string) => {
 	const tempQuery = '%' + query + '%';
 	return await sql<
-	ArticleInfo[]
+		ArticleInfo[]
 	>`SELECT articles.id, articles.date_publish, articles.title, articles.thumbnail, articles.category, articles.content, users.name 
 	FROM articles
 	INNER JOIN users 
