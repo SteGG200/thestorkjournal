@@ -24,7 +24,7 @@
 			delay: 3000
 		})
 	];
-	const options = { watchDrag: false, loop: true };
+	const options = { loop: true };
 
 	let emblaApi;
 
