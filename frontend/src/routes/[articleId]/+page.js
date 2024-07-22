@@ -10,9 +10,20 @@ function uuidValidateV4(uuid) {
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch, params }) {
 	if (uuidValidateV4(params.articleId)) {
-		const response = await fetch(`${PUBLIC_SERVER_URL}/article/show/${params.articleId}`);
-		const result = await response.json();
-		return result;
+		const [response_article, response_authentication] = await Promise.all([
+			fetch(`${PUBLIC_SERVER_URL}/article/show/${params.articleId}`),
+			fetch(`${PUBLIC_SERVER_URL}/auth`, { credentials: 'include' })
+		])
+
+		const result = await response_article.json()
+
+		if(!result.article){
+			error(404, 'Not Found');
+		}
+
+		const isAuthenticated = response_authentication.status === 200
+
+		return {article: result.article, authorName: result.authorName, isAuthenticated: isAuthenticated}
 	}
 
 	error(404, 'Not Found');

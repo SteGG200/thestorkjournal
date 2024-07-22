@@ -53,11 +53,14 @@
 			}, 500);
 		}
 	}
-
-	
 </script>
 
-<Navbar />
+<svelte:head>
+	<title>The Stork Journal</title>
+  <meta name="description" content="The Stork Journal" />
+</svelte:head>
+
+<Navbar isAuthenticated={data.isAuthenticated} />
 
 <div class="pt-10">
 	<div class="mx-auto max-md:mx-4 w-4/5 max-md:w-auto relative">

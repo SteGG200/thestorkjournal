@@ -5,7 +5,7 @@
 	const { data } = $props();
 </script>
 
-<NavBar />
+<NavBar isAuthenticated={data.isAuthenticated}/>
 
 <section class="mt-10 max-lg:mt-10 max-sm:mt-4 space-y-4 max-sm:space-y-2">
 	<p

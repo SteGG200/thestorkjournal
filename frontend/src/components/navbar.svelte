@@ -1,7 +1,8 @@
 <script>
 	import '../app.css';
 	import { goto } from '$app/navigation';
-	let name = 'world';
+
+	const { isAuthenticated } = $props()	
 
 	const tags = [
 		'News',
@@ -14,8 +15,12 @@
 		'Art gallery',
 		'About us'
 	];
-	function to_text_editor() {
-		goto('./text-editor');
+	function to_text_editor_or_login() {
+		if(isAuthenticated) {
+			goto('/text-editor');
+		}else{
+			goto('/login');
+		}
 	}
 </script>
 
@@ -34,12 +39,17 @@ sticky w-full z-20 top-0 start-0 border-b"
 		<div class="flex lg:order-2 space-x-3 lg:space-x-0 rtl:space-x-reverse">
 			<button
 				type="button"
-				on:click={to_text_editor}
+				onclick={to_text_editor_or_login}
 				class="text-white bg-red-700 hover:bg-red-800
         focus:ring-4 focus:outline-none focus:ring-red-800
         font-medium text-center text-sm
-        rounded-lg px-4 py-2">Write article</button
-			>
+        rounded-lg px-4 py-2">
+				{#if isAuthenticated}
+					Write article
+				{:else}
+					Login
+				{/if}
+			</button>
 
 			<button
 				data-collapse-toggle="navbar-sticky"

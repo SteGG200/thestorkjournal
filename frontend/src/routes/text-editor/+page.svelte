@@ -12,7 +12,7 @@
 		{ name: 'Science', value: 'science' },
 		{ name: 'Life style', value: 'life-style' },
 		{ name: 'Fashion', value: 'fashion' },
-		{ name: 'Sport', value: 'sport' },
+		{ name: 'Sports', value: 'sports' },
 		{ name: 'Technology', value: 'technology' },
 		{ name: 'Art gallery', value: 'art-gallery' }
 	];
@@ -179,11 +179,15 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Write Article</title>
+</svelte:head>
+
 {#if isLoading}
 	<Loading />
 {:else}
 	{#if replyMessage == 200}
-		<Popup_200 />
+		<Popup_200>Submit sucessfully, we will send you an email after verification.</Popup_200>
 	{:else if replyMessage == 401}
 		<Popup_401 />
 	{/if}
@@ -284,7 +288,7 @@
 			<button
 				type="submit"
 				onclick={submitArticle}
-				class=" text-gray-100 bg-red-500 hover:bg-primary-600 border-2 border-red-500
+				class="text-gray-100 bg-red-500 hover:bg-primary-600 border-2 border-red-500
 			focus:ring-2 focus:outline-none focus:ring-red-700 focus:ring-primary-300
 			font-medium rounded-md text-sm px-5 py-2.5 text-center"
 				>Submit your article

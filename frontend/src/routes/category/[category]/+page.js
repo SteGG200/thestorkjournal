@@ -14,12 +14,16 @@ export const load  = async ({ fetch, params }) => {
 	];
 
 	if(categories.includes(params.category)){
-		const response = await fetch(`${PUBLIC_SERVER_URL}/article/get/${params.category}`);
-		const result = await response.json();
-    return {
-			result,
-			category: params.category
-		};
+		const [response_articles, response_authentication] = await Promise.all([
+			fetch(`${PUBLIC_SERVER_URL}/article/get/${params.category}`),
+			fetch(`${PUBLIC_SERVER_URL}/auth`, { credentials: 'include' })
+		])
+	
+		const result = await response_articles.json()
+	
+		const isAuthenticated = response_authentication.status === 200
+	
+		return { articles: result.articles, isAuthenticated};
 	}
 
 	error(404, 'Not Found');
