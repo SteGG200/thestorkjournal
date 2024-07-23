@@ -39,7 +39,7 @@ export const createArticleRoute: FastifyPluginAsync = async (fastify, option) =>
 			from: process.env.EMAIL_ADMIN,
 			to: process.env.EMAIL_ADMIN,
 			subject: 'New Article Created',
-			text: `A new article has been created by ${authorInfo.name} with email ${authorInfo.email}.\n\nThe ID of the article is ${articleId}. Using the key below to confirm the article as soon as you can.\n\nThis is the key: ${confirmKey}\n\nThank you!`
+			text: `A new article has been created by ${authorInfo.name} with email ${authorInfo.email}.\n\nPlease access below link to confirm or reject the article.\n\n${process.env.CLIENT_URL}/confirm/${articleId}\n\nUsing this key to authenticate: ${confirmKey}\n\nThank you!`
 		});
 
 		res.statusCode = 200;
