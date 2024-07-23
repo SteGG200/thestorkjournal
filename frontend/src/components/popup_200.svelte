@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 
-    const { children } = $props()
+	const { children } = $props();
 </script>
 
 <div

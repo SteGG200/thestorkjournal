@@ -2,7 +2,7 @@
 	import '../app.css';
 	import { goto } from '$app/navigation';
 
-	const { isAuthenticated } = $props()	
+	const { isAuthenticated } = $props();
 
 	const tags = [
 		'News',
@@ -16,9 +16,9 @@
 		'About us'
 	];
 	function to_text_editor_or_login() {
-		if(isAuthenticated) {
+		if (isAuthenticated) {
 			goto('/text-editor');
-		}else{
+		} else {
 			goto('/login');
 		}
 	}
@@ -43,7 +43,8 @@ sticky w-full z-20 top-0 start-0 border-b"
 				class="text-white bg-red-700 hover:bg-red-800
         focus:ring-4 focus:outline-none focus:ring-red-800
         font-medium text-center text-sm
-        rounded-lg px-4 py-2">
+        rounded-lg px-4 py-2"
+			>
 				{#if isAuthenticated}
 					Write article
 				{:else}
@@ -90,7 +91,7 @@ sticky w-full z-20 top-0 start-0 border-b"
 				{#each tags as tag}
 					<li>
 						<a
-							href={`/category/${tag.toLowerCase().replace(' ','-')}`}
+							href={`/category/${tag.toLowerCase().replace(' ', '-')}`}
 							class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-red-700 lg:p-0"
 							>{tag}</a
 						>

@@ -1,7 +1,6 @@
 import { FastifyPluginAsync } from 'fastify';
 import { uuidValidateV4 } from '../../utils/articleIdHandler.js';
 import { getArticleById } from '../../database/articleHandler.js';
-import { getUserById } from '../../database/userHandler.js';
 
 export const showArticleRoute: FastifyPluginAsync = async (fastify, option) => {
 	fastify.get<{

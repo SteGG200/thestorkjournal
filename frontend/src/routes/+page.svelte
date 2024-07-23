@@ -7,7 +7,7 @@
 	import { goto } from '$app/navigation';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import Autoplay from 'embla-carousel-autoplay';
-	import { suggestArticles } from '$lib/utils.js'
+	import { suggestArticles } from '$lib/utils.js';
 
 	/** @type {import('./$types').PageData} */
 	const { data } = $props();
@@ -17,7 +17,7 @@
 	const article_number = data.articles.length;
 	const pages = Math.ceil(article_number / article_per_page);
 
-	const limit_suggested_article = 3
+	const limit_suggested_article = 3;
 
 	const plugins = [
 		Autoplay({
@@ -57,7 +57,7 @@
 
 <svelte:head>
 	<title>The Stork Journal</title>
-  <meta name="description" content="The Stork Journal" />
+	<meta name="description" content="The Stork Journal" />
 </svelte:head>
 
 <Navbar isAuthenticated={data.isAuthenticated} />
@@ -159,7 +159,9 @@
 						</div>
 					</div>
 					<div class="pb-8 border-b-2 border-gray-300 mx-4 mt-4">
-						<p class="line-clamp-3 content">{@html JSON.parse(article.content).blocks[0].data.text}</p>
+						<p class="line-clamp-3 content">
+							{@html JSON.parse(article.content).blocks[0].data.text}
+						</p>
 					</div>
 				{/each}
 
@@ -230,7 +232,9 @@
 				</div>
 			</div>
 
-			<div class="max-md:border-t-2 max-md:border-gray-300 max-md:pt-8 pt-0 border-none w-1/3 max-md:w-auto">
+			<div
+				class="max-md:border-t-2 max-md:border-gray-300 max-md:pt-8 pt-0 border-none w-1/3 max-md:w-auto"
+			>
 				<div class="text-gray-600 font-semibold px-4 pb-4 text-md">Suggested for you</div>
 				{#each suggestArticles(data.articles, limit_suggested_article) as article}
 					<div class="flex flex-row mb-4 items-center mx-4">

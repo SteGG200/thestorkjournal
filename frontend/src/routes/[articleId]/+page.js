@@ -13,17 +13,21 @@ export async function load({ fetch, params }) {
 		const [response_article, response_authentication] = await Promise.all([
 			fetch(`${PUBLIC_SERVER_URL}/article/show/${params.articleId}`),
 			fetch(`${PUBLIC_SERVER_URL}/auth`, { credentials: 'include' })
-		])
+		]);
 
-		const result = await response_article.json()
+		const result = await response_article.json();
 
-		if(!result.article){
+		if (!result.article) {
 			error(404, 'Not Found');
 		}
 
-		const isAuthenticated = response_authentication.status === 200
+		const isAuthenticated = response_authentication.status === 200;
 
-		return {article: result.article, authorName: result.authorName, isAuthenticated: isAuthenticated}
+		return {
+			article: result.article,
+			authorName: result.authorName,
+			isAuthenticated: isAuthenticated
+		};
 	}
 
 	error(404, 'Not Found');

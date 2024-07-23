@@ -1,8 +1,8 @@
 <script>
-	import { page } from '$app/stores'
-	import { PUBLIC_SERVER_URL } from '$env/static/public'
+	import { page } from '$app/stores';
+	import { PUBLIC_SERVER_URL } from '$env/static/public';
 	import Popup_200 from '$components/popup_200.svelte';
-	import '../../../app.css'
+	import '../../../app.css';
 
 	const tags = [
 		'News',
@@ -13,32 +13,32 @@
 		'Sports',
 		'Technology',
 		'Art gallery'
-	]
+	];
 
-	let isDisable = $state(false)
+	let isDisable = $state(false);
 
-	let isAuthenticated = $state(false)
+	let isAuthenticated = $state(false);
 
-	let editor = $state()
+	let editor = $state();
 
-	let confirmKey = $state("")
-	let isAuthenticationFail = $state(false)
+	let confirmKey = $state('');
+	let isAuthenticationFail = $state(false);
 
-	let title = $state("")
-	let thumbnail = $state("")
-	let content = $state({})
-	let category = $state("")
-	let authorId = $state(0)
-	let isConfirm = $state(false)
+	let title = $state('');
+	let thumbnail = $state('');
+	let content = $state({});
+	let category = $state('');
+	let authorId = $state(0);
+	let isConfirm = $state(false);
 
-	let isTitleEmptyError = $state(false)
-	let isThumbnailEmptyError = $state(false)
-	let isContentEmptyError = $state(false)
-	let isCategoryEmptyError = $state(false)
+	let isTitleEmptyError = $state(false);
+	let isThumbnailEmptyError = $state(false);
+	let isContentEmptyError = $state(false);
+	let isCategoryEmptyError = $state(false);
 
-	let inputThumbnail = $state(null)
+	let inputThumbnail = $state(null);
 
-	let replyMessage = $state(0)
+	let replyMessage = $state(0);
 
 	const editorjsLoader = async () => {
 		const ImageTool = (await import('@editorjs/image')).default;
@@ -59,10 +59,10 @@
 			data: content
 		});
 	};
-	
+
 	const triggerInputThumbnail = () => {
-		inputThumbnail.click()
-	}
+		inputThumbnail.click();
+	};
 
 	const sendThumbnail = async (e) => {
 		const thumbnailFile = e.target.files[0];
@@ -80,65 +80,68 @@
 			return;
 		}
 
-		thumbnail = result.file.url
-	}
+		thumbnail = result.file.url;
+	};
 
 	const authenticate = async () => {
-		const response = await fetch(`${PUBLIC_SERVER_URL}/article/confirm/${$page.params.articleId}/get`,{
-			method: 'POST',
-			headers: {
-				'content-type': 'application/json'
-			},
-			body: JSON.stringify({ confirmKey })
-		})
+		const response = await fetch(
+			`${PUBLIC_SERVER_URL}/article/confirm/${$page.params.articleId}/get`,
+			{
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json'
+				},
+				body: JSON.stringify({ confirmKey })
+			}
+		);
 
-		if(response.status === 200){
-			const result = await response.json()
-	
-			title = result.article.title
-			thumbnail = result.article.thumbnail
-			content = JSON.parse(result.article.content)
-			category = result.article.category
-			authorId = result.authorId
+		if (response.status === 200) {
+			const result = await response.json();
 
-			isAuthenticated = true
-			isAuthenticationFail = false
-		}else{
-			isAuthenticationFail = true
+			title = result.article.title;
+			thumbnail = result.article.thumbnail;
+			content = JSON.parse(result.article.content);
+			category = result.article.category;
+			authorId = result.authorId;
+
+			isAuthenticated = true;
+			isAuthenticationFail = false;
+		} else {
+			isAuthenticationFail = true;
 		}
-		console.log("here")
-	}
+		console.log('here');
+	};
 
 	const checkIsValid = () => {
-		let isValid = true
+		let isValid = true;
 
-		if(title == ''){
-			isTitleEmptyError = true
-      isValid = false
+		if (title == '') {
+			isTitleEmptyError = true;
+			isValid = false;
 		}
 
-		if(thumbnail == ''){
-			isThumbnailEmptyError = true
-      isValid = false
+		if (thumbnail == '') {
+			isThumbnailEmptyError = true;
+			isValid = false;
 		}
 
-		if(content.blocks.length == 0){
-			isContentEmptyError = true
-      isValid = false
+		if (content.blocks.length == 0) {
+			isContentEmptyError = true;
+			isValid = false;
 		}
 
-		if(category == ''){
-			isCategoryEmptyError = true
-      isValid = false
+		if (category == '') {
+			isCategoryEmptyError = true;
+			isValid = false;
 		}
 
-		return isValid
-	}
+		return isValid;
+	};
 
 	const updateContent = async () => {
-		content = await editor.save()
+		content = await editor.save();
 
-		if(!checkIsValid()){
+		if (!checkIsValid()) {
 			return;
 		}
 
@@ -152,26 +155,26 @@
 				article: {
 					title,
 					thumbnail,
-          content: JSON.stringify(content),
-          category
+					content: JSON.stringify(content),
+					category
 				},
 				authorId,
 				confirmStatus: isConfirm
 			})
-		})
+		});
 
-		replyMessage = response.status
-	}
+		replyMessage = response.status;
+	};
 
 	const onSubmit = async () => {
-		isDisable = true
-		if(!isAuthenticated){
-			await authenticate()
-		}else{
-			await updateContent()
+		isDisable = true;
+		if (!isAuthenticated) {
+			await authenticate();
+		} else {
+			await updateContent();
 		}
-		isDisable = false
-	}
+		isDisable = false;
+	};
 </script>
 
 <svelte:head>
@@ -181,24 +184,46 @@
 <form onsubmit={onSubmit}>
 	{#if !isAuthenticated}
 		<div class="w-full h-screen bg-gray-200 flex justify-center items-center max-md:px-4">
-			<div class="bg-white w-[500px] flex flex-col items-center p-6 space-y-4 rounded-lg shadow max-md:w-full">
+			<div
+				class="bg-white w-[500px] flex flex-col items-center p-6 space-y-4 rounded-lg shadow max-md:w-full"
+			>
 				<div class="w-full space-y-2">
 					<label for="key">Confirm Key</label>
-					<input class="w-full h-[40px] bg-gray-50 border-2 border-gray-300 rounded-lg outline-none p-2.5" name="key" type="text" bind:value={confirmKey} disabled={isDisable} autocomplete="off" required>
+					<input
+						class="w-full h-[40px] bg-gray-50 border-2 border-gray-300 rounded-lg outline-none p-2.5"
+						name="key"
+						type="text"
+						bind:value={confirmKey}
+						disabled={isDisable}
+						autocomplete="off"
+						required
+					/>
 				</div>
 				{#if isAuthenticationFail}
 					<p class="text-red-500">Your key is wrong</p>
 				{/if}
-				<button class="w-full bg-red-700 hover:bg-red-800 rounded-lg py-1 text-gray-100" type="submit" disabled={isDisable}>Submit</button>
+				<button
+					class="w-full bg-red-700 hover:bg-red-800 rounded-lg py-1 text-gray-100"
+					type="submit"
+					disabled={isDisable}>Submit</button
+				>
 			</div>
 		</div>
 	{:else}
 		{#if replyMessage == 200}
-			<Popup_200>{isConfirm ? "Confirm" : "Reject"} the article successfully. We will send an email to author immediately</Popup_200>
+			<Popup_200
+				>{isConfirm ? 'Confirm' : 'Reject'} the article successfully. We will send an email to author
+				immediately</Popup_200
+			>
 		{/if}
 		<div class="w-full h-full flex flex-col items-center py-8 max-md:py-4 space-y-4">
-
-			<input class={`font-semibold text-3xl w-3/4 text-center outline-none mx-auto mb-4`} type="text" placeholder={`${isTitleEmptyError ? 'Title is required' : 'Article title'}`} disabled={isDisable} bind:value={title}>
+			<input
+				class={`font-semibold text-3xl w-3/4 text-center outline-none mx-auto mb-4`}
+				type="text"
+				placeholder={`${isTitleEmptyError ? 'Title is required' : 'Article title'}`}
+				disabled={isDisable}
+				bind:value={title}
+			/>
 
 			{#if thumbnail}
 				<button onclick={triggerInputThumbnail} class="relative">
@@ -256,7 +281,9 @@
 				<p class="text-red-500 text-center font-light my-3">*Content is required.</p>
 			{/if}
 			<div class="w-full flex justify-center space-x-4">
-				<select disabled={isDisable} bind:value={category}
+				<select
+					disabled={isDisable}
+					bind:value={category}
 					class={` bg-gray-50 border text-gray-900 rounded-md  block p-2.5 ${isCategoryEmptyError ? 'border-red-500' : ''} `}
 				>
 					<option disabled selected value="">
@@ -270,14 +297,22 @@
 						<option value={tag.toLowerCase().replace(' ', '-')}>{tag}</option>
 					{/each}
 				</select>
-				<button type="submit" class="bg-red-500 hover:bg-red-600 rounded-md px-2 text-gray-100" onclick={(e) => {
-					isConfirm = true;
-				}}>
+				<button
+					type="submit"
+					class="bg-red-500 hover:bg-red-600 rounded-md px-2 text-gray-100"
+					onclick={(e) => {
+						isConfirm = true;
+					}}
+				>
 					Confirm
 				</button>
-				<button type="submit" class="bg-gray-50 hover:bg-gray-100 rounded-md px-2 border-2" onclick={(e) => {
-					isConfirm = false;
-				}}>
+				<button
+					type="submit"
+					class="bg-gray-50 hover:bg-gray-100 rounded-md px-2 border-2"
+					onclick={(e) => {
+						isConfirm = false;
+					}}
+				>
 					Reject
 				</button>
 			</div>
