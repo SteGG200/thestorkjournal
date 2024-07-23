@@ -44,7 +44,8 @@ const pluginsRegister = async () => {
 		parseOptions: {
 			maxAge: 172800,
 			path: '/',
-			sameSite: 'none'
+			sameSite: 'none',
+			secure: true
 		}
 	});
 
