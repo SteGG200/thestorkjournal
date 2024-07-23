@@ -6,6 +6,7 @@
 	import { formatCategory } from '$lib/utils.js';
 	import PageButton from '$components/page_button.svelte';
 	import EtcButton from '$components/Etc_button.svelte';
+    import { take_first_para } from "$lib/utils.js";
 
 	const { data } = $props();
 
@@ -58,7 +59,7 @@
 					/>
 				</a>
 				<p class="content line-clamp-3">
-					{@html JSON.parse(data.articles[0].content).blocks[0].data.text}
+					{@html take_first_para(JSON.parse(data.articles[0].content).blocks)}
 				</p>
 			</div>
 			{#if data.articles.length > 1}
@@ -88,7 +89,7 @@
 							</div>
 						</div>
 						<p class="content line-clamp-3">
-							{@html JSON.parse(article.content).blocks[0].data.text}
+							{@html take_first_para(JSON.parse(article.content).blocks)}
 						</p>
 					</div>
 				{/each}

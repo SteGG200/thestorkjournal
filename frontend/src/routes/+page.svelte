@@ -8,6 +8,7 @@
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import Autoplay from 'embla-carousel-autoplay';
 	import { suggestArticles } from '$lib/utils.js';
+    import { take_first_para } from '$lib/utils.js';
 
 	/** @type {import('./$types').PageData} */
 	const { data } = $props();
@@ -83,7 +84,7 @@
 								})}
 							</p>
 							<div class="hidden md:block text-gray-400 pb-4 w-2/3">
-								<p class="line-clamp-3">{@html JSON.parse(article.content).blocks[0].data.text}</p>
+								<p class="line-clamp-3">{@html take_first_para(JSON.parse(article.content).blocks)}</p>
 							</div>
 							<a class="pb-2 md:pb-4 hover:text-gray-400 w-1/2 max-lg:w-full" href="/{article.id}">
 								<h1 class="text-xl md:text-4xl">
@@ -156,7 +157,7 @@
 					</div>
 					<div class="pb-8 border-b-2 border-gray-300 mx-4 mt-4">
 						<p class="line-clamp-3 content">
-							{@html JSON.parse(article.content).blocks[0].data.text}
+							{@html take_first_para(JSON.parse(article.content).blocks)}
 						</p>
 					</div>
 				{/each}
