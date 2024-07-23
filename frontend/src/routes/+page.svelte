@@ -1,9 +1,9 @@
 <script>
 	import '../app.css';
 	import Navbar from '$components/navbar.svelte';
-	import PageButton from '../components/page_button.svelte';
+	import PageButton from '$components/page_button.svelte';
 	import Footer from '$components/Footer.svelte';
-	import EtcButton from '../components/Etc_button.svelte';
+	import EtcButton from '$components/Etc_button.svelte';
 	import { goto } from '$app/navigation';
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import Autoplay from 'embla-carousel-autoplay';
@@ -12,16 +12,17 @@
 	/** @type {import('./$types').PageData} */
 	const { data } = $props();
 
-	let current_number_page = $state(1);
+	let current_page_number = $state(1);
 	const article_per_page = 5;
 	const article_number = data.articles.length;
-	const pages = Math.ceil(article_number / article_per_page);
+	const number_pages = Math.ceil(article_number / article_per_page);
 
 	const limit_suggested_article = 3;
 
 	const plugins = [
 		Autoplay({
-			delay: 3000
+			delay: 5000,
+			stopOnInteraction: false
 		})
 	];
 	const options = { loop: true };
@@ -134,8 +135,8 @@
 	</div>
 	<div class="mt-12 md:mx-auto mx-4 w-4/5 max-md:w-auto">
 		<div class="md:flex md:flex-row border-t-2 border-gray-300 py-8">
-			<div class="max-lg:w-auto w-2/3 border-r-2 border-gray-300">
-				{#each data.articles.slice((current_number_page - 1) * article_per_page, Math.min(current_number_page * article_per_page, article_number)) as article}
+			<div class="max-lg:w-auto w-2/3 md:border-r-2 border-gray-300">
+				{#each data.articles.slice((current_page_number - 1) * article_per_page, Math.min(current_page_number * article_per_page, article_number)) as article}
 					<div class="flex flex-row items-center mt-4 mx-4">
 						<button
 							class="w-2/3 max-lg:w-[250px] aspect-[14/8] bg-center bg-cover"
@@ -166,66 +167,68 @@
 				{/each}
 
 				<div class="flex flex-row m-4 items-center justify-center">
-					{#if current_number_page != 1}
+					{#if current_page_number != 1}
 						<PageButton
 							page_number={'Previous'}
 							change_page={() => {
-								current_number_page--;
+								current_page_number--;
 							}}
 						/>
 					{/if}
 
 					<PageButton
 						page_number={1}
+						disabled={current_page_number == 1}
 						change_page={() => {
-							current_number_page = 1;
+							current_page_number = 1;
 						}}
 					/>
 
-					{#if current_number_page > 3}
+					{#if current_page_number - 1 >= 3}
 						<EtcButton />
 					{/if}
 
-					{#if current_number_page > 2}
+					{#if current_page_number - 1 > 1}
 						<PageButton
-							page_number={current_number_page - 1}
+							page_number={current_page_number - 1}
 							change_page={() => {
-								current_number_page--;
+								current_page_number--;
 							}}
 						/>
 					{/if}
 
-					{#if current_number_page != 1 && current_number_page != pages}
-						<PageButton page_number={current_number_page} change_page={() => {}} />
+					{#if current_page_number != 1 && current_page_number != number_pages}
+						<PageButton page_number={current_page_number} disabled={true} />
 					{/if}
 
-					{#if current_number_page < pages - 1}
+					{#if current_page_number + 1 < number_pages}
 						<PageButton
-							page_number={current_number_page + 1}
+							page_number={current_page_number + 1}
 							change_page={() => {
-								current_number_page++;
+								current_page_number++;
 							}}
 						/>
 					{/if}
 
-					{#if current_number_page < pages - 2}
+					{#if number_pages - current_page_number >= 3}
 						<EtcButton />
 					{/if}
 
-					{#if current_number_page != 1}
+					{#if number_pages != 1}
 						<PageButton
-							page_number={pages}
+							page_number={number_pages}
+							disabled={current_page_number == number_pages}
 							change_page={() => {
-								current_number_page = pages;
+								current_page_number = number_pages;
 							}}
 						/>
 					{/if}
 
-					{#if current_number_page != pages}
+					{#if current_page_number != number_pages}
 						<PageButton
 							page_number={'Next'}
 							change_page={() => {
-								current_number_page++;
+								current_page_number++;
 							}}
 						/>
 					{/if}

@@ -12,8 +12,7 @@
 		'Fashion',
 		'Sports',
 		'Technology',
-		'Art gallery',
-		'About us'
+		'Art gallery'
 	];
 	function to_text_editor_or_login() {
 		if (isAuthenticated) {
@@ -97,6 +96,12 @@ sticky w-full z-20 top-0 start-0 border-b"
 						>
 					</li>
 				{/each}
+				<li>
+					<a
+						class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 lg:hover:bg-transparent lg:hover:text-red-700 lg:p-0"
+						href="https://github.com/dta1tin22">About us</a
+					>
+				</li>
 			</ul>
 		</div>
 	</div>

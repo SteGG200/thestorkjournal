@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import { PUBLIC_SERVER_URL } from '$env/static/public';
 	import Popup_200 from '$components/popup_200.svelte';
+	import Popup_401 from '$components/popup_401.svelte';
 	import '../../../app.css';
 
 	const tags = [
@@ -211,10 +212,12 @@
 		</div>
 	{:else}
 		{#if replyMessage == 200}
-			<Popup_200
-				>{isConfirm ? 'Confirm' : 'Reject'} the article successfully. We will send an email to author
-				immediately</Popup_200
-			>
+			<Popup_200>
+				{isConfirm ? 'Confirm' : 'Reject'} the article successfully. We will send an email to author
+				immediately
+			</Popup_200>
+		{:else if replyMessage != 0}
+			<Popup_401 redirect="/" buttonText="Return Home">There are some errors on server.</Popup_401>
 		{/if}
 		<div class="w-full h-full flex flex-col items-center py-8 max-md:py-4 space-y-4">
 			<input
@@ -300,7 +303,7 @@
 				<button
 					type="submit"
 					class="bg-red-500 hover:bg-red-600 rounded-md px-2 text-gray-100"
-					onclick={(e) => {
+					onclick={() => {
 						isConfirm = true;
 					}}
 				>
@@ -309,7 +312,7 @@
 				<button
 					type="submit"
 					class="bg-gray-50 hover:bg-gray-100 rounded-md px-2 border-2"
-					onclick={(e) => {
+					onclick={() => {
 						isConfirm = false;
 					}}
 				>

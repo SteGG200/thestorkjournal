@@ -11,7 +11,8 @@
 		<div class=" m-4 mt-8">{@render children()}</div>
 		<button
 			class="mx-auto bg-red-600 text-white rounded my-4 p-2 hover:bg-red-700"
-			onclick={() => {
+			onclick={(e) => {
+				e.preventDefault();
 				goto('/');
 			}}>Return home</button
 		>

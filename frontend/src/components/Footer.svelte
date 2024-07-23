@@ -11,8 +11,7 @@
 		'Fashion',
 		'Sports',
 		'Technology',
-		'Art gallery',
-		'About us'
+		'Art gallery'
 	];
 </script>
 
@@ -29,10 +28,11 @@
 	</div>
 	<div class="lg:space-x-12 max-lg:flex max-lg:flex-col max-lg:space-y-4">
 		{#each tags as tag}
-			<a class="hover:text-slate-600" href={`/category/${tag.toLowerCase().replace(' ', '-')}`}
-				>{tag}</a
-			>
+			<a class="hover:text-slate-600" href={`/category/${tag.toLowerCase().replace(' ', '-')}`}>
+				{tag}
+			</a>
 		{/each}
+		<a class="hover:text-slate-600" href="https://github.com/dta1tin22">About us</a>
 	</div>
 	<p class="text-sm font-bold tracking-wide">Created in 2024 by Xuan An, Hoa Binh and Viet Anh.</p>
 </footer>

@@ -189,7 +189,7 @@
 	{#if replyMessage == 200}
 		<Popup_200>Submit sucessfully, we will send you an email after verification.</Popup_200>
 	{:else if replyMessage == 401}
-		<Popup_401 />
+		<Popup_401 redirect="/login" buttonText="Login">Have not logged in yet.</Popup_401>
 	{/if}
 
 	<a href="/">

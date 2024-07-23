@@ -15,11 +15,11 @@ export async function load({ fetch, params }) {
 			fetch(`${PUBLIC_SERVER_URL}/auth`, { credentials: 'include' })
 		]);
 
-		const result = await response_article.json();
-
-		if (!result.article) {
-			error(404, 'Not Found');
+		if (response_article.status === 404) {
+			error(404, 'Article not found');
 		}
+
+		const result = await response_article.json();
 
 		const isAuthenticated = response_authentication.status === 200;
 
