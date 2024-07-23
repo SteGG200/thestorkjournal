@@ -30,7 +30,8 @@ server.decorate('config', {
 		'sports',
 		'technology',
 		'art-gallery'
-	]
+	],
+	limitLatestArticles: 5
 });
 
 server.get('/', (req, res) => {

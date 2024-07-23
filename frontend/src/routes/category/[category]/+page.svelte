@@ -4,6 +4,8 @@
 	import { suggestArticles } from '$lib/utils.js';
 	import { page } from '$app/stores';
 	import { formatCategory } from '$lib/utils.js';
+	import PageButton from '$components/page_button.svelte';
+	import EtcButton from '$components/Etc_button.svelte';
 
 	const { data } = $props();
 
@@ -23,7 +25,7 @@
 		<div class="md:border-r-2 md:pr-4 w-1/3 max-md:w-full space-y-4 mt-4">
 			<p class="font-semibold text-gray-600 text-center">Suggested for you</p>
 			<div class="space-y-2 max-md:space-y-6">
-				{#each suggestArticles(data.articles, limit_suggested_article) as article}
+				{#each suggestArticles(data.latestArticles, limit_suggested_article) as article}
 					<p class="line-clamp-2">
 						<a class="text-[#176db3] hover:text-gray-800" href={`/${article.id}`}>{article.title}</a
 						>
@@ -91,6 +93,58 @@
 					</div>
 				{/each}
 			{/if}
+			<div class="flex flex-row m-4 items-center justify-center space-x-2">
+				{#if data.currentPage != 1}
+					<PageButton path={$page.url.pathname} page_number={data.currentPage - 1}>Previous</PageButton>
+				{/if}
+
+				<PageButton path={$page.url.pathname} page_number={1} disabled={data.currentPage == 1}>1</PageButton>
+
+				{#if data.currentPage - 1 >= 3}
+					<EtcButton />
+				{/if}
+
+				{#if data.currentPage - 1 > 1}
+					<PageButton path={$page.url.pathname} page_number={data.currentPage - 1}>
+						{data.currentPage - 1}
+					</PageButton>
+				{/if}
+
+				{#if data.currentPage != 1 && data.currentPage != data.totalPage}
+					<PageButton path={$page.url.pathname} page_number={data.currentPage} disabled>
+						{data.currentPage}
+					</PageButton>
+				{/if}
+
+				{#if data.currentPage + 1 < data.totalPage}
+					<PageButton path={$page.url.pathname}
+						page_number={data.currentPage + 1}
+					>
+						{data.currentPage + 1}
+					</PageButton>
+				{/if}
+
+				{#if data.totalPage - data.currentPage >= 3}
+					<EtcButton />
+				{/if}
+
+				{#if data.totalPage != 1}
+					<PageButton path={$page.url.pathname}
+						page_number={data.totalPage}
+						disabled={data.currentPage == data.totalPage}
+					>
+						{data.totalPage}
+					</PageButton>
+				{/if}
+
+				{#if data.currentPage != data.totalPage}
+					<PageButton path={$page.url.pathname}
+						page_number={data.currentPage + 1}
+					>
+						Next
+					</PageButton>
+				{/if}
+			</div>
 		</div>
 	{:else}
 		<p class="text-4xl text-center">

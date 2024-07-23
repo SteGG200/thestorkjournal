@@ -23,6 +23,7 @@ declare module 'fastify' {
 				userInfo: string;
 			};
 			articleCategories: string[];
+			limitLatestArticles: number;
 		};
 	}
 }

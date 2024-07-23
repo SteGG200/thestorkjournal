@@ -12,11 +12,6 @@
 	/** @type {import('./$types').PageData} */
 	const { data } = $props();
 
-	let current_page_number = $state(1);
-	const article_per_page = 5;
-	const article_number = data.articles.length;
-	const number_pages = Math.ceil(article_number / article_per_page);
-
 	const limit_suggested_article = 3;
 
 	const plugins = [
@@ -71,7 +66,7 @@
 			onemblaInit={onInit}
 		>
 			<div class="flex w-full aspect-[2/1]">
-				{#each data.articles.slice(0, 5) as article}
+				{#each data.latestArticles as article}
 					<div
 						class="flex-none w-full min-w-0 bg-center bg-cover"
 						style={`background-image: url('${article.thumbnail}')`}
@@ -136,7 +131,7 @@
 	<div class="mt-12 md:mx-auto mx-4 w-4/5 max-md:w-auto">
 		<div class="md:flex md:flex-row border-t-2 border-gray-300 py-8">
 			<div class="max-lg:w-auto w-2/3 md:border-r-2 border-gray-300">
-				{#each data.articles.slice((current_page_number - 1) * article_per_page, Math.min(current_page_number * article_per_page, article_number)) as article}
+				{#each data.articles as article}
 					<div class="flex flex-row items-center mt-4 mx-4">
 						<button
 							class="w-2/3 max-lg:w-[250px] aspect-[14/8] bg-center bg-cover"
@@ -166,71 +161,56 @@
 					</div>
 				{/each}
 
-				<div class="flex flex-row m-4 items-center justify-center">
-					{#if current_page_number != 1}
-						<PageButton
-							page_number={'Previous'}
-							change_page={() => {
-								current_page_number--;
-							}}
-						/>
+				<div class="flex flex-row m-4 items-center justify-center space-x-2">
+					{#if data.currentPage != 1}
+						<PageButton path='/' page_number={data.currentPage - 1}>Previous</PageButton>
 					{/if}
 
-					<PageButton
-						page_number={1}
-						disabled={current_page_number == 1}
-						change_page={() => {
-							current_page_number = 1;
-						}}
-					/>
+					<PageButton path='/' page_number={1} disabled={data.currentPage == 1}>1</PageButton>
 
-					{#if current_page_number - 1 >= 3}
+					{#if data.currentPage - 1 >= 3}
 						<EtcButton />
 					{/if}
 
-					{#if current_page_number - 1 > 1}
-						<PageButton
-							page_number={current_page_number - 1}
-							change_page={() => {
-								current_page_number--;
-							}}
-						/>
+					{#if data.currentPage - 1 > 1}
+						<PageButton path='/' page_number={data.currentPage - 1}>
+							{data.currentPage - 1}
+						</PageButton>
 					{/if}
 
-					{#if current_page_number != 1 && current_page_number != number_pages}
-						<PageButton page_number={current_page_number} disabled={true} />
+					{#if data.currentPage != 1 && data.currentPage != data.totalPage}
+						<PageButton path='/' page_number={data.currentPage} disabled>
+							{data.currentPage}
+						</PageButton>
 					{/if}
 
-					{#if current_page_number + 1 < number_pages}
-						<PageButton
-							page_number={current_page_number + 1}
-							change_page={() => {
-								current_page_number++;
-							}}
-						/>
+					{#if data.currentPage + 1 < data.totalPage}
+						<PageButton path='/'
+							page_number={data.currentPage + 1}
+						>
+							{data.currentPage + 1}
+						</PageButton>
 					{/if}
 
-					{#if number_pages - current_page_number >= 3}
+					{#if data.totalPage - data.currentPage >= 3}
 						<EtcButton />
 					{/if}
 
-					{#if number_pages != 1}
-						<PageButton
-							page_number={number_pages}
-							disabled={current_page_number == number_pages}
-							change_page={() => {
-								current_page_number = number_pages;
-							}}
-						/>
+					{#if data.totalPage != 1}
+						<PageButton path='/'
+							page_number={data.totalPage}
+							disabled={data.currentPage == data.totalPage}
+						>
+							{data.totalPage}
+						</PageButton>
 					{/if}
 
-					{#if current_page_number != number_pages}
-						<PageButton
-							page_number={'Next'}
-							change_page={() => {
-								current_page_number++;
-							}}
-						/>
+					{#if data.currentPage != data.totalPage}
+						<PageButton path='/'
+							page_number={data.currentPage + 1}
+						>
+							Next
+						</PageButton>
 					{/if}
 				</div>
 			</div>
@@ -239,7 +219,7 @@
 				class="max-md:border-t-2 max-md:border-gray-300 max-md:pt-8 pt-0 border-none w-1/3 max-md:w-auto"
 			>
 				<div class="text-gray-600 font-semibold px-4 pb-4 text-md">Suggested for you</div>
-				{#each suggestArticles(data.articles, limit_suggested_article) as article}
+				{#each suggestArticles(data.latestArticles, limit_suggested_article) as article}
 					<div class="flex flex-row mb-4 items-center mx-4">
 						<button
 							class="w-1/4 max-lg:w-[60px] aspect-square bg-center bg-cover"

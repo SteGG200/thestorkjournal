@@ -41,7 +41,7 @@ export const confirmArticle = async (article: UnconfirmedArticleInfo) => {
 	RETURNING id, date_publish`;
 };
 
-export const getListArticles = async (category: string = '') => {
+export const getListArticles = async (category: string, limit : number, skip: number) => {
 	if (category != '') {
 		return await sql<
 			ArticleInfo[]
@@ -50,7 +50,9 @@ export const getListArticles = async (category: string = '') => {
 		INNER JOIN users 
 		ON articles.user_id = users.id
 		WHERE articles.category = ${category}
-		ORDER BY date_publish DESC`;
+		ORDER BY date_publish DESC
+		LIMIT ${limit} 
+		OFFSET ${skip}`;
 	} else {
 		return await sql<
 			ArticleInfo[]
@@ -58,9 +60,23 @@ export const getListArticles = async (category: string = '') => {
 		FROM articles 
 		INNER JOIN users 
 		ON articles.user_id = users.id 
-		ORDER BY date_publish DESC`;
+		ORDER BY date_publish DESC
+		LIMIT ${limit}
+		OFFSET ${skip}`;
 	}
 };
+
+export const countArticles = async (category: string) => {
+	if (category!= '') {
+    return await sql<
+      { count: number }[]
+    >`SELECT COUNT(*) as count FROM articles WHERE category = ${category}`;
+  } else {
+    return await sql<
+      { count: number }[]
+    >`SELECT COUNT(*) as count FROM articles`;
+  }
+}
 
 export const getArticleById = async (articleId: string) => {
 	return await sql<
