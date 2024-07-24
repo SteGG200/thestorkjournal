@@ -36,7 +36,7 @@
 		</div>
 		<div class="w-2/3 max-md:w-full space-y-8">
 			<div class="flex flex-col space-y-4 border-b-2 pb-8 w-5/6 max-[1100px]:w-full">
-				<p class="text-3xl max-sm:text-2xl font-bold">
+				<p class="text-3xl max-sm:text-2xl font-bold line-clamp-3">
 					<a href={`/${data.articles[0].id}`} class="hover:text-slate-600"
 						>{data.articles[0].title}</a
 					>

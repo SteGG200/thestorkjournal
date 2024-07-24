@@ -9,7 +9,7 @@ export const load = async ({ fetch, params, url }) => {
 		'economics',
 		'science',
 		'life-style',
-		'fashion',
+		'culture',
 		'sports',
 		'technology',
 		'art-gallery'

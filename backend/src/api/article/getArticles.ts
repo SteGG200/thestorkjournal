@@ -28,7 +28,7 @@ export const getArticleRoute: FastifyPluginAsync = async (fastify, option) => {
 	}>('/:category', async (req, res) => {
 		const category = req.params.category;
 		if (!fastify.config.articleCategories.includes(category)) {
-			res.statusCode = 400;
+			res.statusCode = 404;
 			res.send({ message: 'Invalid category' });
 			return;
 		}

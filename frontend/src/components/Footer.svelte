@@ -8,7 +8,7 @@
 		'Economics',
 		'Science',
 		'Life style',
-		'Fashion',
+		'Culture',
 		'Sports',
 		'Technology',
 		'Art gallery'

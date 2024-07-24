@@ -88,7 +88,7 @@
 								</p>
 							</div>
 							<a class="pb-2 md:pb-4 hover:text-gray-400 w-1/2 max-lg:w-full" href="/{article.id}">
-								<h1 class="text-xl md:text-4xl">
+								<h1 class="text-xl md:text-4xl line-clamp-3 max-sm:line-clamp-2">
 									{article.title}
 								</h1>
 							</a>

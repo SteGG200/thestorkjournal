@@ -7,14 +7,14 @@
 	import Loading from '$components/Loading.svelte';
 
 	const tags = [
-		{ name: 'News', value: 'news' },
-		{ name: 'Economics', value: 'economics' },
-		{ name: 'Science', value: 'science' },
-		{ name: 'Life style', value: 'life-style' },
-		{ name: 'Fashion', value: 'fashion' },
-		{ name: 'Sports', value: 'sports' },
-		{ name: 'Technology', value: 'technology' },
-		{ name: 'Art gallery', value: 'art-gallery' }
+		'News',
+		'Economics',
+		'Science',
+		'Life style',
+		'Culture',
+		'Sports',
+		'Technology',
+		'Art gallery'
 	];
 
 	let editor = $state(null);
@@ -279,8 +279,8 @@
 						Category is required
 					{/if}
 				</option>
-				{#each tags as { name, value }}
-					<option {value}>{name}</option>
+				{#each tags as tag}
+					<option value={tag.toLowerCase().replace(' ', '-')}>{tag}</option>
 				{/each}
 			</select>
 			<button
