@@ -6,7 +6,7 @@
 	import { formatCategory } from '$lib/utils.js';
 	import PageButton from '$components/page_button.svelte';
 	import EtcButton from '$components/Etc_button.svelte';
-    import { take_first_para } from "$lib/utils.js";
+	import { take_first_para } from '$lib/utils.js';
 
 	const { data } = $props();
 
@@ -96,10 +96,14 @@
 			{/if}
 			<div class="flex flex-row m-4 items-center justify-center space-x-2">
 				{#if data.currentPage != 1}
-					<PageButton path={$page.url.pathname} page_number={data.currentPage - 1}>Previous</PageButton>
+					<PageButton path={$page.url.pathname} page_number={data.currentPage - 1}
+						>Previous</PageButton
+					>
 				{/if}
 
-				<PageButton path={$page.url.pathname} page_number={1} disabled={data.currentPage == 1}>1</PageButton>
+				<PageButton path={$page.url.pathname} page_number={1} disabled={data.currentPage == 1}
+					>1</PageButton
+				>
 
 				{#if data.currentPage - 1 >= 3}
 					<EtcButton />
@@ -118,9 +122,7 @@
 				{/if}
 
 				{#if data.currentPage + 1 < data.totalPage}
-					<PageButton path={$page.url.pathname}
-						page_number={data.currentPage + 1}
-					>
+					<PageButton path={$page.url.pathname} page_number={data.currentPage + 1}>
 						{data.currentPage + 1}
 					</PageButton>
 				{/if}
@@ -130,7 +132,8 @@
 				{/if}
 
 				{#if data.totalPage != 1}
-					<PageButton path={$page.url.pathname}
+					<PageButton
+						path={$page.url.pathname}
 						page_number={data.totalPage}
 						disabled={data.currentPage == data.totalPage}
 					>
@@ -139,11 +142,7 @@
 				{/if}
 
 				{#if data.currentPage != data.totalPage}
-					<PageButton path={$page.url.pathname}
-						page_number={data.currentPage + 1}
-					>
-						Next
-					</PageButton>
+					<PageButton path={$page.url.pathname} page_number={data.currentPage + 1}>Next</PageButton>
 				{/if}
 			</div>
 		</div>

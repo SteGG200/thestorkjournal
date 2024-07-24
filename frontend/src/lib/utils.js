@@ -11,13 +11,13 @@ export function formatCategory(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export function take_first_para(blocks){
-    const length = blocks.length;
-    for (let i=0;i<length;++i){
-        if (blocks[i].type=="paragraph"){
-            return blocks[i].data.text;
-            // return "idk test first";
-        }
-    }
-    return "";
+export function take_first_para(blocks) {
+	const length = blocks.length;
+	for (let i = 0; i < length; ++i) {
+		if (blocks[i].type == 'paragraph') {
+			return blocks[i].data.text;
+			// return "idk test first";
+		}
+	}
+	return '';
 }

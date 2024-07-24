@@ -195,8 +195,6 @@
 	<a href="/">
 		<img class="w-20 h-[36px] block mx-4 mt-4" src="/logo.png" alt="logo" />
 	</a>
-	<!-- <div class="border-red-600 border-t-2 w-full h-0"></div> -->
-
 	<div class="mx-auto mt">
 		<div class="flex flex-col items-center justify-center mb-10">
 			<input
@@ -269,7 +267,7 @@
 			</button>
 			<select
 				bind:value={category}
-				class={` bg-gray-50 border text-gray-900 text-sm rounded-md  block p-2.5 ${isCategoryEmpty ? 'border-red-500' : ''} `}
+				class={`bg-gray-50 border text-gray-900 text-sm rounded-md block p-2.5 ${isCategoryEmpty ? 'border-red-500' : ''} `}
 				onchange={() => {
 					isCategoryEmpty = false;
 				}}

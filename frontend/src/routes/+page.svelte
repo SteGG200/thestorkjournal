@@ -8,7 +8,7 @@
 	import emblaCarouselSvelte from 'embla-carousel-svelte';
 	import Autoplay from 'embla-carousel-autoplay';
 	import { suggestArticles } from '$lib/utils.js';
-    import { take_first_para } from '$lib/utils.js';
+	import { take_first_para } from '$lib/utils.js';
 
 	/** @type {import('./$types').PageData} */
 	const { data } = $props();
@@ -72,7 +72,6 @@
 						class="flex-none w-full min-w-0 bg-center bg-cover"
 						style={`background-image: url('${article.thumbnail}')`}
 					>
-						<!-- <img class="w-full mx-auto object-center" src={article.thumbnail} alt="lmao idk"> -->
 						<div
 							class="bg-gradient-to-b from-transparent to-gray-900 w-full h-full text-white flex flex-col-reverse px-8 pb-4 md:p-12 space-y-2"
 						>
@@ -84,7 +83,9 @@
 								})}
 							</p>
 							<div class="hidden md:block text-gray-400 pb-4 w-2/3">
-								<p class="line-clamp-3">{@html take_first_para(JSON.parse(article.content).blocks)}</p>
+								<p class="line-clamp-3">
+									{@html take_first_para(JSON.parse(article.content).blocks)}
+								</p>
 							</div>
 							<a class="pb-2 md:pb-4 hover:text-gray-400 w-1/2 max-lg:w-full" href="/{article.id}">
 								<h1 class="text-xl md:text-4xl">
@@ -135,7 +136,7 @@
 				{#each data.articles as article}
 					<div class="flex flex-row items-center mt-4 mx-4">
 						<button
-							class="w-2/3 max-lg:w-[250px] aspect-[14/8] bg-center bg-cover"
+							class="w-2/3 max-lg:w-[250px] aspect-[14/8] bg-center bg-cover hover:brightness-110"
 							style={`background-image: url('${article.thumbnail}')`}
 							onclick={() => {
 								goto(`/${article.id}`);
@@ -164,31 +165,29 @@
 
 				<div class="flex flex-row m-4 items-center justify-center space-x-2">
 					{#if data.currentPage != 1}
-						<PageButton path='/' page_number={data.currentPage - 1}>Previous</PageButton>
+						<PageButton path="/" page_number={data.currentPage - 1}>Previous</PageButton>
 					{/if}
 
-					<PageButton path='/' page_number={1} disabled={data.currentPage == 1}>1</PageButton>
+					<PageButton path="/" page_number={1} disabled={data.currentPage == 1}>1</PageButton>
 
 					{#if data.currentPage - 1 >= 3}
 						<EtcButton />
 					{/if}
 
 					{#if data.currentPage - 1 > 1}
-						<PageButton path='/' page_number={data.currentPage - 1}>
+						<PageButton path="/" page_number={data.currentPage - 1}>
 							{data.currentPage - 1}
 						</PageButton>
 					{/if}
 
 					{#if data.currentPage != 1 && data.currentPage != data.totalPage}
-						<PageButton path='/' page_number={data.currentPage} disabled>
+						<PageButton path="/" page_number={data.currentPage} disabled>
 							{data.currentPage}
 						</PageButton>
 					{/if}
 
 					{#if data.currentPage + 1 < data.totalPage}
-						<PageButton path='/'
-							page_number={data.currentPage + 1}
-						>
+						<PageButton path="/" page_number={data.currentPage + 1}>
 							{data.currentPage + 1}
 						</PageButton>
 					{/if}
@@ -198,7 +197,8 @@
 					{/if}
 
 					{#if data.totalPage != 1}
-						<PageButton path='/'
+						<PageButton
+							path="/"
 							page_number={data.totalPage}
 							disabled={data.currentPage == data.totalPage}
 						>
@@ -207,11 +207,7 @@
 					{/if}
 
 					{#if data.currentPage != data.totalPage}
-						<PageButton path='/'
-							page_number={data.currentPage + 1}
-						>
-							Next
-						</PageButton>
+						<PageButton path="/" page_number={data.currentPage + 1}>Next</PageButton>
 					{/if}
 				</div>
 			</div>
@@ -223,7 +219,7 @@
 				{#each suggestArticles(data.latestArticles, limit_suggested_article) as article}
 					<div class="flex flex-row mb-4 items-center mx-4">
 						<button
-							class="w-1/4 max-lg:w-[60px] aspect-square bg-center bg-cover"
+							class="w-1/4 max-lg:w-[60px] aspect-square bg-center bg-cover brightness-110"
 							style={`background-image: url('${article.thumbnail}')`}
 							onclick={() => {
 								goto(`/${article.id}`);
@@ -240,7 +236,5 @@
 		</div>
 	</div>
 </div>
-
-<!-- <button onclick={sth}> this is button</button> -->
 
 <Footer />

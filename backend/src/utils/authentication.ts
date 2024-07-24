@@ -3,26 +3,30 @@ import lucia from '../api/authentication/setup_auth.js';
 import { getUserInfoCookie } from './cookieHandler.js';
 
 export const isAuthenticated = async (fastify: FastifyInstance, req: FastifyRequest) => {
-	const cookieHeader = req.headers.cookie;
-	const sessionId = lucia.readSessionCookie(cookieHeader ?? '');
+	try {
+		const cookieHeader = req.headers.cookie;
+		const sessionId = lucia.readSessionCookie(cookieHeader ?? '');
 
-	if (!sessionId) return false;
+		if (!sessionId) return false;
 
-	const { session, user } = await lucia.validateSession(sessionId);
+		const { session, user } = await lucia.validateSession(sessionId);
 
-	if (!session || !user) return false;
+		if (!session || !user) return false;
 
-	const tokenUserInfo = req.cookies[fastify.config.cookieName.userInfo];
+		const tokenUserInfo = req.cookies[fastify.config.cookieName.userInfo];
 
-	if (!tokenUserInfo) {
+		if (!tokenUserInfo) {
+			return false;
+		}
+
+		const userInfoCookie = getUserInfoCookie(tokenUserInfo);
+
+		if (userInfoCookie.id == user.id) {
+			return true;
+		}
+
+		return false;
+	} catch (error) {
 		return false;
 	}
-
-	const userInfoCookie = getUserInfoCookie(tokenUserInfo);
-
-	if (userInfoCookie.id == user.id) {
-		return true;
-	}
-
-	return false;
 };

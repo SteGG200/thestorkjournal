@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 
 	const { isAuthenticated } = $props();
-    let navbar_hidden = $state(true);
+	let navbar_hidden = $state(true);
 	const tags = [
 		'News',
 		'Economics',
@@ -21,9 +21,9 @@
 			goto('/login');
 		}
 	}
-    function hide_navbar(){
-        navbar_hidden = !navbar_hidden;
-    }
+	function hide_navbar() {
+		navbar_hidden = !navbar_hidden;
+	}
 </script>
 
 <nav
@@ -55,7 +55,8 @@ sticky w-full z-20 top-0 start-0 border-b"
 			</button>
 
 			<button
-				data-collapse-toggle="navbar-sticky" onclick={hide_navbar}
+				data-collapse-toggle="navbar-sticky"
+				onclick={hide_navbar}
 				type="button"
 				class="inline-flex items-center p-2 w-10 h-10 justify-center
         text-sm text-gray-500 rounded-lg min-[1100px]:hidden
@@ -83,9 +84,9 @@ sticky w-full z-20 top-0 start-0 border-b"
 		</div>
 
 		<div
-			class={`items-center justify-between ${navbar_hidden? "hidden":""}
+			class={`items-center justify-between ${navbar_hidden ? 'hidden' : ''}
         w-full min-[1100px]:flex min-[1100px]:w-auto min-[1100px]:order-1`}
-			id="navbar-sticky" 
+			id="navbar-sticky"
 		>
 			<ul
 				class="flex flex-col p-4 lg:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 lg:space-x-8 rtl:space-x-reverse lg:flex-row lg:mt-0 lg:border-0 lg:bg-white"

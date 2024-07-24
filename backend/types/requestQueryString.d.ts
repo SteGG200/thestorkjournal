@@ -1,4 +1,4 @@
 interface QuerystringGetArticlesAPI {
-	limit: number
-	skip: number
+	limit: number;
+	skip: number;
 }

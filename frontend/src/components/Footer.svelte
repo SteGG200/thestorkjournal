@@ -34,5 +34,11 @@
 		{/each}
 		<a class="hover:text-slate-600" href="https://github.com/dta1tin22">About us</a>
 	</div>
-	<p class="text-sm font-bold tracking-wide">Created in 2024 by Xuan An, Hoa Binh and <a href="https://twitter.com/vanh_1910" class="hover:underline" target="_blank">Viet Anh</a>.</p>
+	<p class="text-sm font-bold tracking-wide">
+		Created in 2024 by Xuan An, Hoa Binh and <a
+			href="https://twitter.com/vanh_1910"
+			class="hover:underline"
+			target="_blank">Viet Anh</a
+		>.
+	</p>
 </footer>

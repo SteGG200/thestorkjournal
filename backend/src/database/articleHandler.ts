@@ -41,7 +41,7 @@ export const confirmArticle = async (article: UnconfirmedArticleInfo) => {
 	RETURNING id, date_publish`;
 };
 
-export const getListArticles = async (category: string, limit : number, skip: number) => {
+export const getListArticles = async (category: string, limit: number, skip: number) => {
 	if (category != '') {
 		return await sql<
 			ArticleInfo[]
@@ -67,16 +67,14 @@ export const getListArticles = async (category: string, limit : number, skip: nu
 };
 
 export const countArticles = async (category: string) => {
-	if (category!= '') {
-    return await sql<
-      { count: number }[]
-    >`SELECT COUNT(*) as count FROM articles WHERE category = ${category}`;
-  } else {
-    return await sql<
-      { count: number }[]
-    >`SELECT COUNT(*) as count FROM articles`;
-  }
-}
+	if (category != '') {
+		return await sql<
+			{ count: number }[]
+		>`SELECT COUNT(*) as count FROM articles WHERE category = ${category}`;
+	} else {
+		return await sql<{ count: number }[]>`SELECT COUNT(*) as count FROM articles`;
+	}
+};
 
 export const getArticleById = async (articleId: string) => {
 	return await sql<
