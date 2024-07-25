@@ -157,7 +157,7 @@
 						</div>
 					</div>
 					<div class="pb-8 border-b-2 border-gray-300 mx-4 mt-4">
-						<p class="line-clamp-3 content bold-child-none">
+						<p class="line-clamp-3 content bold-child-none text-sm">
 							{@html take_first_para(JSON.parse(article.content).blocks)}
 						</p>
 					</div>

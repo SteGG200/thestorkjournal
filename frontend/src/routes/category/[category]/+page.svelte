@@ -88,7 +88,7 @@
 								</p>
 							</div>
 						</div>
-						<p class="content line-clamp-3">
+						<p class="content line-clamp-3 text-sm">
 							{@html take_first_para(JSON.parse(article.content).blocks)}
 						</p>
 					</div>
