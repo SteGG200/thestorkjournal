@@ -32,7 +32,7 @@
 				{tag}
 			</a>
 		{/each}
-		<a class="hover:text-slate-600" href="https://github.com/dta1tin22">About us</a>
+		<a class="hover:text-slate-600" href="/about-us">About us</a>
 	</div>
 	<p class="text-sm font-bold tracking-wide">
 		Created in 2024 by Xuan An, Hoa Binh and <a

@@ -37,4 +37,8 @@
 	.content > a:hover {
 		text-decoration: none;
 	}
+
+	.bold-child-none > b {
+		font-weight: normal;
+	}
 }

@@ -58,7 +58,7 @@
 						alt="notfound"
 					/>
 				</a>
-				<p class="content line-clamp-3">
+				<p class="content line-clamp-3 bold-child-none">
 					{@html take_first_para(JSON.parse(data.articles[0].content).blocks)}
 				</p>
 			</div>
@@ -147,7 +147,7 @@
 			</div>
 		</div>
 	{:else}
-		<p class="text-4xl text-center">
+		<p class="text-4xl max-md:text-xl text-center">
 			Sorry, we can't find any article related to '{formatCategory($page.params.category)}' for you.
 		</p>
 	{/if}

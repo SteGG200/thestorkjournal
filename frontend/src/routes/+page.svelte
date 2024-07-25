@@ -83,7 +83,7 @@
 								})}
 							</p>
 							<div class="hidden md:block text-gray-400 pb-4 w-2/3">
-								<p class="line-clamp-3">
+								<p class="line-clamp-3 bold-child-none">
 									{@html take_first_para(JSON.parse(article.content).blocks)}
 								</p>
 							</div>
@@ -157,7 +157,7 @@
 						</div>
 					</div>
 					<div class="pb-8 border-b-2 border-gray-300 mx-4 mt-4">
-						<p class="line-clamp-3 content">
+						<p class="line-clamp-3 content bold-child-none">
 							{@html take_first_para(JSON.parse(article.content).blocks)}
 						</p>
 					</div>
