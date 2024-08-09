@@ -1,7 +1,6 @@
 <script>
 	import { PUBLIC_SERVER_URL } from '$env/static/public';
 	import '../../app.css';
-	import Navbar from '../../components/navbar.svelte';
 	import { goto } from '$app/navigation';
 	let email = $state('');
 	let password = $state('');
@@ -46,7 +45,7 @@
 </svelte:head>
 
 <section class="bg-gray-200">
-	<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+	<div class="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-dvh lg:py-0">
 		<a href="/" class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
 			<img class="w-36 h-16 mr-2" src="/logo.png" alt="logo" />
 		</a>

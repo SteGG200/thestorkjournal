@@ -20,14 +20,16 @@
 
 	let isAuthenticated = $state(false);
 
-	let editor = $state();
+	/**@type {import('@editorjs/editorjs').default | null}*/
+	let editor = $state(null);
 
 	let confirmKey = $state('');
 	let isAuthenticationFail = $state(false);
 
 	let title = $state('');
 	let thumbnail = $state('');
-	let content = $state({});
+	/**@type {import('@editorjs/editorjs').OutputData | undefined}*/
+	let content = $state(undefined);
 	let category = $state('');
 	let authorId = $state(0);
 	let isConfirm = $state(false);
@@ -37,10 +39,12 @@
 	let isContentEmptyError = $state(false);
 	let isCategoryEmptyError = $state(false);
 
+	/**@type {HTMLInputElement | null}*/
 	let inputThumbnail = $state(null);
 
 	let replyMessage = $state(0);
 
+	/**@type {import('svelte/action').Action}*/
 	const editorjsLoader = async () => {
 		const ImageTool = (await import('@editorjs/image')).default;
 
@@ -49,6 +53,7 @@
 			placeholder: 'Article Content',
 			tools: {
 				image: {
+					// @ts-ignore
 					class: ImageTool,
 					config: {
 						endpoints: {
@@ -62,11 +67,14 @@
 	};
 
 	const triggerInputThumbnail = () => {
-		inputThumbnail.click();
+		if(inputThumbnail){
+			inputThumbnail.click();
+		}
 	};
 
+	// @ts-ignore
 	const sendThumbnail = async (e) => {
-		const thumbnailFile = e.target.files[0];
+		const thumbnailFile = e.target?.files[0];
 		const formData = new FormData();
 		formData.append('thumbnail', thumbnailFile);
 
@@ -126,7 +134,7 @@
 			isValid = false;
 		}
 
-		if (content.blocks.length == 0) {
+		if (!content || content.blocks.length == 0) {
 			isContentEmptyError = true;
 			isValid = false;
 		}
@@ -140,6 +148,7 @@
 	};
 
 	const updateContent = async () => {
+		if(!editor) return;
 		content = await editor.save();
 
 		if (!checkIsValid()) {
@@ -275,9 +284,7 @@
 				accept=".jpg, .jpeg, .png"
 				disabled={isDisable}
 				bind:this={inputThumbnail}
-				onchange={(e) => {
-					sendThumbnail(e);
-				}}
+				onchange={sendThumbnail}
 			/>
 			<div id="editorjs" class="text-xl w-full" use:editorjsLoader></div>
 			{#if isContentEmptyError}

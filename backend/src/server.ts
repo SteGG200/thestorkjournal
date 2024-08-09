@@ -45,7 +45,8 @@ const pluginsRegister = async () => {
 			maxAge: 172800,
 			path: '/',
 			sameSite: 'none',
-			secure: true
+			secure: true,
+			httpOnly: true
 		}
 	});
 

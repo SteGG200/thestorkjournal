@@ -1,10 +1,9 @@
 <script>
 	import '../../app.css';
 	import { PUBLIC_SERVER_URL } from '$env/static/public';
-	import { logged_in } from '$lib/store.js';
 	import Popup_200 from '$components/popup_200.svelte';
 	import Popup_401 from '$components/popup_401.svelte';
-	import Loading from '$components/Loading.svelte';
+	import LoadingScreen from '$components/LoadingScreen.svelte';
 
 	const tags = [
 		'News',
@@ -17,11 +16,14 @@
 		'Art gallery'
 	];
 
+	/**@type {import('@editorjs/editorjs').default | null}*/
 	let editor = $state(null);
 
 	let title = $state('');
 	let thumbnailUrl = $state('');
-	let content = $state({});
+
+	/**@type {import('@editorjs/editorjs').OutputData | undefined}*/
+	let content = $state(undefined);
 	let category = $state('');
 
 	let isTitleEmpty = $state(false);
@@ -33,6 +35,7 @@
 
 	let isLoading = $state(true);
 
+	/**@type {HTMLInputElement | null}*/
 	let inputThumbnail = $state(null);
 
 	$effect(() => {
@@ -42,7 +45,7 @@
 
 		const editorjsLoader = async () => {
 			const savedContent = localStorage.getItem('content') ?? '';
-			let contentData = {};
+			let contentData = undefined;
 			if (savedContent != '') {
 				contentData = JSON.parse(savedContent);
 			}
@@ -55,6 +58,7 @@
 				placeholder: 'Article Content',
 				tools: {
 					image: {
+						// @ts-ignore
 						class: ImageTool,
 						config: {
 							endpoints: {
@@ -71,9 +75,12 @@
 	});
 
 	const triggerInputThumbnail = () => {
+		if(!inputThumbnail) return;
 		inputThumbnail.click();
 	};
 
+
+	// @ts-ignore
 	const sendThumbnail = async (e) => {
 		const thumbnailFile = e.target.files[0];
 		const formData = new FormData();
@@ -106,7 +113,7 @@
 			isValid = false;
 		}
 
-		if (content.blocks.length == 0) {
+		if (!content || content.blocks.length == 0) {
 			isContentEmpty = true;
 			isValid = false;
 		}
@@ -129,6 +136,7 @@
 	};
 
 	const saveArticle = async () => {
+		if(!editor) return;
 		try {
 			content = await editor.save();
 
@@ -139,6 +147,7 @@
 	};
 
 	const submitArticle = async () => {
+		if(!editor) return;
 		try {
 			content = await editor.save();
 			const isValid = checkIsValid();
@@ -184,7 +193,7 @@
 </svelte:head>
 
 {#if isLoading}
-	<Loading />
+	<LoadingScreen />
 {:else}
 	{#if replyMessage == 200}
 		<Popup_200>Submit sucessfully, we will send you an email after verification.</Popup_200>

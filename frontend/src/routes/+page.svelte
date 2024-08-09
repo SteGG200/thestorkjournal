@@ -10,11 +10,11 @@
 	import { suggestArticles } from '$lib/utils.js';
 	import { take_first_para } from '$lib/utils.js';
 
-	/** @type {import('./$types').PageData} */
 	const { data } = $props();
 
 	const limit_suggested_article = 3;
 
+	/**@type {import('embla-carousel').EmblaPluginType[]}*/
 	const plugins = [
 		Autoplay({
 			delay: 5000,
@@ -23,8 +23,12 @@
 	];
 	const options = { loop: true };
 
+	/**@type { import('embla-carousel').EmblaCarouselType}*/
 	let emblaApi;
 
+	/**
+	 * @param {CustomEvent<import('embla-carousel').EmblaCarouselType>} event
+	*/
 	function onInit(event) {
 		emblaApi = event.detail;
 	}

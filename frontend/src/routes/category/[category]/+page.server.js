@@ -3,6 +3,7 @@ import { PUBLIC_SERVER_URL } from '$env/static/public';
 
 const article_per_page = 5;
 
+/**@type {import('./$types').PageServerLoad} */
 export const load = async ({ fetch, params, url }) => {
 	const categories = [
 		'news',
@@ -16,7 +17,7 @@ export const load = async ({ fetch, params, url }) => {
 	];
 
 	if (categories.includes(params.category)) {
-		const currentPage = parseInt(url.searchParams.get('page')) || 1;
+		const currentPage = parseInt(url.searchParams.get('page') || '1');
 
 		const skip = (currentPage - 1) * article_per_page;
 
@@ -24,7 +25,7 @@ export const load = async ({ fetch, params, url }) => {
 			fetch(
 				`${PUBLIC_SERVER_URL}/article/get/${params.category}?limit=${article_per_page}&skip=${skip}`
 			),
-			fetch(`${PUBLIC_SERVER_URL}/auth`, { credentials: 'include' })
+			fetch(`${PUBLIC_SERVER_URL}/auth`)
 		]);
 
 		const result = await response_articles.json();
