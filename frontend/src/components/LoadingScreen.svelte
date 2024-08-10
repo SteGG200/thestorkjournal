@@ -1,7 +1,7 @@
 <script>
 	/**
 	 * @typedef {Object} LoadingScreenProps
-	 * @property {string} className
+	 * @property {string} [className]
 	 */
 
 	import Loader from "./icons/Loader.svelte";

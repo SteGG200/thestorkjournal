@@ -4,6 +4,8 @@
 	import Popup_200 from '$components/popup_200.svelte';
 	import Popup_401 from '$components/popup_401.svelte';
 	import '../../../app.css';
+	import LoadingScreen from '$components/LoadingScreen.svelte';
+	import Button from '$components/Button.svelte'
 
 	const tags = [
 		'News',
@@ -16,7 +18,7 @@
 		'Art gallery'
 	];
 
-	let isDisable = $state(false);
+	let isLoading = $state(false)
 
 	let isAuthenticated = $state(false);
 
@@ -177,13 +179,13 @@
 	};
 
 	const onSubmit = async () => {
-		isDisable = true;
+		isLoading = true;
 		if (!isAuthenticated) {
 			await authenticate();
 		} else {
 			await updateContent();
 		}
-		isDisable = false;
+		isLoading = false;
 	};
 </script>
 
@@ -204,7 +206,7 @@
 						name="key"
 						type="text"
 						bind:value={confirmKey}
-						disabled={isDisable}
+						disabled={isLoading}
 						autocomplete="off"
 						required
 					/>
@@ -212,14 +214,24 @@
 				{#if isAuthenticationFail}
 					<p class="text-red-500">Your key is wrong</p>
 				{/if}
-				<button
+				<!-- <button
 					class="w-full bg-red-700 hover:bg-red-800 rounded-lg py-1 text-gray-100"
 					type="submit"
-					disabled={isDisable}>Submit</button
+					disabled={isLoading}>Submit</button
+				> -->
+				<Button
+				  className="w-full bg-red-700 hover:bg-red-800 rounded-lg py-1 text-gray-100"
+          type="submit"
+          isPending={isLoading}
 				>
+					Submit
+				</Button>
 			</div>
 		</div>
 	{:else}
+		{#if isLoading}
+			<LoadingScreen className="opacity-65"/>
+		{/if}
 		{#if replyMessage == 200}
 			<Popup_200>
 				{isConfirm ? 'Confirm' : 'Reject'} the article successfully. We will send an email to author
@@ -233,7 +245,7 @@
 				class={`font-semibold text-3xl w-3/4 text-center outline-none mx-auto mb-4`}
 				type="text"
 				placeholder={`${isTitleEmptyError ? 'Title is required' : 'Article title'}`}
-				disabled={isDisable}
+				disabled={isLoading}
 				bind:value={title}
 			/>
 
@@ -282,7 +294,7 @@
 				class="hidden"
 				type="file"
 				accept=".jpg, .jpeg, .png"
-				disabled={isDisable}
+				disabled={isLoading}
 				bind:this={inputThumbnail}
 				onchange={sendThumbnail}
 			/>
@@ -292,7 +304,7 @@
 			{/if}
 			<div class="w-full flex justify-center space-x-4">
 				<select
-					disabled={isDisable}
+					disabled={isLoading}
 					bind:value={category}
 					class={` bg-gray-50 border text-gray-900 rounded-md  block p-2.5 ${isCategoryEmptyError ? 'border-red-500' : ''} `}
 				>
