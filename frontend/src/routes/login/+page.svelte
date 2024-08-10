@@ -10,6 +10,7 @@
 	/**@type {string | null}*/
 	let error = $state(null)
 	let isPending = $state(false);
+	let redirectUrl = $page.url.searchParams.get('redirect')
 
   const loginSchema = z.object({
     email: z.string().email({ message: 'Invalid email address' }),
@@ -47,7 +48,6 @@
 		}
 
 		const listApprovedRedirects = ['/', '/text-editor']
-		let redirectUrl = $page.url.searchParams.get('redirect')
 		
 		if(!redirectUrl || !listApprovedRedirects.includes(redirectUrl)){
 			redirectUrl = '/'
@@ -71,7 +71,7 @@
 				<h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
 					Sign in to your account
 				</h1>
-				<form class="space-y-4 md:space-y-6" on:submit|preventDefault={handleSubmit}>
+				<form class="space-y-4 md:space-y-6" onsubmit={handleSubmit}>
 					<div>
 						<label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
 						<input

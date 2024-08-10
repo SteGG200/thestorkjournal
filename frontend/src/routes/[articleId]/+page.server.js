@@ -3,11 +3,16 @@ import { version as uuidVersion } from 'uuid';
 import { validate as uuidValidate } from 'uuid';
 import { PUBLIC_SERVER_URL } from '$env/static/public';
 
+/**
+ * 
+ * @param {string} uuid 
+ * @returns {boolean} 
+ */
 function uuidValidateV4(uuid) {
 	return uuidValidate(uuid) && uuidVersion(uuid) === 4;
 }
 
-/** @type {import('./$types').PageLoad} */
+/** @type {import('./$types').PageServerLoad} */
 export async function load({ fetch, params }) {
 	if (uuidValidateV4(params.articleId)) {
 		const [response_article, response_authentication] = await Promise.all([
