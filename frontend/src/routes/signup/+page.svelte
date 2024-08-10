@@ -1,43 +1,13 @@
 <script>
-	import { PUBLIC_SERVER_URL } from '$env/static/public';
+	import { enhance } from '$app/forms';
+	import Button from '$components/Button.svelte';
 	import '../../app.css';
-	import { goto } from '$app/navigation';
+
+	const { form } = $props()
+
 	let email = $state('');
-	let password = $state('');
 	let name = $state('');
-	let re_password = $state('');
-	let is_create_success = $state(true);
-	let error_message = $state();
-	function create_account() {
-		if (password != re_password) {
-			is_create_success = false;
-			error_message = 'Password do not match.';
-		} else {
-			fetch_sign_up_data();
-		}
-	}
-	async function fetch_sign_up_data() {
-		const response = await fetch(`${PUBLIC_SERVER_URL}/auth/signup`, {
-			method: 'POST',
-			headers: {
-				'content-type': 'application/json'
-			},
-			body: JSON.stringify({
-				email: email,
-				password: password,
-				name: name
-			})
-		});
-		const status_code = response.status;
-		console.log(status_code);
-		if (status_code == 200) {
-			console.log('ok');
-			goto('/');
-		} else if (status_code == 400) {
-			is_create_success = false;
-			error_message = 'Email already exists.';
-		}
-	}
+	let isLoading = $state(false);
 </script>
 
 <svelte:head>
@@ -54,7 +24,23 @@
 				<h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
 					Create an account
 				</h1>
-				<form class="space-y-4 md:space-y-6" action="#">
+				<form class="space-y-4 md:space-y-6" method="POST" use:enhance={() => {
+					isLoading = true
+					return async ({update, result}) => {
+						await update()
+						if(result.type == 'success' && result.data && result.data.previousState && typeof result.data.previousState == 'object'){
+							const previousState = result.data.previousState
+							if('email' in previousState && typeof previousState.email === 'string'){
+								email = previousState.email
+							}
+
+							if('name' in previousState && typeof previousState.name === 'string'){
+								name = previousState.name
+							}
+						}
+						isLoading = false
+					}
+				}}>
 					<div>
 						<label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
 						<input
@@ -63,8 +49,7 @@
 							id="email"
 							bind:value={email}
 							class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-							placeholder=""
-							required={true}
+							required
 						/>
 					</div>
 					<div>
@@ -73,10 +58,9 @@
 							type="name"
 							name="name"
 							id="name"
-							placeholder=""
 							bind:value={name}
 							class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-							required={true}
+							required
 						/>
 					</div>
 					<div>
@@ -87,10 +71,8 @@
 							type="password"
 							name="password"
 							id="password"
-							placeholder=""
-							bind:value={password}
 							class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-							required={true}
+							required
 						/>
 					</div>
 					<div>
@@ -101,37 +83,28 @@
 							type="password"
 							name="re_password"
 							id="re_password"
-							bind:value={re_password}
 							class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-							required={true}
+							required
 						/>
 					</div>
-					<!--<div class="flex items-center justify-between">
-                        
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5">
-                              <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 " required={true}>
-                            </div>
-                            <div class="ml-3 text-sm">
-                              <label for="remember" class="text-gray-500 ">remember </label>
-                            </div>
-                        </div>
-                        <a href="/error404" class="text-sm font-medium text-primary-600 hover:underline ">Forgot password?</a>
-                    </div>-->
-					{#if is_create_success == false}
-						<div class="text-red-500">{error_message}</div>
+					{#if form && !form.success}
+						<div class="text-red-500">{form.error}</div>
 					{/if}
-					<button
+					<Button
 						type="submit"
-						onclick={create_account}
-						class="w-full text-gray-100 bg-red-700 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-						>Create an account</button
+						className="w-full text-gray-100 bg-red-700 hover:bg-red-750 disabled:bg-red-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+						isPending={isLoading}
 					>
+						Create an account
+					</Button>
 					<p class="text-sm font-light text-gray-700">
-						Already have an account? <a
+						Already have an account? 
+						<a
 							href="/login"
-							class="font-medium text-primary-600 hover:underline">Login here</a
+							class="font-medium text-primary-600 hover:underline"
 						>
+							Login here
+						</a>
 					</p>
 				</form>
 			</div>
