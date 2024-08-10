@@ -46,7 +46,8 @@ const pluginsRegister = async () => {
 			path: '/',
 			sameSite: 'none',
 			secure: true,
-			httpOnly: true
+			httpOnly: true,
+			partitioned: true
 		}
 	});
 
