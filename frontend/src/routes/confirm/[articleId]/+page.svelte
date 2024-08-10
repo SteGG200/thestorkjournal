@@ -220,7 +220,7 @@
 					disabled={isLoading}>Submit</button
 				> -->
 				<Button
-				  className="w-full bg-red-700 hover:bg-red-800 rounded-lg py-1 text-gray-100"
+				  className="w-full bg-red-700 hover:bg-red-750 disabled:bg-red-800 rounded-lg py-1 text-gray-100"
           type="submit"
           isPending={isLoading}
 				>
