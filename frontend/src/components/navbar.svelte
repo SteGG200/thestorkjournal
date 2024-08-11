@@ -4,6 +4,10 @@
 
 	const { isAuthenticated } = $props();
 	let navbar_hidden = $state(true);
+	/**@type {HTMLDivElement | null}*/
+	let DropdownMenu = $state(null)
+	/**@type {HTMLButtonElement | null}*/
+	let DropdownTrigger = $state(null)
 	const tags = [
 		'News',
 		'Economics',
@@ -21,6 +25,29 @@
 			goto('/login');
 		}
 	}
+
+	$effect(() => {
+
+		/**
+		 * @param {MouseEvent | null} event
+		 */
+		const handleClickOutside = (event) => {
+			if(DropdownMenu && event && event.target instanceof HTMLAnchorElement && DropdownMenu.contains(event.target)){
+				event.target.click()
+			}
+
+			if(DropdownTrigger && event && event.target instanceof Node && !DropdownTrigger.contains(event.target)){
+				navbar_hidden = true;
+			}
+		}
+
+		document.addEventListener('mousedown', handleClickOutside);
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		}
+	})
+
 	function hide_navbar() {
 		navbar_hidden = !navbar_hidden;
 	}
@@ -55,6 +82,7 @@ sticky w-full z-20 top-0 start-0 border-b"
 			</button>
 
 			<button
+				bind:this={DropdownTrigger}
 				data-collapse-toggle="navbar-sticky"
 				onclick={hide_navbar}
 				type="button"
@@ -84,6 +112,7 @@ sticky w-full z-20 top-0 start-0 border-b"
 		</div>
 
 		<div
+			bind:this={DropdownMenu}
 			class={`items-center justify-between ${navbar_hidden ? 'hidden' : ''}
         w-full min-[1100px]:flex min-[1100px]:w-auto min-[1100px]:order-1`}
 			id="navbar-sticky"

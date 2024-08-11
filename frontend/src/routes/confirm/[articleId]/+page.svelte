@@ -120,7 +120,6 @@
 		} else {
 			isAuthenticationFail = true;
 		}
-		console.log('here');
 	};
 
 	const checkIsValid = () => {
