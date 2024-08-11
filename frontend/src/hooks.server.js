@@ -6,6 +6,6 @@ export async function handleFetch({ event, request, fetch }){
 	if(request.url.startsWith(`${PUBLIC_SERVER_URL}/auth`) && cookies){
 		request.headers.set('cookie', cookies);
 	}
-
-	return fetch(request, { credentials: 'include'})
+	
+	return fetch(request)
 }

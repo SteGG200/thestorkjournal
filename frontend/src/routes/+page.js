@@ -3,7 +3,7 @@ import { error } from '@sveltejs/kit';
 
 const article_per_page = 5;
 
-/** @type {import('./$types').PageServerLoad} */
+/** @type {import('./$types').PageLoad} */
 export async function load({ fetch, url }) {
 	const currentPage = parseInt(url.searchParams.get('page') ?? '1');
 
@@ -11,7 +11,7 @@ export async function load({ fetch, url }) {
 
 	const [response_articles, response_authentication] = await Promise.all([
 		fetch(`${PUBLIC_SERVER_URL}/article/get?limit=${article_per_page}&skip=${skip}`),
-		fetch(`${PUBLIC_SERVER_URL}/auth`)
+		fetch(`${PUBLIC_SERVER_URL}/auth`, { credentials: 'include' })
 	]);
 
 	const result = await response_articles.json();
