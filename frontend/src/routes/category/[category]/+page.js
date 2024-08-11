@@ -3,7 +3,7 @@ import { PUBLIC_SERVER_URL } from '$env/static/public';
 
 const article_per_page = 5;
 
-/**@type {import('./$types').PageServerLoad} */
+/**@type {import('./$types').PageLoad} */
 export const load = async ({ fetch, params, url }) => {
 	const categories = [
 		'news',

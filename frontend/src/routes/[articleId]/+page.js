@@ -12,7 +12,7 @@ function uuidValidateV4(uuid) {
 	return uuidValidate(uuid) && uuidVersion(uuid) === 4;
 }
 
-/** @type {import('./$types').PageServerLoad} */
+/** @type {import('./$types').PageLoad} */
 export async function load({ fetch, params }) {
 	if (uuidValidateV4(params.articleId)) {
 		const [response_article, response_authentication] = await Promise.all([
