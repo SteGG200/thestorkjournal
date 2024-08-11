@@ -4,7 +4,7 @@ import { error } from '@sveltejs/kit';
 const article_per_page = 5;
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ fetch, url }) {
+export async function load({ url }) {
 	const currentPage = parseInt(url.searchParams.get('page') ?? '1');
 
 	const skip = (currentPage - 1) * article_per_page;
