@@ -5,7 +5,7 @@
 	import Popup_401 from '$components/popup_401.svelte';
 	import '../../../app.css';
 	import LoadingScreen from '$components/LoadingScreen.svelte';
-	import Button from '$components/Button.svelte'
+	import Button from '$components/Button.svelte';
 
 	const tags = [
 		'News',
@@ -18,7 +18,7 @@
 		'Art gallery'
 	];
 
-	let isLoading = $state(false)
+	let isLoading = $state(false);
 
 	let isAuthenticated = $state(false);
 
@@ -69,7 +69,7 @@
 	};
 
 	const triggerInputThumbnail = () => {
-		if(inputThumbnail){
+		if (inputThumbnail) {
 			inputThumbnail.click();
 		}
 	};
@@ -150,7 +150,7 @@
 	};
 
 	const updateContent = async () => {
-		if(!editor) return;
+		if (!editor) return;
 		content = await editor.save();
 
 		if (!checkIsValid()) {
@@ -220,9 +220,9 @@
 					disabled={isLoading}>Submit</button
 				> -->
 				<Button
-				  className="w-full bg-red-700 hover:bg-red-750 disabled:bg-red-800 rounded-lg py-1 text-gray-100"
-          type="submit"
-          isPending={isLoading}
+					className="w-full bg-red-700 hover:bg-red-750 disabled:bg-red-800 rounded-lg py-1 text-gray-100"
+					type="submit"
+					isPending={isLoading}
 				>
 					Submit
 				</Button>
@@ -230,7 +230,7 @@
 		</div>
 	{:else}
 		{#if isLoading}
-			<LoadingScreen className="opacity-65"/>
+			<LoadingScreen className="opacity-65" />
 		{/if}
 		{#if replyMessage == 200}
 			<Popup_200>

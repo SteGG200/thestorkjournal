@@ -4,9 +4,9 @@ import { validate as uuidValidate } from 'uuid';
 import { PUBLIC_SERVER_URL } from '$env/static/public';
 
 /**
- * 
- * @param {string} uuid 
- * @returns {boolean} 
+ *
+ * @param {string} uuid
+ * @returns {boolean}
  */
 function uuidValidateV4(uuid) {
 	return uuidValidate(uuid) && uuidVersion(uuid) === 4;

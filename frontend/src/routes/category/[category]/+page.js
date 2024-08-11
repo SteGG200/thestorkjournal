@@ -25,7 +25,7 @@ export const load = async ({ fetch, params, url }) => {
 			fetch(
 				`${PUBLIC_SERVER_URL}/article/get/${params.category}?limit=${article_per_page}&skip=${skip}`
 			),
-			fetch(`${PUBLIC_SERVER_URL}/auth`)
+			fetch(`${PUBLIC_SERVER_URL}/auth`, { credentials: 'include' })
 		]);
 
 		const result = await response_articles.json();

@@ -5,7 +5,7 @@ const config = {
 		extend: {
 			theme: {
 				colors: {
-					mainred: '#db2424',
+					mainred: '#db2424'
 				}
 			},
 			colors: {
@@ -18,4 +18,4 @@ const config = {
 	plugins: []
 };
 
-export default config
+export default config;

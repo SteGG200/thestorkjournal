@@ -1,15 +1,15 @@
 <script>
 	/**
-	* @typedef {Object} PageButtonProps
-	* @property {import('svelte').Snippet} children
-	* @property {number} page_number
-	* @property {boolean} [disabled]
-	* @property {string} path
-	*/
+	 * @typedef {Object} PageButtonProps
+	 * @property {import('svelte').Snippet} children
+	 * @property {number} page_number
+	 * @property {boolean} [disabled]
+	 * @property {string} path
+	 */
 
 	/**
 	 * @type {PageButtonProps}
-	*/
+	 */
 	const { page_number, disabled, path, children } = $props();
 </script>
 

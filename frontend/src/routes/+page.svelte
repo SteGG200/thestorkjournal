@@ -28,7 +28,7 @@
 
 	/**
 	 * @param {CustomEvent<import('embla-carousel').EmblaCarouselType>} event
-	*/
+	 */
 	function onInit(event) {
 		emblaApi = event.detail;
 	}

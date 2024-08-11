@@ -77,10 +77,9 @@
 	});
 
 	const triggerInputThumbnail = () => {
-		if(!inputThumbnail) return;
+		if (!inputThumbnail) return;
 		inputThumbnail.click();
 	};
-
 
 	// @ts-ignore
 	const sendThumbnail = async (e) => {
@@ -139,8 +138,8 @@
 
 	const saveArticle = async () => {
 		isLoading = true;
-		loadingScreenOpacity = 65
-		if(!editor) {
+		loadingScreenOpacity = 65;
+		if (!editor) {
 			isLoading = false;
 			return;
 		}
@@ -157,8 +156,8 @@
 
 	const submitArticle = async () => {
 		isLoading = true;
-		loadingScreenOpacity = 65
-		if(!editor) {
+		loadingScreenOpacity = 65;
+		if (!editor) {
 			isLoading = false;
 			return;
 		}
@@ -196,7 +195,7 @@
 			} else if (response.status == 401) {
 				saveArticleToLocalStorage();
 			}
-			isLoading = false
+			isLoading = false;
 		} catch (error) {
 			console.log('Saving error: ' + error);
 			isLoading = false;
@@ -209,7 +208,7 @@
 </svelte:head>
 
 {#if isLoading}
-	<LoadingScreen className={`opacity-${loadingScreenOpacity}`}/>
+	<LoadingScreen className={`opacity-${loadingScreenOpacity}`} />
 {/if}
 
 {#if replyMessage == 200}

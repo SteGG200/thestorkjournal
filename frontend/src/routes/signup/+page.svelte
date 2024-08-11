@@ -3,7 +3,7 @@
 	import Button from '$components/Button.svelte';
 	import '../../app.css';
 
-	const { form } = $props()
+	const { form } = $props();
 
 	let email = $state('');
 	let name = $state('');
@@ -24,23 +24,32 @@
 				<h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
 					Create an account
 				</h1>
-				<form class="space-y-4 md:space-y-6" method="POST" use:enhance={() => {
-					isLoading = true
-					return async ({update, result}) => {
-						await update()
-						if(result.type == 'success' && result.data && result.data.previousState && typeof result.data.previousState == 'object'){
-							const previousState = result.data.previousState
-							if('email' in previousState && typeof previousState.email === 'string'){
-								email = previousState.email
-							}
+				<form
+					class="space-y-4 md:space-y-6"
+					method="POST"
+					use:enhance={() => {
+						isLoading = true;
+						return async ({ update, result }) => {
+							await update();
+							if (
+								result.type == 'success' &&
+								result.data &&
+								result.data.previousState &&
+								typeof result.data.previousState == 'object'
+							) {
+								const previousState = result.data.previousState;
+								if ('email' in previousState && typeof previousState.email === 'string') {
+									email = previousState.email;
+								}
 
-							if('name' in previousState && typeof previousState.name === 'string'){
-								name = previousState.name
+								if ('name' in previousState && typeof previousState.name === 'string') {
+									name = previousState.name;
+								}
 							}
-						}
-						isLoading = false
-					}
-				}}>
+							isLoading = false;
+						};
+					}}
+				>
 					<div>
 						<label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
 						<input
@@ -98,13 +107,8 @@
 						Create an account
 					</Button>
 					<p class="text-sm font-light text-gray-700">
-						Already have an account? 
-						<a
-							href="/login"
-							class="font-medium text-primary-600 hover:underline"
-						>
-							Login here
-						</a>
+						Already have an account?
+						<a href="/login" class="font-medium text-primary-600 hover:underline"> Login here </a>
 					</p>
 				</form>
 			</div>
