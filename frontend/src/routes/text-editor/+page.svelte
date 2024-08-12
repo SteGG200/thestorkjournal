@@ -31,7 +31,7 @@
 	let isContentEmpty = $state(false);
 	let isCategoryEmpty = $state(false);
 
-	let replyMessage = $state(200);
+	let replyMessage = $state(0);
 
 	let isLoading = $state(true);
 	let loadingScreenOpacity = $state(100);
