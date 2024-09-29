@@ -4,6 +4,7 @@ import { isAuthenticated } from '../../utils/authentication.js';
 import { createNewArticle } from '../../database/articleHandler.js';
 import transporter from '../../utils/emailHandler.js';
 import crypto from 'crypto';
+import { sanitizer } from '../../utils/HtmlSanitizer.js';
 
 export const createArticleRoute: FastifyPluginAsync = async (fastify, option) => {
 	fastify.get('/', (req, res) => {
@@ -23,11 +24,21 @@ export const createArticleRoute: FastifyPluginAsync = async (fastify, option) =>
 
 		const article = req.body;
 
-		if (!article.title || !article.thumbnail || !article.category || !article.content) {
+		if (!article.title || !article.thumbnail || !article.category || !article.content || article.content.blocks.length == 0) {
 			res.statusCode = 400;
 			res.send({ message: 'Invalid article information' });
 			return;
 		}
+
+		article.content.blocks = article.content.blocks.map(block => {
+			if(block.type === 'image') return block
+			return {
+				...block,
+				data: {
+					text: sanitizer(block.data.text)
+				}
+			}
+		})
 
 		const authorInfo = getUserInfoCookie(req.cookies[fastify.config.cookieName.userInfo] as string);
 

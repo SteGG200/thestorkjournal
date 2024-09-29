@@ -30,7 +30,7 @@
 		alt="notfound"
 	/>
 	<div class="w-[600px] max-[600px]:w-full max-[600px]:px-4 mx-auto space-y-6">
-		{#each JSON.parse(data.article.content).blocks as block}
+		{#each data.article.content.blocks as block}
 			{#if block.type == 'paragraph'}
 				<div class="text-lg max-sm:text-base content whitespace-normal overflow-hidden text-ellipsis">{@html block.data.text}</div>
 			{:else if block.type == 'image'}

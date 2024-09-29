@@ -1,7 +1,35 @@
+interface ContentBlock {
+	id: string
+}
+
+interface BlockParagraph extends ContentBlock {
+	type: "paragraph"
+	data: {
+		text: string
+	}
+}
+
+interface BlockImage extends ContentBlock {
+	type: "image"
+	data: {
+		file: {
+			url: string
+		}
+		[key: string] : any
+	}
+}
+
+interface ArticleContent {
+	time: number
+	blocks: (BlockParagraph | BlockImage)[]
+	version: string
+	[key: string]: any
+}
+
 interface Article {
 	title: string;
 	thumbnail: string;
-	content: string;
+	content: ArticleContent
 	category: string;
 }
 

@@ -1,10 +1,10 @@
 import sql from './db.js';
 
 export const createNewArticle = async (newArticle: UnconfirmedArticleInfo, key: string) => {
-	const article = await sql<
-		{ id: string }[]
-	>`INSERT INTO unconfirmed_articles (user_id, title, thumbnail, category, content, key) 
-	VALUES (${newArticle.user_id}, ${newArticle.title}, ${newArticle.thumbnail}, ${newArticle.category}, ${newArticle.content}, ${key})
+	const article = await sql<{
+		id: string
+	}[]>`INSERT INTO unconfirmed_articles (user_id, title, thumbnail, category, content, key) 
+	VALUES (${newArticle.user_id}, ${newArticle.title}, ${newArticle.thumbnail}, ${newArticle.category}, ${sql.json(newArticle.content)}, ${key})
 	RETURNING id`;
 
 	return article[0].id;
@@ -37,7 +37,7 @@ export const confirmArticle = async (article: UnconfirmedArticleInfo) => {
 	return await sql<
 		{ id: string; datePublish: string }[]
 	>`INSERT INTO articles (user_id, title, thumbnail, category, content) 
-  VALUES (${article.user_id}, ${article.title}, ${article.thumbnail}, ${article.category}, ${article.content})
+  VALUES (${article.user_id}, ${article.title}, ${article.thumbnail}, ${article.category}, ${sql.json(article.content)})
 	RETURNING id, date_publish`;
 };
 

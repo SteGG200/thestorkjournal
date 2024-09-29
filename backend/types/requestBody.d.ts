@@ -10,7 +10,7 @@ interface BodySignupAPI extends BodyLoginAPI {
 interface BodyCreateArticleAPI {
 	title: string;
 	thumbnail: string;
-	content: string;
+	content: ArticleContent;
 	category: string;
 }
 

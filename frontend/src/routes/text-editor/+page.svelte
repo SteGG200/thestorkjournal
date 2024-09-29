@@ -170,8 +170,6 @@
 				return;
 			}
 
-			const contentStr = JSON.stringify(content);
-
 			const response = await fetch(`${PUBLIC_SERVER_URL}/article/new`, {
 				method: 'POST',
 				headers: {
@@ -180,7 +178,7 @@
 				body: JSON.stringify({
 					title: title,
 					thumbnail: thumbnailUrl,
-					content: contentStr,
+					content: content,
 					category: category
 				}),
 				credentials: 'include'

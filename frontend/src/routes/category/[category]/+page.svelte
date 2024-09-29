@@ -59,7 +59,7 @@
 					/>
 				</a>
 				<p class="content line-clamp-3 bold-child-none">
-					{@html take_first_para(JSON.parse(data.articles[0].content).blocks)}
+					{@html take_first_para(data.articles[0].content.blocks)}
 				</p>
 			</div>
 			{#if data.articles.length > 1}
@@ -89,7 +89,7 @@
 							</div>
 						</div>
 						<p class="content line-clamp-3 text-sm">
-							{@html take_first_para(JSON.parse(article.content).blocks)}
+							{@html take_first_para(article.content.blocks)}
 						</p>
 					</div>
 				{/each}

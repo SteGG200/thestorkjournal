@@ -114,7 +114,7 @@
 
 			title = result.article.title;
 			thumbnail = result.article.thumbnail;
-			content = JSON.parse(result.article.content);
+			content = result.article.content;
 			category = result.article.category;
 			authorId = result.authorId;
 
@@ -169,7 +169,7 @@
 				article: {
 					title,
 					thumbnail,
-					content: JSON.stringify(content),
+					content: content,
 					category
 				},
 				authorId,
