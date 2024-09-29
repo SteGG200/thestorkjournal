@@ -47,25 +47,28 @@
 	let replyMessage = $state(0);
 
 	/**@type {import('svelte/action').Action}*/
-	const editorjsLoader = async () => {
-		const ImageTool = (await import('@editorjs/image')).default;
-
-		editor = new (await import('@editorjs/editorjs')).default({
-			autofocus: false,
-			placeholder: 'Article Content',
-			tools: {
-				image: {
-					// @ts-ignore
-					class: ImageTool,
-					config: {
-						endpoints: {
-							byFile: `${PUBLIC_SERVER_URL}/upload`
+	const editorjsLoader = () => {
+		const loader = async () => {
+			const ImageTool = (await import('@editorjs/image')).default;
+	
+			editor = new (await import('@editorjs/editorjs')).default({
+				autofocus: false,
+				placeholder: 'Article Content',
+				tools: {
+					image: {
+						// @ts-ignore
+						class: ImageTool,
+						config: {
+							endpoints: {
+								byFile: `${PUBLIC_SERVER_URL}/upload`
+							}
 						}
 					}
-				}
-			},
-			data: content
-		});
+				},
+				data: content
+			});
+		}
+		loader()
 	};
 
 	const triggerInputThumbnail = () => {

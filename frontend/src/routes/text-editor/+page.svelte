@@ -217,7 +217,7 @@
 	<Popup_401 redirect="/text-editor" buttonText="Login">You have not logged in yet.</Popup_401>
 {/if}
 
-<a class="w-20 h-[36px] block mx-4 mt-4" href="/">
+<a class="w-20 h-[36px] block mx-4 pt-4" href="/">
 	<img src="/logo.png" alt="logo" />
 </a>
 <div class="mx-auto mt">
